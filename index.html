@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<meta name="theme-color" content="#0a0f1e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Peptide Calc">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
+
+<title>Peptide Calculator - Offline</title>
+<meta name="description" content="Offline peptide reconstitution and intranasal calculator.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0f1e;--panel:#0d1f35;--panel2:#0a1929;--border:rgba(255,255,255,.10);
+  --cyan:#06b6d4;--text:#f1f5f9;--muted:#94a3b8;--muted2:#64748b;--orange:#ff6b35;
+  --warn:#f59e0b;
+}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg);color:#fff;min-height:100vh;line-height:1.55;
+}
+.container{
+  max-width:1200px;margin:0 auto;padding:22px;
+  display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:36px;align-items:start;
+}
+.header{grid-column:1/-1;text-align:center;margin:4px 0 2px}
+.brand{font-size:1rem;font-weight:600;color:var(--orange);letter-spacing:.4px;margin-bottom:4px}
+h1{
+  font-size:2.35rem;line-height:1.1;margin-bottom:9px;
+  background:linear-gradient(135deg,#e2e8f0,#94a3b8);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.subtitle{font-size:.96rem;color:var(--muted)}
+.offline-badge{
+  display:inline-block;margin-top:10px;padding:5px 9px;border-radius:999px;
+  border:1px solid rgba(6,182,212,.35);color:var(--cyan);font-size:.72rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;background:rgba(6,182,212,.07)
+}
+.tabbar,.subtabs{
+  display:flex;background:var(--panel2);border:1px solid var(--border);border-radius:12px;
+  padding:4px;gap:4px;margin-bottom:22px
+}
+.tab,.subtab{
+  flex:1;border:0;border-radius:9px;background:transparent;color:#8e8e93;
+  padding:11px 12px;font-weight:650;cursor:pointer;transition:.18s;font-size:.9rem;
+}
+.tab small{display:block;font-weight:400;font-size:.7rem;opacity:.8;margin-top:2px}
+.tab.active,.subtab.active{
+  background:rgba(6,182,212,.15);color:var(--cyan);border:1px solid rgba(6,182,212,.5);
+  box-shadow:0 0 14px rgba(6,182,212,.16)
+}
+.tab:hover:not(.active),.subtab:hover:not(.active){background:rgba(6,182,212,.07);color:#fff}
+.card{
+  background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:27px;
+}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.sectiontitle{font-size:1.1rem;font-weight:750;letter-spacing:.06em}
+.reset{
+  border:1px solid #1e3a5f;background:transparent;color:#fff;border-radius:8px;
+  padding:7px 12px;cursor:pointer;font-size:.82rem
+}
+.reset:hover{background:rgba(255,255,255,.06)}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px;margin-bottom:18px}
+.inputcard{
+  background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 15px;
+  transition:.18s
+}
+.inputcard:focus-within,.inputcard:hover{border-color:var(--cyan);background:#0d2340}
+.label{
+  display:block;font-size:.67rem;color:#8e8e93;font-weight:750;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:5px
+}
+.inrow{display:flex;gap:7px;align-items:baseline}
+input[type=number]{
+  width:100%;background:transparent;border:0;outline:0;color:var(--text);
+  font-size:1.5rem;font-weight:650;min-width:0;font-variant-numeric:tabular-nums
+}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.unitlabel{font-size:.8rem;color:#8e8e93;font-weight:700;text-transform:uppercase;white-space:nowrap}
+.hint{font-size:.67rem;color:#6e6e73;margin-top:5px}
+.unitToggle{display:flex;gap:6px;margin-top:9px}
+.unitBtn{
+  flex:1;padding:6px 0;border:1px solid #1e3a5f;border-radius:8px;background:transparent;
+  color:#64748b;font-size:.78rem;font-weight:750;letter-spacing:.07em;cursor:pointer
+}
+.unitBtn.active{
+  background:rgba(6,182,212,.17);border-color:rgba(6,182,212,.55);color:var(--cyan)
+}
+.calc{
+  width:100%;padding:14px;border-radius:14px;background:rgba(6,182,212,.12);
+  border:1px solid rgba(6,182,212,.45);color:var(--cyan);font-size:1rem;font-weight:650;cursor:pointer
+}
+.calc:hover{background:rgba(6,182,212,.22);border-color:var(--cyan);color:#fff;box-shadow:0 0 22px rgba(6,182,212,.25)}
+.syringe-select{margin:4px 0 17px}
+.syringe-label{font-size:.67rem;font-weight:750;color:#8e8e93;letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px}
+.syringes{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.syringe-choice{
+  background:var(--panel2);border:1px solid #1e3a5f;border-radius:12px;padding:11px 8px 9px;
+  color:#fff;cursor:pointer;text-align:center;transition:.18s
+}
+.syringe-choice.active{border-color:rgba(6,182,212,.62);background:rgba(6,182,212,.10);box-shadow:0 0 12px rgba(6,182,212,.12)}
+.mini-syringe{height:30px;position:relative;margin-bottom:7px}
+.mini-syringe:before{content:"";position:absolute;left:8%;right:8%;top:11px;height:8px;background:#d8dde6;border:1px solid #8e9aaa;border-radius:2px}
+.mini-syringe:after{content:"";position:absolute;right:1%;top:14px;width:9%;height:2px;background:#7a8494}
+.syringe-choice strong{display:block;font-size:.92rem}
+.syringe-choice span{font-size:.68rem;color:var(--muted2);text-transform:uppercase;font-weight:650}
+.results{
+  display:none;background:var(--panel);border:1px solid var(--border);border-radius:18px;
+  padding:27px 23px 23px;margin-top:21px
+}
+.drawbox{
+  text-align:center;background:rgba(6,182,212,.07);border:1px solid rgba(6,182,212,.3);
+  border-radius:14px;padding:20px;margin-bottom:17px;box-shadow:0 0 24px rgba(6,182,212,.06)
+}
+.drawlabel{font-size:.7rem;font-weight:750;letter-spacing:.17em;text-transform:uppercase;color:var(--cyan)}
+.drawval{font-size:3.55rem;line-height:1.1;color:var(--cyan);font-weight:750;letter-spacing:-.03em;text-shadow:0 0 20px rgba(6,182,212,.33)}
+.drawval small{font-size:1.25rem;opacity:.78}
+.syringeWrap{margin:10px 0 18px}
+.syringeCanvas{width:100%;height:125px;display:block}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:14px 0}
+.metric{background:var(--panel2);border:1px solid var(--border);border-radius:13px;padding:15px 10px;text-align:center}
+.metric .mlabel{font-size:.66rem;font-weight:750;color:#8e8e93;letter-spacing:.06em;text-transform:uppercase}
+.metric .mval{font-size:1.72rem;line-height:1.1;font-weight:750;color:#fff;margin:5px 0 2px}
+.metric .munit{font-size:.67rem;color:#6e6e73;font-weight:650}
+.summary{text-align:center;color:#8e8e93;font-size:.84rem;margin:12px 0}
+.recommend{text-align:center;padding:11px;border-radius:10px;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.25);color:var(--cyan);font-size:.84rem;font-weight:550}
+.bigresult{
+  display:none;text-align:center;margin-top:19px;padding:20px;border-radius:14px;
+  background:rgba(6,182,212,.07);border:1px solid rgba(6,182,212,.25)
+}
+.bigresult .rlabel{font-size:.68rem;color:var(--cyan);font-weight:750;letter-spacing:.14em;text-transform:uppercase}
+.bigresult .rval{font-size:3rem;color:var(--cyan);font-weight:750;line-height:1.1}
+.bigresult .runit{font-size:1rem;color:var(--cyan);font-weight:650}
+.bigresult .rsub{font-size:.83rem;color:#8e8e93;margin-top:6px}
+.sidebar{
+  background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:25px;
+  position:sticky;top:18px
+}
+.sidebar h2{font-size:1.08rem;margin-bottom:16px}
+.step{margin-bottom:16px}
+.step h3{font-size:.92rem;margin-bottom:4px}
+.step p{font-size:.84rem;color:var(--muted)}
+.example{margin-top:16px}
+.example h3{font-size:.92rem;margin-bottom:8px}
+.example li{list-style:none;color:var(--muted);font-size:.83rem;margin-bottom:4px;padding-left:13px;position:relative}
+.example li:before{content:"•";position:absolute;left:0;color:var(--cyan);font-weight:bold}
+.warning{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:12px;margin-top:16px}
+.warning strong{display:block;color:#ffc107;font-size:.84rem;margin-bottom:3px}
+.warning p{color:#ffe082;font-size:.78rem}
+.reference{margin-top:12px;background:rgba(6,182,212,.04);border:1px solid #1e3a5f;border-radius:10px;padding:12px}
+.reference h4{font-size:.88rem;margin-bottom:7px}
+.refrow{display:grid;grid-template-columns:1fr auto 1fr;gap:9px;padding:5px 8px;background:rgba(6,182,212,.05);border-radius:6px;font-size:.78rem;margin-top:5px}
+.refrow span:first-child{text-align:right;color:#fff}.refrow span:nth-child(2){color:var(--cyan);font-weight:700}.refrow span:last-child{color:#e0e0e0}
+.specs{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 20px;margin-bottom:14px}
+.specs h3{font-size:.96rem;margin-bottom:8px}.specs p{font-size:.8rem;color:var(--muted);margin-bottom:12px}
+.specgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.spec{background:rgba(6,182,212,.06);border-radius:9px;padding:9px 6px;text-align:center}
+.spec small{display:block;font-size:.59rem;text-transform:uppercase;color:var(--muted2);font-weight:700;letter-spacing:.06em}
+.spec strong{font-size:.78rem;color:var(--text)}
+.verify,.tips,.detail{border-radius:14px;padding:17px 19px;margin-top:14px}
+.verify{background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.18)}
+.tips{background:var(--panel);border:1px solid #1e3a5f}.detail{background:var(--panel2);border:1px solid #1e3a5f}
+.verify h3,.tips h3,.detail h3{font-size:.9rem;margin-bottom:8px}
+.verify ol{padding-left:20px}.verify li,.tips li,.detail p,.detail li{font-size:.78rem;color:var(--muted);margin-bottom:5px}
+.tips ul,.detail ul{padding-left:18px}
+.hidden{display:none!important}
+.footer{grid-column:1/-1;text-align:center;color:#475569;font-size:.72rem;padding:8px 0 18px}
+.fade{animation:fade .25s ease}@keyframes fade{from{opacity:.55;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media(max-width:900px){
+  .container{grid-template-columns:1fr;gap:18px;padding:15px}
+  .sidebar{position:static}
+  h1{font-size:1.95rem}
+}
+@media(max-width:560px){
+  .card{padding:18px}.metrics{grid-template-columns:1fr 1fr}.specgrid{grid-template-columns:1fr 1fr}
+  .drawval{font-size:2.8rem}.syringeCanvas{height:110px}.tab{font-size:.82rem;padding:9px 6px}
+}
+
+.installArea{
+  grid-column:1/-1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin:-2px 0 2px;
+  flex-wrap:wrap;
+}
+.installButton{
+  appearance:none;
+  border:1px solid rgba(6,182,212,.55);
+  background:rgba(6,182,212,.12);
+  color:var(--cyan);
+  border-radius:10px;
+  padding:9px 14px;
+  font-weight:750;
+  font-size:.84rem;
+  cursor:pointer;
+}
+.installButton:active{transform:scale(.98)}
+.iosInstallHelp{
+  width:100%;
+  max-width:520px;
+  text-align:center;
+  color:var(--muted);
+  font-size:.8rem;
+  padding:8px 12px;
+  border-radius:10px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--border);
+}
+@media(display-mode:standalone){
+  .installArea{display:none}
+  body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+}
+@media(max-width:560px){
+  body{overscroll-behavior-y:none}
+  .container{
+    padding:max(12px,env(safe-area-inset-top)) 12px max(18px,env(safe-area-inset-bottom));
+    gap:12px;
+  }
+  .header{margin-top:0}
+  .brand{font-size:.8rem}
+  h1{font-size:1.72rem;margin-bottom:5px}
+  .subtitle{font-size:.82rem;padding:0 8px}
+  .offline-badge{margin-top:7px}
+  .tabbar{position:sticky;top:0;z-index:20;margin:0 0 12px;background:#0a1929eF;backdrop-filter:blur(12px)}
+  .tab{min-height:52px}
+  .card{padding:14px;border-radius:16px}
+  .sectionhead{margin-bottom:12px}
+  .sectiontitle{font-size:.95rem}
+  .inputs{grid-template-columns:1fr;gap:9px;margin-bottom:12px}
+  .inputcard{padding:12px 13px}
+  input[type=number]{font-size:1.72rem;min-height:38px}
+  .unitToggle{margin-top:7px}
+  .unitBtn{min-height:36px;font-size:.82rem}
+  .syringe-select{margin-bottom:12px}
+  .syringes{gap:6px}
+  .syringe-choice{padding:9px 4px 8px;min-height:76px}
+  .syringe-choice strong{font-size:.82rem}
+  .syringe-choice span{font-size:.6rem}
+  .mini-syringe{height:23px}
+  .calc{
+    position:sticky;
+    bottom:max(8px,env(safe-area-inset-bottom));
+    z-index:15;
+    min-height:52px;
+    font-size:1.02rem;
+    box-shadow:0 12px 35px rgba(0,0,0,.34);
+  }
+  .results{padding:17px 12px 14px;margin-top:13px;border-radius:15px}
+  .drawbox{padding:15px 8px;margin-bottom:10px}
+  .drawval{font-size:3.2rem}
+  .syringeWrap{margin:4px 0 10px;overflow:hidden}
+  .syringeCanvas{height:96px;min-width:560px;transform:scale(.68);transform-origin:left center;width:147%}
+  .metrics{grid-template-columns:1fr 1fr;gap:7px}
+  .metric{padding:12px 6px}
+  .metric .mval{font-size:1.45rem}
+  .sidebar{padding:17px;border-radius:16px}
+  .sidebar h2{font-size:1rem}
+  .step{margin-bottom:12px}
+  .step p,.example li{font-size:.79rem}
+  .specgrid{grid-template-columns:1fr 1fr}
+  .bigresult .rval{font-size:2.55rem}
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <div class="brand">r/USPeptides style calculator</div>
+    <h1>Peptide Calculator</h1>
+    <div class="subtitle">Reconstitution and intranasal dosage calculators for research use.</div>
+    <div class="offline-badge">Offline PC Edition</div>
+  </header>
+
+  <div id="installArea" class="installArea">
+    <button id="installButton" class="installButton hidden" type="button">Install App</button>
+    <button id="iosInstallButton" class="installButton hidden" type="button">Install on iPhone</button>
+    <div id="iosInstallHelp" class="iosInstallHelp hidden">
+      In Safari, tap Share, then choose <strong>Add to Home Screen</strong>.
+    </div>
+  </div>
+
+  <main>
+    <div class="tabbar">
+      <button id="tabRecon" class="tab active" onclick="switchTab('recon')">Reconstitution<small>injection draw volume</small></button>
+      <button id="tabNasal" class="tab" onclick="switchTab('nasal')">Intranasal<small>nasal spray dosing</small></button>
+    </div>
+
+    <section id="panelRecon">
+      <div class="card">
+        <div class="sectionhead"><span class="sectiontitle">INPUTS</span><button class="reset" onclick="resetRecon()">RESET</button></div>
+        <div class="inputs">
+          <div class="inputcard">
+            <label class="label">Vial Size</label>
+            <div class="inrow"><input id="vialAmount" type="number" min="0" step="0.1" value="20"><span id="vialDisplayUnit" class="unitlabel">MG</span></div>
+            <div class="unitToggle"><button class="unitBtn active" data-group="vialUnit" onclick="setUnit('vialUnit','mg',this)">MG</button><button class="unitBtn" data-group="vialUnit" onclick="setUnit('vialUnit','mcg',this)">MCG</button></div>
+            <input id="vialUnit" type="hidden" value="mg">
+          </div>
+          <div class="inputcard">
+            <label class="label">BAC Water</label>
+            <div class="inrow"><input id="waterVolume" type="number" min="0" step="0.1" value="2"><span class="unitlabel">ML</span></div>
+          </div>
+          <div class="inputcard">
+            <label class="label">Target Dose</label>
+            <div class="inrow"><input id="desiredDose" type="number" min="0" step="0.1" value="2"><span id="doseDisplayUnit" class="unitlabel">MG</span></div>
+            <div class="unitToggle"><button class="unitBtn" data-group="doseUnit" onclick="setUnit('doseUnit','mcg',this)">MCG</button><button class="unitBtn active" data-group="doseUnit" onclick="setUnit('doseUnit','mg',this)">MG</button></div>
+            <input id="doseUnit" type="hidden" value="mg">
+          </div>
+        </div>
+
+        <div class="syringe-select">
+          <div class="syringe-label">Syringe Size</div>
+          <div class="syringes">
+            <button class="syringe-choice" data-units="30" onclick="selectSyringe(30,this)"><div class="mini-syringe"></div><strong>0.3 mL</strong><span>30 units</span></button>
+            <button class="syringe-choice" data-units="50" onclick="selectSyringe(50,this)"><div class="mini-syringe"></div><strong>0.5 mL</strong><span>50 units</span></button>
+            <button class="syringe-choice active" data-units="100" onclick="selectSyringe(100,this)"><div class="mini-syringe"></div><strong>1.0 mL</strong><span>100 units</span></button>
+          </div>
+        </div>
+        <button class="calc" onclick="calculateRecon()">Calculate Dosage</button>
+
+        <div id="reconResults" class="results">
+          <div class="drawbox">
+            <div class="drawlabel">DRAW TO</div>
+            <div class="drawval"><span id="drawUnits">—</span> <small>IU</small></div>
+          </div>
+
+          <div class="syringeWrap">
+            <svg id="syringeSvg" class="syringeCanvas" viewBox="0 0 720 150" aria-label="Syringe visualization">
+              <defs>
+                <linearGradient id="barrelGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#d8dde6"/><stop offset="100%" stop-color="#eef0f4"/>
+                </linearGradient>
+                <linearGradient id="fluidGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#0891b2"/>
+                </linearGradient>
+              </defs>
+              <rect x="22" y="56" width="30" height="30" rx="3" fill="#94a3b8"/>
+              <rect x="52" y="66" width="82" height="10" fill="#64748b"/>
+              <rect x="116" y="42" width="7" height="58" rx="1" fill="#94a3b8"/>
+              <rect x="140" y="56" width="470" height="30" fill="url(#barrelGrad)" stroke="#c8cdd6" stroke-width="2"/>
+              <rect id="fluid" x="610" y="58" width="0" height="26" fill="url(#fluidGrad)" opacity=".9"/>
+              <g id="ticks"></g>
+              <rect id="plunger" x="604" y="52" width="8" height="38" rx="1" fill="#64748b"/>
+              <polygon points="610,56 630,67 630,75 610,86" fill="#eef0f4" stroke="#c8cdd6" stroke-width="1.2"/>
+              <rect x="630" y="66" width="10" height="10" rx="1" fill="#94a3b8"/>
+              <line x1="640" y1="71" x2="700" y2="71" stroke="#7a8494" stroke-width="2"/>
+              <polygon points="700,69 710,71 700,73" fill="#7a8494"/>
+              <line id="pointerLine" x1="610" y1="30" x2="610" y2="54" stroke="#06b6d4" stroke-width="2"/>
+              <text id="pointerText" x="610" y="22" fill="#06b6d4" font-size="15" font-weight="700" text-anchor="middle">0 IU</text>
+            </svg>
+          </div>
+
+          <div class="metrics">
+            <div class="metric"><div class="mlabel">Concentration</div><div id="concVal" class="mval">—</div><div id="concUnit" class="munit">mg/mL</div></div>
+            <div class="metric"><div class="mlabel">Total Doses</div><div id="totalDoses" class="mval">—</div><div class="munit">per vial</div></div>
+            <div class="metric"><div class="mlabel">Per Injection</div><div id="perDose" class="mval">—</div><div id="perDoseUnit" class="munit">mcg</div></div>
+          </div>
+          <div id="summary" class="summary"></div>
+          <div id="recommend" class="recommend"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panelNasal" class="hidden">
+      <div class="specs">
+        <h3>Standard Nasal Spray Pump Specs</h3>
+        <p>Standard metered pumps commonly deliver about <strong style="color:#06b6d4">0.1 mL (100 µL)</strong> per actuation. Calibrate your actual device before relying on a calculated amount.</p>
+        <div class="specgrid">
+          <div class="spec"><small>Pump Volume</small><strong>0.1 mL/spray</strong></div>
+          <div class="spec"><small>5 mL Bottle</small><strong>50 sprays</strong></div>
+          <div class="spec"><small>10 mL Bottle</small><strong>100 sprays</strong></div>
+          <div class="spec"><small>Both Nostrils</small><strong>0.2 mL/dose</strong></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="subtabs">
+          <button id="subVial" class="subtab active" onclick="switchNasal('vial')">DIY Vial Version</button>
+          <button id="subBottle" class="subtab" onclick="switchNasal('bottle')">Premixed Bottle Version</button>
+        </div>
+
+        <div id="nasalVial">
+          <div class="sectionhead"><span class="sectiontitle">INPUTS</span><button class="reset" onclick="resetNasalVial()">RESET</button></div>
+          <div class="inputs">
+            <div class="inputcard">
+              <label class="label">Vial Size</label>
+              <div class="inrow"><input id="nasalMass" type="number" min="0" step="0.1" value="10"><span id="nasalMassDisplay" class="unitlabel">MG</span></div>
+              <div class="unitToggle"><button class="unitBtn active" data-group="nasalMassUnit" onclick="setUnit('nasalMassUnit','mg',this)">MG</button><button class="unitBtn" data-group="nasalMassUnit" onclick="setUnit('nasalMassUnit','mcg',this)">MCG</button></div>
+              <input id="nasalMassUnit" type="hidden" value="mg">
+            </div>
+            <div class="inputcard">
+              <label class="label">Target Dose</label>
+              <div class="inrow"><input id="nasalDose" type="number" min="0" step="0.1" value="250"><span id="nasalDoseDisplay" class="unitlabel">MCG</span></div>
+              <div class="unitToggle"><button class="unitBtn active" data-group="nasalDoseUnit" onclick="setUnit('nasalDoseUnit','mcg',this)">MCG</button><button class="unitBtn" data-group="nasalDoseUnit" onclick="setUnit('nasalDoseUnit','mg',this)">MG</button></div>
+              <input id="nasalDoseUnit" type="hidden" value="mcg">
+            </div>
+            <div class="inputcard">
+              <label class="label">Spray Volume</label>
+              <div class="inrow"><input id="nasalSprayVol" type="number" min="0.01" step="0.01" value="0.10"><span class="unitlabel">ML</span></div>
+              <div class="hint">Common: 0.05–0.14 mL per spray</div>
+            </div>
+          </div>
+          <button class="calc" onclick="calculateNasalVial()">Calculate — Vial Version</button>
+          <div id="nasalVialResult" class="bigresult">
+            <div class="rlabel">Recommended: Add</div><div id="nasalAddVol" class="rval">—</div><div class="runit">mL of liquid to vial</div>
+            <div id="nasalVialSummary" class="rsub"></div>
+          </div>
+          <div id="nasalVialMetrics" class="metrics hidden">
+            <div class="metric"><div class="mlabel">Concentration</div><div id="nasalConc" class="mval">—</div><div id="nasalConcUnit" class="munit">mcg/mL</div></div>
+            <div class="metric"><div class="mlabel">Vol per Dose</div><div id="nasalVolDose" class="mval">—</div><div class="munit">mL</div></div>
+            <div class="metric"><div class="mlabel">Total Doses</div><div id="nasalDoses" class="mval">—</div><div class="munit">per vial</div></div>
+          </div>
+        </div>
+
+        <div id="nasalBottle" class="hidden">
+          <div class="sectionhead"><span class="sectiontitle">INPUTS</span><button class="reset" onclick="resetBottle()">RESET</button></div>
+          <div class="inputs">
+            <div class="inputcard">
+              <label class="label">Mass in Bottle</label>
+              <div class="inrow"><input id="bottleMass" type="number" min="0" step="0.1" value="10"><span id="bottleMassDisplay" class="unitlabel">MG</span></div>
+              <div class="unitToggle"><button class="unitBtn active" data-group="bottleMassUnit" onclick="setUnit('bottleMassUnit','mg',this)">MG</button><button class="unitBtn" data-group="bottleMassUnit" onclick="setUnit('bottleMassUnit','mcg',this)">MCG</button></div>
+              <input id="bottleMassUnit" type="hidden" value="mg">
+            </div>
+            <div class="inputcard">
+              <label class="label">Bottle Volume</label>
+              <div class="inrow"><input id="bottleVolume" type="number" min="0" step="0.1" value="10"><span class="unitlabel">ML</span></div>
+              <div class="hint">Common sizes: 10, 15, 30 mL</div>
+            </div>
+            <div class="inputcard">
+              <label class="label">Spray Volume</label>
+              <div class="inrow"><input id="bottleSprayVol" type="number" min="0.01" step="0.01" value="0.10"><span class="unitlabel">ML</span></div>
+              <div class="hint">Common: 0.05–0.14 mL per spray</div>
+            </div>
+            <div class="inputcard">
+              <label class="label">Sprays per Dose</label>
+              <div class="inrow"><input id="spraysPerDose" type="number" min="1" step="1" value="1"><span class="unitlabel">sprays</span></div>
+            </div>
+          </div>
+          <button class="calc" onclick="calculateBottle()">Calculate — Bottle Version</button>
+          <div id="bottleResult" class="bigresult">
+            <div class="rlabel">Dose per Administration</div><div id="bottleDose" class="rval">—</div>
+            <div id="bottleSummary" class="rsub"></div>
+          </div>
+          <div id="bottleMetrics" class="metrics hidden">
+            <div class="metric"><div class="mlabel">Total Doses</div><div id="bottleDoses" class="mval">—</div><div class="munit">available</div></div>
+            <div class="metric"><div class="mlabel">Concentration</div><div id="bottleConc" class="mval">—</div><div id="bottleConcUnit" class="munit">mcg/mL</div></div>
+            <div class="metric"><div class="mlabel">Dose per Spray</div><div id="dosePerSpray" class="mval">—</div><div id="dosePerSprayUnit" class="munit">mcg</div></div>
+            <div class="metric"><div class="mlabel">Total Sprays</div><div id="totalSprays" class="mval">—</div><div class="munit">available</div></div>
+          </div>
+        </div>
+
+        <div class="verify">
+          <h3>How to Verify Your Spray Volume</h3>
+          <ol>
+            <li>Fill with a known volume of plain water.</li>
+            <li>Prime the pump, then spray 10 actuations into a container.</li>
+            <li>Measure the collected liquid accurately.</li>
+            <li>Divide the measured volume by 10 for actual mL per spray.</li>
+          </ol>
+        </div>
+        <div class="tips">
+          <h3>Typical Spray Volumes</h3>
+          <ul><li>Standard metered pump: about 0.10 mL</li><li>Fine mist: about 0.05–0.07 mL</li><li>Large actuator: about 0.12–0.14 mL</li></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="sidebar">
+    <div id="infoRecon">
+      <h2>How It Works</h2>
+      <div class="step"><h3>1. Concentration</h3><p>Divide vial amount in mcg by liquid volume in mL.</p></div>
+      <div class="step"><h3>2. Volume Needed</h3><p>Divide the desired dose by concentration to get mL per dose.</p></div>
+      <div class="step"><h3>3. Syringe Units</h3><p>For a U-100 syringe, multiply mL by 100 to get units.</p></div>
+      <div class="example"><h3>Example</h3><ul><li>5 mg vial + 2 mL liquid = 2.5 mg/mL</li><li>250 mcg target dose = 0.25 mg</li><li>0.25 ÷ 2.5 = 0.1 mL</li><li>0.1 mL = 10 U-100 units</li></ul></div>
+      <div class="warning"><strong>Research Use Only</strong><p>This calculator performs arithmetic only. It is not medical advice and does not determine whether a compound, dose, route, or preparation is appropriate.</p></div>
+      <div class="reference"><h4>Common Conversions</h4><div class="refrow"><span>1 mg</span><span>=</span><span>1,000 mcg</span></div><div class="refrow"><span>500 mcg</span><span>=</span><span>0.5 mg</span></div><div class="refrow"><span>250 mcg</span><span>=</span><span>0.25 mg</span></div></div>
+      <div class="reference"><h4>Syringe Units</h4><div class="refrow"><span>0.3 mL</span><span>=</span><span>30 units</span></div><div class="refrow"><span>0.5 mL</span><span>=</span><span>50 units</span></div><div class="refrow"><span>1.0 mL</span><span>=</span><span>100 units</span></div></div>
+    </div>
+    <div id="infoNasal" class="hidden">
+      <h2>Intranasal Math</h2>
+      <div class="step"><h3>Vial Version</h3><p>Calculates the liquid volume needed so one spray equals the selected target dose.</p></div>
+      <div class="step"><h3>Bottle Version</h3><p>Calculates concentration, dose per spray, dose per administration, and estimated total sprays.</p></div>
+      <div class="warning"><strong>Research Use Only</strong><p>Pump output varies by device. Measure your actual spray volume before relying on any calculation.</p></div>
+    </div>
+  </aside>
+
+  <div class="footer">Installable offline calculator. All calculations run locally on this device. No calculator data is sent anywhere.</div>
+</div>
+
+<script>
+let syringeMax = 100;
+
+function q(id){return document.getElementById(id)}
+function val(id){return parseFloat(q(id).value)}
+function validPositive(n){return Number.isFinite(n)&&n>0}
+function animate(el){el.classList.remove('fade');void el.offsetWidth;el.classList.add('fade')}
+
+function switchTab(tab){
+  q('panelRecon').classList.toggle('hidden',tab!=='recon');
+  q('panelNasal').classList.toggle('hidden',tab!=='nasal');
+  q('infoRecon').classList.toggle('hidden',tab!=='recon');
+  q('infoNasal').classList.toggle('hidden',tab!=='nasal');
+  q('tabRecon').classList.toggle('active',tab==='recon');
+  q('tabNasal').classList.toggle('active',tab==='nasal');
+}
+function switchNasal(mode){
+  q('nasalVial').classList.toggle('hidden',mode!=='vial');
+  q('nasalBottle').classList.toggle('hidden',mode!=='bottle');
+  q('subVial').classList.toggle('active',mode==='vial');
+  q('subBottle').classList.toggle('active',mode==='bottle');
+}
+function setUnit(hiddenId,unit,btn){
+  q(hiddenId).value=unit;
+  btn.parentElement.querySelectorAll('.unitBtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const displayMap={
+    vialUnit:'vialDisplayUnit',doseUnit:'doseDisplayUnit',
+    nasalMassUnit:'nasalMassDisplay',nasalDoseUnit:'nasalDoseDisplay',
+    bottleMassUnit:'bottleMassDisplay'
+  };
+  if(displayMap[hiddenId]) q(displayMap[hiddenId]).textContent=unit.toUpperCase();
+  if(['vialUnit','doseUnit'].includes(hiddenId)) calculateRecon(false);
+  if(['nasalMassUnit','nasalDoseUnit'].includes(hiddenId)) calculateNasalVial(false);
+  if(hiddenId==='bottleMassUnit') calculateBottle(false);
+}
+function selectSyringe(maxU,btn){
+  syringeMax=maxU;
+  document.querySelectorAll('.syringe-choice').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  buildTicks();
+  calculateRecon(false,true);
+}
+function setSyringeByUnits(maxU){
+  syringeMax=maxU;
+  document.querySelectorAll('.syringe-choice').forEach(b=>b.classList.toggle('active',Number(b.dataset.units)===maxU));
+  buildTicks();
+}
+function buildTicks(){
+  const g=q('ticks');g.innerHTML='';
+  const left=140,right=610,NS='http://www.w3.org/2000/svg';
+  const major=syringeMax===30?5:10;
+  const minor=syringeMax===30?1:(syringeMax===50?2:5);
+  for(let u=0;u<=syringeMax;u+=minor){
+    const x=right-(u/syringeMax)*(right-left);
+    const line=document.createElementNS(NS,'line');
+    const maj=u%major===0;
+    line.setAttribute('x1',x);line.setAttribute('x2',x);
+    line.setAttribute('y1','56');line.setAttribute('y2',maj?'70':'64');
+    line.setAttribute('stroke',maj?'#475569':'#94a3b8');
+    line.setAttribute('stroke-width',maj?'1.4':'1');
+    g.appendChild(line);
+    if(maj){
+      const t=document.createElementNS(NS,'text');
+      t.setAttribute('x',x);t.setAttribute('y','108');t.setAttribute('font-size','14');
+      t.setAttribute('font-weight','650');t.setAttribute('fill','#7a8494');t.setAttribute('text-anchor','middle');
+      t.textContent=u;g.appendChild(t);
+    }
+  }
+}
+function updateSyringe(units){
+  const left=140,right=610;
+  const clamped=Math.max(0,Math.min(syringeMax,units));
+  const x=right-(clamped/syringeMax)*(right-left);
+  q('fluid').setAttribute('x',x);q('fluid').setAttribute('width',Math.max(0,right-x));
+  q('plunger').setAttribute('x',x-4);
+  q('pointerLine').setAttribute('x1',x);q('pointerLine').setAttribute('x2',x);
+  q('pointerText').setAttribute('x',x);q('pointerText').textContent=units.toFixed(1)+' IU';
+}
+
+function resetRecon(){
+  q('vialAmount').value=20;q('waterVolume').value=2;q('desiredDose').value=2;
+  q('vialUnit').value='mg';q('doseUnit').value='mg';q('vialDisplayUnit').textContent='MG';q('doseDisplayUnit').textContent='MG';
+  document.querySelectorAll('[data-group="vialUnit"]').forEach(b=>b.classList.toggle('active',b.textContent==='MG'));
+  document.querySelectorAll('[data-group="doseUnit"]').forEach(b=>b.classList.toggle('active',b.textContent==='MG'));
+  setSyringeByUnits(100);calculateRecon();
+}
+function calculateRecon(showAlerts=true,userSyringe=false){
+  const vialAmt=val('vialAmount'),water=val('waterVolume'),dose=val('desiredDose');
+  if(!validPositive(vialAmt)||!validPositive(water)||!validPositive(dose)){
+    if(showAlerts) alert('Enter positive values for vial size, liquid volume, and target dose.');
+    return;
+  }
+  const vialMcg=q('vialUnit').value==='mg'?vialAmt*1000:vialAmt;
+  const doseMcg=q('doseUnit').value==='mg'?dose*1000:dose;
+  const concMcgMl=vialMcg/water,concMgMl=concMcgMl/1000;
+  const injMl=doseMcg/concMcgMl;
+  const units=injMl*100;
+  const doses=Math.floor(vialMcg/doseMcg);
+
+  // Keep the currently selected syringe. Calculating a new dose must not
+  // automatically switch syringe size.
+  updateSyringe(units);
+  q('drawUnits').textContent=units.toFixed(1);
+  if(concMgMl>=1){q('concVal').textContent=concMgMl.toFixed(2);q('concUnit').textContent='mg/mL'}
+  else{q('concVal').textContent=concMcgMl.toFixed(1);q('concUnit').textContent='mcg/mL'}
+  q('totalDoses').textContent=doses;
+  if(doseMcg>=1000){q('perDose').textContent=(doseMcg/1000).toFixed(2);q('perDoseUnit').textContent='mg'}
+  else{q('perDose').textContent=Number.isInteger(doseMcg)?doseMcg:doseMcg.toFixed(1);q('perDoseUnit').textContent='mcg'}
+  const ctxt=concMgMl>=1?concMgMl.toFixed(2)+' mg/mL':concMcgMl.toFixed(1)+' mcg/mL';
+  q('summary').textContent='≈ '+injMl.toFixed(3)+' mL per dose · '+doses+' doses per vial · concentration '+ctxt;
+  if(units>100){
+    q('recommend').textContent='Check inputs: the calculated draw is '+units.toFixed(1)+' U ('+injMl.toFixed(3)+' mL), which exceeds a single 1.0 mL / 100-unit U-100 syringe.';
+  }else if(syringeMax<units){
+    q('recommend').textContent='Selected syringe is too small: calculated draw is '+units.toFixed(1)+' U, but this syringe holds '+syringeMax+' U. Select a larger syringe.';
+  }else{
+    q('recommend').textContent=units<=30?'Recommended display: 0.3 mL syringe (30-unit)':units<=50?'Recommended display: 0.5 mL syringe (50-unit)':'Recommended display: 1.0 mL syringe (100-unit)';
+  }
+  q('reconResults').style.display='block';animate(q('reconResults'));
+}
+
+function resetNasalVial(){
+  q('nasalMass').value=10;q('nasalDose').value=250;q('nasalSprayVol').value=.10;
+  q('nasalMassUnit').value='mg';q('nasalDoseUnit').value='mcg';
+  q('nasalMassDisplay').textContent='MG';q('nasalDoseDisplay').textContent='MCG';
+  document.querySelectorAll('[data-group="nasalMassUnit"]').forEach(b=>b.classList.toggle('active',b.textContent==='MG'));
+  document.querySelectorAll('[data-group="nasalDoseUnit"]').forEach(b=>b.classList.toggle('active',b.textContent==='MCG'));
+  q('nasalVialResult').style.display='none';q('nasalVialMetrics').classList.add('hidden');
+}
+function calculateNasalVial(showAlerts=true){
+  const mass=val('nasalMass'),dose=val('nasalDose'),spray=val('nasalSprayVol');
+  if(!validPositive(mass)||!validPositive(dose)||!validPositive(spray)){
+    if(showAlerts)alert('Enter positive values for vial size, target dose, and spray volume.');return;
+  }
+  const massMcg=q('nasalMassUnit').value==='mg'?mass*1000:mass;
+  const doseMcg=q('nasalDoseUnit').value==='mg'?dose*1000:dose;
+  const concNeeded=doseMcg/spray;
+  const addVol=massMcg/concNeeded;
+  const total=Math.floor(massMcg/doseMcg);
+  const concMgMl=concNeeded/1000;
+  q('nasalAddVol').textContent=addVol.toFixed(2);
+  q('nasalVialSummary').textContent='1 spray per dose · '+total+' total doses';
+  if(concMgMl>=1){q('nasalConc').textContent=concMgMl.toFixed(2);q('nasalConcUnit').textContent='mg/mL'}
+  else{q('nasalConc').textContent=concNeeded.toFixed(0);q('nasalConcUnit').textContent='mcg/mL'}
+  q('nasalVolDose').textContent=spray.toFixed(3);q('nasalDoses').textContent=total;
+  q('nasalVialResult').style.display='block';q('nasalVialMetrics').classList.remove('hidden');animate(q('nasalVialResult'));
+}
+
+function resetBottle(){
+  q('bottleMass').value=10;q('bottleVolume').value=10;q('bottleSprayVol').value=.10;q('spraysPerDose').value=1;
+  q('bottleMassUnit').value='mg';q('bottleMassDisplay').textContent='MG';
+  document.querySelectorAll('[data-group="bottleMassUnit"]').forEach(b=>b.classList.toggle('active',b.textContent==='MG'));
+  q('bottleResult').style.display='none';q('bottleMetrics').classList.add('hidden');
+}
+function calculateBottle(showAlerts=true){
+  const mass=val('bottleMass'),bottleVol=val('bottleVolume'),sprayVol=val('bottleSprayVol'),sprays=Math.max(1,parseInt(q('spraysPerDose').value)||1);
+  if(!validPositive(mass)||!validPositive(bottleVol)||!validPositive(sprayVol)){
+    if(showAlerts)alert('Enter positive values for mass, bottle volume, and spray volume.');return;
+  }
+  const massMcg=q('bottleMassUnit').value==='mg'?mass*1000:mass;
+  const conc=massMcg/bottleVol,concMg=conc/1000;
+  const perSpray=conc*sprayVol,perAdmin=perSpray*sprays;
+  const totalSprays=Math.floor(bottleVol/sprayVol),totalDoses=Math.floor(totalSprays/sprays);
+  q('bottleDose').textContent=perAdmin>=1000?(perAdmin/1000).toFixed(2)+' mg':perAdmin.toFixed(2)+' mcg';
+  q('bottleSummary').textContent=sprays+' spray'+(sprays>1?'s':'')+' × '+perSpray.toFixed(2)+' mcg/spray';
+  q('bottleDoses').textContent=totalDoses;
+  if(concMg>=1){q('bottleConc').textContent=concMg.toFixed(2);q('bottleConcUnit').textContent='mg/mL'}
+  else{q('bottleConc').textContent=conc.toFixed(2);q('bottleConcUnit').textContent='mcg/mL'}
+  if(perSpray>=1000){q('dosePerSpray').textContent=(perSpray/1000).toFixed(2);q('dosePerSprayUnit').textContent='mg'}
+  else{q('dosePerSpray').textContent=perSpray.toFixed(2);q('dosePerSprayUnit').textContent='mcg'}
+  q('totalSprays').textContent=totalSprays;
+  q('bottleResult').style.display='block';q('bottleMetrics').classList.remove('hidden');animate(q('bottleResult'));
+}
+
+['vialAmount','waterVolume','desiredDose'].forEach(id=>q(id).addEventListener('input',()=>calculateRecon(false)));
+['nasalMass','nasalDose','nasalSprayVol'].forEach(id=>q(id).addEventListener('input',()=>calculateNasalVial(false)));
+['bottleMass','bottleVolume','bottleSprayVol','spraysPerDose'].forEach(id=>q(id).addEventListener('input',()=>calculateBottle(false)));
+
+buildTicks();calculateRecon(false,true);
+</script>
+
+<script>
+(function(){
+  const STATE_KEY = 'peptideCalculatorState_v2';
+  let deferredInstallPrompt = null;
+
+  function byId(id){ return document.getElementById(id); }
+
+  function syncUnitButtons(group, unit){
+    document.querySelectorAll('[data-group="'+group+'"]').forEach(function(btn){
+      btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === unit);
+    });
+    const displays = {
+      vialUnit:'vialDisplayUnit',
+      doseUnit:'doseDisplayUnit',
+      nasalMassUnit:'nasalMassDisplay',
+      nasalDoseUnit:'nasalDoseDisplay',
+      bottleMassUnit:'bottleMassDisplay'
+    };
+    if(displays[group] && byId(displays[group])){
+      byId(displays[group]).textContent = unit.toUpperCase();
+    }
+  }
+
+  function collectState(){
+    const ids = [
+      'vialAmount','waterVolume','desiredDose','vialUnit','doseUnit',
+      'nasalMass','nasalDose','nasalSprayVol','nasalMassUnit','nasalDoseUnit',
+      'bottleMass','bottleVolume','bottleSprayVol','spraysPerDose','bottleMassUnit'
+    ];
+    const state = {};
+    ids.forEach(function(id){
+      const el = byId(id);
+      if(el) state[id] = el.value;
+    });
+    state.syringeMax = typeof syringeMax !== 'undefined' ? syringeMax : 100;
+    return state;
+  }
+
+  function saveState(){
+    try { localStorage.setItem(STATE_KEY, JSON.stringify(collectState())); } catch(e) {}
+  }
+
+  function restoreState(){
+    let state;
+    try { state = JSON.parse(localStorage.getItem(STATE_KEY) || 'null'); } catch(e) { state = null; }
+    if(!state) return false;
+
+    Object.keys(state).forEach(function(id){
+      if(id === 'syringeMax') return;
+      const el = byId(id);
+      if(el && state[id] !== undefined && state[id] !== null) el.value = state[id];
+    });
+
+    ['vialUnit','doseUnit','nasalMassUnit','nasalDoseUnit','bottleMassUnit'].forEach(function(group){
+      const el = byId(group);
+      if(el) syncUnitButtons(group, el.value);
+    });
+
+    if(state.syringeMax && [30,50,100].includes(Number(state.syringeMax))){
+      setSyringeByUnits(Number(state.syringeMax));
+    }
+
+    calculateRecon(false, true);
+    return true;
+  }
+
+  // Save any calculator input change.
+  document.querySelectorAll('input').forEach(function(el){
+    el.addEventListener('change', saveState);
+    el.addEventListener('input', saveState);
+  });
+  document.querySelectorAll('.unitBtn,.syringe-choice,.reset').forEach(function(el){
+    el.addEventListener('click', function(){ setTimeout(saveState, 0); });
+  });
+
+  // Restore saved state on subsequent launches.
+  restoreState();
+
+  // PWA service worker.
+  if('serviceWorker' in navigator && location.protocol !== 'file:'){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('./sw.js').catch(function(){});
+    });
+  }
+
+  // Android/Chromium installation.
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    const btn = byId('installButton');
+    if(btn) btn.classList.remove('hidden');
+  });
+
+  const installBtn = byId('installButton');
+  if(installBtn){
+    installBtn.addEventListener('click', async function(){
+      if(!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      try { await deferredInstallPrompt.userChoice; } catch(e) {}
+      deferredInstallPrompt = null;
+      installBtn.classList.add('hidden');
+    });
+  }
+
+  window.addEventListener('appinstalled', function(){
+    if(installBtn) installBtn.classList.add('hidden');
+  });
+
+  // iPhone/iPad installation guidance.
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  const iosBtn = byId('iosInstallButton');
+  const iosHelp = byId('iosInstallHelp');
+  if(isIOS && !isStandalone && iosBtn){
+    iosBtn.classList.remove('hidden');
+    iosBtn.addEventListener('click', function(){
+      if(iosHelp) iosHelp.classList.toggle('hidden');
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
