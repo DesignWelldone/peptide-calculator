@@ -1,13 +1,13 @@
 {
-  "name": "Peptide Calculator",
-  "short_name": "Peptide Calc",
-  "description": "Offline reconstitution and intranasal arithmetic calculator.",
+  "name": "VialTrack",
+  "short_name": "VialTrack",
+  "description": "Offline vial calculator, daily tracker, reconstitution history, and active vial inventory.",
   "id": "./",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0a0f1e",
-  "theme_color": "#0a0f1e",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
   "orientation": "any",
   "icons": [
     {

@@ -1,8 +1,8 @@
-const CACHE_NAME = 'peptide-calculator-v2-1';
+const CACHE_NAME = 'vialtrack-v7-1';
 const APP_SHELL = [
   './',
   './index.html',
-  './PeptideCalculator.html',
+  './VialTrack.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png'
