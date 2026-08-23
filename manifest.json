@@ -1,7 +1,7 @@
 {
   "name": "VialTrack",
   "short_name": "VialTrack",
-  "description": "Offline vial calculator, daily tracker, reconstitution history, and active vial inventory.",
+  "description": "Offline vial calculator with stock inventory, active vials, daily tracking, and reconstitution history.",
   "id": "./",
   "start_url": "./index.html",
   "scope": "./",

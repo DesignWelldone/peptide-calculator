@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vialtrack-v7-1';
+const CACHE_NAME = 'vialtrack-v8-1';
 const APP_SHELL = [
   './',
   './index.html',

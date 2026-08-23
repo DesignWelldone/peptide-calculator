@@ -1446,7 +1446,7 @@ h1{
 }
 .todayStats{
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-columns:repeat(5,minmax(0,1fr));
   gap:10px;
   margin-top:14px;
 }
@@ -1633,6 +1633,33 @@ h1{
   .homeSection{padding:14px}
 }
 
+
+.inventoryHeaderActions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.stockFormGrid{display:grid;grid-template-columns:1.4fr .8fr .7fr .9fr;gap:10px}
+.stockNotesCard{grid-column:1/-1}
+.stockCard{background:linear-gradient(180deg,rgba(13,27,45,.98),rgba(9,19,33,.98));border:1px solid var(--line);border-radius:18px;padding:17px;box-shadow:0 13px 30px rgba(0,0,0,.22)}
+.stockCardTop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.stockName{font-size:1.08rem;font-weight:850;color:#f4fbff}
+.stockSub{color:var(--muted2);font-size:.74rem;margin-top:3px}
+.stockQtyBadge{min-width:66px;text-align:center;padding:8px 10px;border-radius:12px;background:linear-gradient(135deg,rgba(53,215,234,.11),rgba(79,127,255,.12));border:1px solid rgba(83,214,255,.16)}
+.stockQtyBadge strong{display:block;color:#a7f8ff;font-size:1.25rem;line-height:1}
+.stockQtyBadge span{display:block;color:var(--muted2);font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
+.stockStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.stockStat{padding:9px;border-radius:10px;background:rgba(255,255,255,.022);border:1px solid rgba(255,255,255,.035)}
+.stockStat span{display:block;color:var(--muted2);font-size:.6rem;text-transform:uppercase;letter-spacing:.07em;font-weight:800;margin-bottom:3px}
+.stockStat strong{color:var(--text);font-size:.84rem;word-break:break-word}
+.stockNotes{margin-top:9px;color:var(--muted);font-size:.78rem}
+.stockActions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.stockActionBtn{flex:1;min-width:105px;min-height:39px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--text);font-weight:750;cursor:pointer}
+.stockActionBtn.primary{background:linear-gradient(135deg,rgba(53,215,234,.12),rgba(79,127,255,.15));border-color:rgba(83,214,255,.18)}
+.stockActionBtn.danger{color:#ffb9b9}
+.stockActionBtn:disabled{opacity:.4;cursor:not-allowed}
+.pendingStockNotice{margin-bottom:12px;padding:11px 12px;border-radius:12px;background:linear-gradient(135deg,rgba(53,215,234,.08),rgba(79,127,255,.08));border:1px solid rgba(83,214,255,.16);color:#c7f8ff;font-size:.82rem}
+.pendingStockNotice strong{color:#f1fdff}
+.pendingStockNotice button{float:right;border:0;background:transparent;color:var(--muted);cursor:pointer;font-weight:700}
+@media(max-width:900px){.stockFormGrid{grid-template-columns:1fr 1fr}.stockNotesCard{grid-column:1/-1}}
+@media(max-width:640px){.inventoryHeaderActions{width:100%}.inventoryHeaderActions .heroBtn{flex:1}.stockFormGrid{grid-template-columns:1fr}.stockNotesCard{grid-column:auto}.stockStats{grid-template-columns:1fr 1fr}.stockActions{flex-direction:column}.stockActionBtn{width:100%}}
+
 </style>
 </head>
 <body>
@@ -1696,6 +1723,11 @@ h1{
         <span>Active Vials</span>
         <strong id="homeActiveVialCount">0</strong>
         <small>currently active</small>
+      </div>
+      <div class="todayStatCard" onclick="showView('inventory')">
+        <span>Stock Vials</span>
+        <strong id="homeStockVialCount">0</strong>
+        <small>unopened on hand</small>
       </div>
       <div class="todayStatCard" onclick="showView('tracker')">
         <span>This Week</span>
@@ -1837,35 +1869,124 @@ h1{
   </section>
 
 
+  
   <section id="inventoryPanel" class="inventoryPanel appView hidden">
     <div class="inventoryHeader">
       <div>
-        <div class="heroEyebrow">Active Vials</div>
+        <div class="heroEyebrow">Vial Inventory</div>
         <h2>Inventory</h2>
-        <p>Calculated remaining quantity is based on tracker entries linked to each vial. It does not account for unlogged use, transfer loss, priming, or waste.</p>
+        <p>Track unopened stock and active reconstituted vials. Remaining active-vial quantity is calculated from linked tracker entries.</p>
       </div>
-      <button class="heroBtn primary" type="button" onclick="showView('calculator')">+ Reconstitute Vial</button>
+      <div class="inventoryHeaderActions">
+        <button class="heroBtn" type="button" onclick="openAddActiveVial()">+ Add Active Vial</button>
+        <button class="heroBtn primary" type="button" onclick="openStockComposer()">+ Add Stock</button>
+      </div>
+    </div>
+
+    <div id="stockComposer" class="trackerComposer hidden">
+      <div class="composerHeader">
+        <div><div class="dashLabel">Stock Inventory</div><h3 id="stockComposerTitle">Add unopened vials</h3></div>
+        <button class="iconTextBtn" type="button" onclick="closeStockComposer()">Close</button>
+      </div>
+      <input id="stockEditingId" type="hidden" value="">
+      <div class="stockFormGrid">
+        <div class="inputcard">
+          <label class="label">Peptide / Vial Name</label>
+          <input id="stockPeptideName" class="textInput" type="text" placeholder="Example: Retatrutide">
+        </div>
+        <div class="inputcard">
+          <label class="label">Vial Strength</label>
+          <div class="inrow"><input id="stockStrength" type="number" min="0" step="0.1" value="20"><span id="stockStrengthDisplayUnit" class="unitlabel">MG</span></div>
+          <div class="unitToggle">
+            <button class="unitBtn active" data-stock-unit="mg" type="button" onclick="setStockUnit('mg',this)">MG</button>
+            <button class="unitBtn" data-stock-unit="mcg" type="button" onclick="setStockUnit('mcg',this)">MCG</button>
+          </div>
+          <input id="stockStrengthUnit" type="hidden" value="mg">
+        </div>
+        <div class="inputcard">
+          <label class="label">Quantity</label>
+          <div class="inrow"><input id="stockQuantity" type="number" min="0" step="1" value="1"><span class="unitlabel">VIALS</span></div>
+        </div>
+        <div class="inputcard">
+          <label class="label">Date Received</label>
+          <input id="stockReceivedDate" class="textInput dateTimeInput" type="date">
+        </div>
+        <div class="inputcard">
+          <label class="label">Source / Vendor</label>
+          <input id="stockSource" class="textInput" type="text" placeholder="Optional">
+        </div>
+        <div class="inputcard">
+          <label class="label">Lot / Batch</label>
+          <input id="stockLot" class="textInput" type="text" placeholder="Optional">
+        </div>
+        <div class="inputcard stockNotesCard">
+          <label class="label">Notes</label>
+          <input id="stockNotes" class="textInput" type="text" placeholder="Optional note">
+        </div>
+      </div>
+      <div class="trackerComposerActions">
+        <button class="heroBtn" type="button" onclick="closeStockComposer()">Cancel</button>
+        <button id="stockSaveButton" class="heroBtn primary" type="button" onclick="saveStockItem()">Save Stock</button>
+      </div>
+    </div>
+
+    <div id="manualActiveComposer" class="trackerComposer hidden">
+      <div class="composerHeader">
+        <div><div class="dashLabel">Active Vial</div><h3>Add an already-reconstituted vial</h3></div>
+        <button class="iconTextBtn" type="button" onclick="closeManualActiveVial()">Close</button>
+      </div>
+      <div class="stockFormGrid">
+        <div class="inputcard">
+          <label class="label">Peptide / Vial Name</label>
+          <input id="manualActiveName" class="textInput" type="text" placeholder="Example: Retatrutide">
+        </div>
+        <div class="inputcard">
+          <label class="label">Vial Strength</label>
+          <div class="inrow"><input id="manualActiveStrength" type="number" min="0" step="0.1" value="20"><span id="manualActiveStrengthDisplayUnit" class="unitlabel">MG</span></div>
+          <div class="unitToggle">
+            <button class="unitBtn active" data-manual-active-unit="mg" type="button" onclick="setManualActiveUnit('mg',this)">MG</button>
+            <button class="unitBtn" data-manual-active-unit="mcg" type="button" onclick="setManualActiveUnit('mcg',this)">MCG</button>
+          </div>
+          <input id="manualActiveStrengthUnit" type="hidden" value="mg">
+        </div>
+        <div class="inputcard">
+          <label class="label">BAC Water</label>
+          <div class="inrow"><input id="manualActiveWater" type="number" min="0" step="0.1" value="2"><span class="unitlabel">ML</span></div>
+        </div>
+        <div class="inputcard">
+          <label class="label">Reconstituted Date</label>
+          <input id="manualActiveDate" class="textInput dateTimeInput" type="date">
+        </div>
+        <div class="inputcard stockNotesCard">
+          <label class="label">Notes</label>
+          <input id="manualActiveNotes" class="textInput" type="text" placeholder="Optional note">
+        </div>
+      </div>
+      <div class="trackerComposerActions">
+        <button class="heroBtn" type="button" onclick="closeManualActiveVial()">Cancel</button>
+        <button class="heroBtn primary" type="button" onclick="saveManualActiveVial()">Add Active Vial</button>
+      </div>
     </div>
 
     <div class="inventoryControls">
       <div class="viewToggle">
-        <button id="inventoryActiveBtn" class="viewToggleBtn active" type="button" onclick="setInventoryFilter('active')">Active</button>
+        <button id="inventoryStockBtn" class="viewToggleBtn active" type="button" onclick="setInventoryFilter('stock')">Stock</button>
+        <button id="inventoryActiveBtn" class="viewToggleBtn" type="button" onclick="setInventoryFilter('active')">Active</button>
         <button id="inventoryAllBtn" class="viewToggleBtn" type="button" onclick="setInventoryFilter('all')">All</button>
       </div>
-      <div class="inventoryLegend">Remaining is calculated, not measured.</div>
+      <div class="inventoryLegend">Stock = unopened vials. Active = reconstituted vials.</div>
     </div>
 
     <div id="inventorySummary" class="trackerSummary"></div>
-
     <div id="inventoryEmpty" class="emptyState hidden">
       <div class="emptyIcon">VT</div>
-      <h3>No active vials yet</h3>
-      <p>Run a reconstitution calculation and choose Save + Add to Vials, or add one from Reconstitution History.</p>
-      <button class="heroBtn primary" type="button" onclick="showView('calculator')">Open Calculator</button>
+      <h3>No inventory yet</h3>
+      <p>Add unopened stock or an active vial to get started.</p>
+      <button class="heroBtn primary" type="button" onclick="openStockComposer()">+ Add Stock</button>
     </div>
-
     <div id="inventoryList" class="inventoryList"></div>
   </section>
+
 
   <section id="historyPanel" class="historyPanel appView hidden">
     <div class="historyHeader">
@@ -1989,6 +2110,7 @@ h1{
           <div id="summary" class="summary"></div>
           <div id="recommend" class="recommend"></div>
 
+          <div id="pendingStockNotice" class="pendingStockNotice hidden"></div>
           <div class="saveReconstitution">
             <div class="saveHeader">
               <div>
@@ -2367,7 +2489,7 @@ buildTicks();calculateRecon(false,true);showView('home');
 
 <script>
 const VT_DB_NAME = 'VialTrackDB';
-const VT_DB_VERSION = 3;
+const VT_DB_VERSION = 4;
 const VT_HISTORY_STORE = 'reconstitutions';
 let vtDbPromise = null;
 
@@ -2394,6 +2516,11 @@ function openVialTrackDB(){
         vialStore.createIndex('peptideName','peptideName',{unique:false});
         vialStore.createIndex('createdAt','createdAt',{unique:false});
         vialStore.createIndex('historyId','historyId',{unique:false});
+      }
+      if(!db.objectStoreNames.contains('stockInventory')){
+        const stockStore = db.createObjectStore('stockInventory', {keyPath:'id', autoIncrement:true});
+        stockStore.createIndex('peptideName','peptideName',{unique:false});
+        stockStore.createIndex('createdAt','createdAt',{unique:false});
       }
     };
     req.onsuccess = () => resolve(req.result);
@@ -2493,8 +2620,10 @@ async function saveCurrentReconstitution(activateVial=false){
   try{
     const historyId = await addHistoryRecord(record);
     if(activateVial){
-      await activateHistoryRecord(historyId);
-      q('saveConfirmation').textContent = peptideName + ' saved and added to Active Vials.';
+      let sourceStockId = null;
+      if(pendingStockId) sourceStockId = await consumePendingStock();
+      await activateHistoryRecord(historyId,false,sourceStockId);
+      q('saveConfirmation').textContent = peptideName + ' saved and added to Active Vials.' + (sourceStockId ? ' Stock reduced by 1 vial.' : '');
     }else{
       q('saveConfirmation').textContent = peptideName + ' saved to Reconstitution History.';
     }
@@ -2654,13 +2783,16 @@ async function exportHistory(){
   const records = await getAllHistoryRecords();
   let trackerLogs = [];
   let activeVials = [];
+  let stockInventory = [];
   try{ trackerLogs = await getAllTrackerLogs(); }catch(e){}
   try{ activeVials = await getAllActiveVials(); }catch(e){}
+  try{ stockInventory = await getAllStockItems(); }catch(e){}
   const payload = {
     app:'VialTrack',
-    version:'v6',
+    version:'v8',
     exportedAt:new Date().toISOString(),
     reconstitutions:records,
+    stockInventory,
     activeVials,
     trackerLogs
   };
@@ -2692,6 +2824,20 @@ async function importHistoryFile(event){
       await addHistoryRecord(record);
     }
 
+    const stockIdMap = new Map();
+    let importedStock = 0;
+    if(Array.isArray(data.stockInventory)){
+      for(const raw of data.stockInventory){
+        const stock = {...raw};
+        const oldStockId = Number(stock.id || 0);
+        delete stock.id;
+        if(!stock.createdAt) stock.createdAt = new Date().toISOString();
+        const newStockId = await addStockItem(stock);
+        if(oldStockId) stockIdMap.set(oldStockId,newStockId);
+        importedStock++;
+      }
+    }
+
     const vialIdMap = new Map();
     let importedVials = 0;
     if(Array.isArray(data.activeVials)){
@@ -2699,6 +2845,11 @@ async function importHistoryFile(event){
         const vial = {...raw};
         const oldId = Number(vial.id || 0);
         delete vial.id;
+        if(vial.sourceStockId && stockIdMap.has(Number(vial.sourceStockId))){
+          vial.sourceStockId = stockIdMap.get(Number(vial.sourceStockId));
+        }else if(vial.sourceStockId){
+          vial.sourceStockId = null;
+        }
         if(!vial.createdAt) vial.createdAt = new Date().toISOString();
         const newId = await addActiveVial(vial);
         if(oldId) vialIdMap.set(oldId,newId);
@@ -2726,9 +2877,11 @@ async function importHistoryFile(event){
     await renderHistory();
     await updateHomeWeekEntryCount();
     await updateHomeActiveVialCount();
+    await updateHomeStockVialCount();
     await refreshHomeDashboard();
     alert(records.length + ' reconstitution record' + (records.length===1?'':'s') +
-      (importedVials ? ', ' + importedVials + ' vial' + (importedVials===1?'':'s') : '') +
+      (importedStock ? ', ' + importedStock + ' stock item' + (importedStock===1?'':'s') : '') +
+      (importedVials ? ', ' + importedVials + ' active vial' + (importedVials===1?'':'s') : '') +
       (importedLogs ? ', and ' + importedLogs + ' tracker entr' + (importedLogs===1?'y':'ies') : '') +
       ' imported.');
   }catch(err){
@@ -2746,281 +2899,258 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
 <script>
 const VT_VIAL_STORE = 'activeVials';
-let inventoryFilter = 'active';
+const VT_STOCK_STORE = 'stockInventory';
+let inventoryFilter = 'stock';
+let pendingStockId = null;
 
 async function addActiveVial(record){
   const db = await openVialTrackDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_VIAL_STORE,'readwrite');
     const req = tx.objectStore(VT_VIAL_STORE).add(record);
-    req.onsuccess = ()=>resolve(req.result);
-    req.onerror = ()=>reject(req.error);
+    req.onsuccess = ()=>resolve(req.result); req.onerror = ()=>reject(req.error);
   });
 }
-
 async function updateActiveVial(record){
   const db = await openVialTrackDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_VIAL_STORE,'readwrite');
     const req = tx.objectStore(VT_VIAL_STORE).put(record);
-    req.onsuccess = ()=>resolve(req.result);
-    req.onerror = ()=>reject(req.error);
+    req.onsuccess = ()=>resolve(req.result); req.onerror = ()=>reject(req.error);
   });
 }
-
 async function getActiveVial(id){
   const db = await openVialTrackDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_VIAL_STORE,'readonly');
     const req = tx.objectStore(VT_VIAL_STORE).get(Number(id));
-    req.onsuccess = ()=>resolve(req.result || null);
-    req.onerror = ()=>reject(req.error);
+    req.onsuccess = ()=>resolve(req.result || null); req.onerror = ()=>reject(req.error);
   });
 }
-
 async function getAllActiveVials(){
   const db = await openVialTrackDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_VIAL_STORE,'readonly');
     const req = tx.objectStore(VT_VIAL_STORE).getAll();
-    req.onsuccess = ()=>resolve(req.result || []);
-    req.onerror = ()=>reject(req.error);
+    req.onsuccess = ()=>resolve(req.result || []); req.onerror = ()=>reject(req.error);
+  });
+}
+async function addStockItem(record){
+  const db = await openVialTrackDB();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction(VT_STOCK_STORE,'readwrite');
+    const req = tx.objectStore(VT_STOCK_STORE).add(record);
+    req.onsuccess = ()=>resolve(req.result); req.onerror = ()=>reject(req.error);
+  });
+}
+async function updateStockItem(record){
+  const db = await openVialTrackDB();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction(VT_STOCK_STORE,'readwrite');
+    const req = tx.objectStore(VT_STOCK_STORE).put(record);
+    req.onsuccess = ()=>resolve(req.result); req.onerror = ()=>reject(req.error);
+  });
+}
+async function getStockItem(id){
+  const db = await openVialTrackDB();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction(VT_STOCK_STORE,'readonly');
+    const req = tx.objectStore(VT_STOCK_STORE).get(Number(id));
+    req.onsuccess = ()=>resolve(req.result || null); req.onerror = ()=>reject(req.error);
+  });
+}
+async function getAllStockItems(){
+  const db = await openVialTrackDB();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction(VT_STOCK_STORE,'readonly');
+    const req = tx.objectStore(VT_STOCK_STORE).getAll();
+    req.onsuccess = ()=>resolve(req.result || []); req.onerror = ()=>reject(req.error);
+  });
+}
+async function deleteStockItem(id){
+  const db = await openVialTrackDB();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction(VT_STOCK_STORE,'readwrite');
+    const req = tx.objectStore(VT_STOCK_STORE).delete(Number(id));
+    req.onsuccess = ()=>resolve(); req.onerror = ()=>reject(req.error);
   });
 }
 
 function amountToMcg(amount,unit){
-  const n = Number(amount)||0;
+  const n=Number(amount)||0;
   return String(unit).toLowerCase()==='mg' ? n*1000 : n;
 }
-
 function mcgDisplay(mcg){
-  const n = Number(mcg)||0;
-  if(Math.abs(n) >= 1000) return fmtNumber(n/1000,3) + ' mg';
-  return fmtNumber(n,1) + ' mcg';
+  const n=Number(mcg)||0;
+  return Math.abs(n)>=1000 ? fmtNumber(n/1000,3)+' mg' : fmtNumber(n,1)+' mcg';
 }
-
 async function vialUsageMap(){
-  const logs = await getAllTrackerLogs();
-  const map = new Map();
+  const logs=await getAllTrackerLogs(); const map=new Map();
   logs.forEach(log=>{
-    const vialId = Number(log.activeVialId || 0);
-    if(!vialId) return;
-    map.set(vialId, (map.get(vialId)||0) + amountToMcg(log.amount,log.amountUnit));
+    const id=Number(log.activeVialId||0); if(!id)return;
+    map.set(id,(map.get(id)||0)+amountToMcg(log.amount,log.amountUnit));
   });
   return map;
 }
 
-async function activateHistoryRecord(historyId, openInventory=false){
-  const history = await getHistoryRecord(historyId);
-  if(!history){
-    alert('That reconstitution record could not be found.');
-    return;
-  }
-
-  const all = await getAllActiveVials();
-  const existing = all.find(v=>Number(v.historyId)===Number(historyId) && v.status==='active');
-  if(existing){
-    if(openInventory){
-      showView('inventory');
-      setTimeout(()=>document.getElementById('vial-'+existing.id)?.scrollIntoView({behavior:'smooth',block:'center'}),100);
-    }
-    return existing.id;
-  }
-
-  const totalMcg = amountToMcg(history.vialAmount,history.vialUnit);
-  const record = {
-    historyId:Number(historyId),
-    peptideName:history.peptideName || 'Unnamed vial',
-    notes:history.notes || '',
-    createdAt:new Date().toISOString(),
-    reconstitutedAt:history.createdAt || new Date().toISOString(),
-    vialAmount:Number(history.vialAmount)||0,
-    vialUnit:history.vialUnit || 'mg',
-    totalMcg,
-    waterVolumeMl:Number(history.waterVolumeMl)||0,
-    concentrationMcgMl:Number(history.concentrationMcgMl)||0,
-    status:'active'
-  };
-
-  const id = await addActiveVial(record);
-  await updateHomeActiveVialCount();
-  await populateTrackerActiveVials();
-  await refreshHomeDashboard();
-
-  if(openInventory){
-    showView('inventory');
-  }
-  return id;
+function setStockUnit(unit,btn){
+  q('stockStrengthUnit').value=unit; q('stockStrengthDisplayUnit').textContent=unit.toUpperCase();
+  document.querySelectorAll('[data-stock-unit]').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+}
+function applyStockUnit(unit){
+  q('stockStrengthUnit').value=unit; q('stockStrengthDisplayUnit').textContent=unit.toUpperCase();
+  document.querySelectorAll('[data-stock-unit]').forEach(b=>b.classList.toggle('active',b.dataset.stockUnit===unit));
+}
+function openStockComposer(id=null){
+  q('stockComposer').classList.remove('hidden'); q('manualActiveComposer').classList.add('hidden');
+  if(!id){
+    q('stockEditingId').value=''; q('stockComposerTitle').textContent='Add unopened vials'; q('stockSaveButton').textContent='Save Stock';
+    q('stockPeptideName').value=''; q('stockStrength').value=20; applyStockUnit('mg'); q('stockQuantity').value=1;
+    q('stockReceivedDate').value=localDateString(); q('stockSource').value=''; q('stockLot').value=''; q('stockNotes').value='';
+  }else loadStockForEdit(id);
+  q('stockComposer').scrollIntoView({behavior:'smooth',block:'start'});
+}
+async function loadStockForEdit(id){
+  const s=await getStockItem(id); if(!s)return;
+  q('stockEditingId').value=s.id; q('stockComposerTitle').textContent='Edit stock item'; q('stockSaveButton').textContent='Save Changes';
+  q('stockPeptideName').value=s.peptideName||''; q('stockStrength').value=s.strength; applyStockUnit(s.strengthUnit||'mg');
+  q('stockQuantity').value=s.quantity; q('stockReceivedDate').value=s.receivedDate||''; q('stockSource').value=s.source||'';
+  q('stockLot').value=s.lot||''; q('stockNotes').value=s.notes||'';
+}
+function closeStockComposer(){q('stockComposer').classList.add('hidden');q('stockEditingId').value='';}
+async function saveStockItem(){
+  const peptideName=(q('stockPeptideName').value||'').trim(), strength=parseFloat(q('stockStrength').value),
+    strengthUnit=q('stockStrengthUnit').value, quantity=Math.floor(parseFloat(q('stockQuantity').value)),
+    receivedDate=q('stockReceivedDate').value, source=(q('stockSource').value||'').trim(),
+    lot=(q('stockLot').value||'').trim(), notes=(q('stockNotes').value||'').trim(),
+    editingId=Number(q('stockEditingId').value||0);
+  if(!peptideName){alert('Enter a peptide or vial name.');return;}
+  if(!Number.isFinite(strength)||strength<=0){alert('Enter a positive vial strength.');return;}
+  if(!Number.isFinite(quantity)||quantity<0){alert('Enter a valid vial quantity.');return;}
+  const record={peptideName,strength,strengthUnit,quantity,receivedDate,source,lot,notes,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
+  if(editingId){const existing=await getStockItem(editingId);record.id=editingId;record.createdAt=existing?.createdAt||record.createdAt;await updateStockItem(record);}
+  else await addStockItem(record);
+  closeStockComposer(); await renderInventory(); await updateHomeStockVialCount(); await refreshHomeDashboard();
+}
+async function removeStockItem(id){
+  if(!confirm('Delete this stock inventory item?'))return;
+  await deleteStockItem(id); await renderInventory(); await updateHomeStockVialCount(); await refreshHomeDashboard();
 }
 
+function setManualActiveUnit(unit,btn){
+  q('manualActiveStrengthUnit').value=unit;q('manualActiveStrengthDisplayUnit').textContent=unit.toUpperCase();
+  document.querySelectorAll('[data-manual-active-unit]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+}
+function openAddActiveVial(){
+  q('manualActiveComposer').classList.remove('hidden'); q('stockComposer').classList.add('hidden');
+  q('manualActiveName').value=''; q('manualActiveStrength').value=20; q('manualActiveStrengthUnit').value='mg';
+  q('manualActiveStrengthDisplayUnit').textContent='MG';
+  document.querySelectorAll('[data-manual-active-unit]').forEach(b=>b.classList.toggle('active',b.dataset.manualActiveUnit==='mg'));
+  q('manualActiveWater').value=2;q('manualActiveDate').value=localDateString();q('manualActiveNotes').value='';
+  q('manualActiveComposer').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function closeManualActiveVial(){q('manualActiveComposer').classList.add('hidden');}
+async function saveManualActiveVial(){
+  const peptideName=(q('manualActiveName').value||'').trim(), strength=parseFloat(q('manualActiveStrength').value),
+    strengthUnit=q('manualActiveStrengthUnit').value, water=parseFloat(q('manualActiveWater').value),
+    date=q('manualActiveDate').value||localDateString(), notes=(q('manualActiveNotes').value||'').trim();
+  if(!peptideName){alert('Enter a peptide or vial name.');return;}
+  if(!Number.isFinite(strength)||strength<=0||!Number.isFinite(water)||water<=0){alert('Enter valid vial strength and BAC water values.');return;}
+  const totalMcg=amountToMcg(strength,strengthUnit), concentrationMcgMl=totalMcg/water, iso=new Date(date+'T12:00:00').toISOString();
+  await addActiveVial({historyId:null,peptideName,notes,createdAt:new Date().toISOString(),reconstitutedAt:iso,vialAmount:strength,vialUnit:strengthUnit,totalMcg,waterVolumeMl:water,concentrationMcgMl,status:'active',sourceStockId:null,manualActive:true});
+  closeManualActiveVial(); inventoryFilter='active'; setInventoryFilter('active');
+  await updateHomeActiveVialCount(); await refreshHomeDashboard();
+}
+
+async function activateHistoryRecord(historyId,openInventory=false,sourceStockId=null){
+  const h=await getHistoryRecord(historyId); if(!h){alert('That reconstitution record could not be found.');return;}
+  const all=await getAllActiveVials();
+  const existing=all.find(v=>Number(v.historyId)===Number(historyId)&&v.status==='active');
+  if(existing){if(openInventory){showView('inventory');setTimeout(()=>document.getElementById('vial-'+existing.id)?.scrollIntoView({behavior:'smooth',block:'center'}),100);}return existing.id;}
+  const totalMcg=amountToMcg(h.vialAmount,h.vialUnit);
+  const id=await addActiveVial({historyId:Number(historyId),peptideName:h.peptideName||'Unnamed vial',notes:h.notes||'',createdAt:new Date().toISOString(),reconstitutedAt:h.createdAt||new Date().toISOString(),vialAmount:Number(h.vialAmount)||0,vialUnit:h.vialUnit||'mg',totalMcg,waterVolumeMl:Number(h.waterVolumeMl)||0,concentrationMcgMl:Number(h.concentrationMcgMl)||0,status:'active',sourceStockId:sourceStockId?Number(sourceStockId):null});
+  await updateHomeActiveVialCount(); await populateTrackerActiveVials(); await refreshHomeDashboard();
+  if(openInventory)showView('inventory'); return id;
+}
 async function setVialStatus(id,status){
-  const vial = await getActiveVial(id);
-  if(!vial) return;
-  vial.status = status;
-  vial.updatedAt = new Date().toISOString();
-  await updateActiveVial(vial);
-  await renderInventory();
-  await updateHomeActiveVialCount();
-  await populateTrackerActiveVials();
-  await refreshHomeDashboard();
+  const v=await getActiveVial(id);if(!v)return;v.status=status;v.updatedAt=new Date().toISOString();await updateActiveVial(v);
+  await renderInventory();await updateHomeActiveVialCount();await populateTrackerActiveVials();await refreshHomeDashboard();
 }
-
 function setInventoryFilter(filter){
-  inventoryFilter = filter;
-  q('inventoryActiveBtn')?.classList.toggle('active',filter==='active');
-  q('inventoryAllBtn')?.classList.toggle('active',filter==='all');
+  inventoryFilter=filter;
+  q('inventoryStockBtn')?.classList.toggle('active',filter==='stock');q('inventoryActiveBtn')?.classList.toggle('active',filter==='active');q('inventoryAllBtn')?.classList.toggle('active',filter==='all');
   renderInventory();
 }
-
 async function updateHomeActiveVialCount(){
-  const el = q('homeActiveVialCount');
-  if(!el) return;
-  try{
-    const vials = await getAllActiveVials();
-    el.textContent = vials.filter(v=>v.status==='active').length;
-  }catch(e){
-    el.textContent = '0';
-  }
+  const el=q('homeActiveVialCount');if(!el)return;
+  try{el.textContent=(await getAllActiveVials()).filter(v=>v.status==='active').length}catch(e){el.textContent='0'}
+}
+async function updateHomeStockVialCount(){
+  const el=q('homeStockVialCount');if(!el)return;
+  try{el.textContent=(await getAllStockItems()).reduce((sum,s)=>sum+Math.max(0,Number(s.quantity)||0),0)}catch(e){el.textContent='0'}
+}
+
+async function startReconstitutionFromStock(id){
+  const s=await getStockItem(id);if(!s||Number(s.quantity)<=0){alert('There are no unopened vials remaining in this stock item.');return;}
+  pendingStockId=Number(id); q('vialAmount').value=s.strength;q('vialUnit').value=s.strengthUnit||'mg';q('vialDisplayUnit').textContent=String(s.strengthUnit||'mg').toUpperCase();
+  document.querySelectorAll('[data-group="vialUnit"]').forEach(b=>b.classList.toggle('active',b.textContent.trim().toLowerCase()===String(s.strengthUnit||'mg').toLowerCase()));
+  q('waterVolume').value=2; q('desiredDose').value=2; q('doseUnit').value='mg'; q('doseDisplayUnit').textContent='MG';
+  document.querySelectorAll('[data-group="doseUnit"]').forEach(b=>b.classList.toggle('active',b.textContent.trim().toLowerCase()==='mg'));
+  setSyringeByUnits(100);
+  q('savePeptideName').value=s.peptideName||'';q('saveReconstitutionNotes').value=s.notes||'';showPendingStockNotice(s);calculateRecon(false,true);showView('calculator');window.scrollTo({top:0,behavior:'smooth'});
+}
+function showPendingStockNotice(s){
+  const n=q('pendingStockNotice');if(!n)return;
+  n.innerHTML=`<button type="button" onclick="cancelPendingStock()">Cancel</button><strong>Using stock:</strong> ${escHtml(s.peptideName)} · ${fmtNumber(s.strength,3)} ${escHtml(s.strengthUnit)} · ${Math.max(0,Number(s.quantity)||0)} vial(s) currently on hand. Saving as an active vial will reduce stock by 1.`;
+  n.classList.remove('hidden');
+}
+function cancelPendingStock(){pendingStockId=null;q('pendingStockNotice')?.classList.add('hidden');}
+async function consumePendingStock(){
+  if(!pendingStockId)return null;const s=await getStockItem(pendingStockId);if(!s||Number(s.quantity)<=0)return null;
+  s.quantity=Math.max(0,Number(s.quantity)-1);s.updatedAt=new Date().toISOString();await updateStockItem(s);
+  const id=pendingStockId;pendingStockId=null;q('pendingStockNotice')?.classList.add('hidden');await updateHomeStockVialCount();return id;
 }
 
 async function renderInventory(){
-  const list = q('inventoryList');
-  const empty = q('inventoryEmpty');
-  if(!list || !empty) return;
-
-  let vials = [];
-  let usage = new Map();
-  try{
-    vials = await getAllActiveVials();
-    usage = await vialUsageMap();
-  }catch(e){
-    list.innerHTML = '<div class="emptyState"><h3>Inventory unavailable</h3><p>Local storage could not be opened.</p></div>';
-    empty.classList.add('hidden');
-    return;
-  }
-
+  const list=q('inventoryList'),empty=q('inventoryEmpty');if(!list||!empty)return;
+  let stock=[],vials=[],usage=new Map();
+  try{stock=await getAllStockItems();vials=await getAllActiveVials();usage=await vialUsageMap();}catch(e){list.innerHTML='<div class="emptyState"><h3>Inventory unavailable</h3><p>Local storage could not be opened.</p></div>';empty.classList.add('hidden');return;}
+  stock.sort((a,b)=>String(b.receivedDate||b.createdAt).localeCompare(String(a.receivedDate||a.createdAt)));
   vials.sort((a,b)=>String(b.reconstitutedAt||b.createdAt).localeCompare(String(a.reconstitutedAt||a.createdAt)));
-  const activeVials = vials.filter(v=>v.status==='active');
-  const shown = inventoryFilter==='active' ? activeVials : vials;
-
-  const linkedLogs = Array.from(usage.values()).filter(v=>v>0).length;
-  q('inventorySummary').innerHTML = `
-    <div class="trackerSummaryCard"><span>Active Vials</span><strong>${activeVials.length}</strong></div>
-    <div class="trackerSummaryCard"><span>Archived</span><strong>${vials.filter(v=>v.status==='archived').length}</strong></div>
-    <div class="trackerSummaryCard"><span>Vials With Linked Use</span><strong>${linkedLogs}</strong></div>
-  `;
-
-  empty.classList.toggle('hidden', shown.length>0);
-  list.innerHTML = shown.map(v=>{
-    const used = usage.get(Number(v.id)) || 0;
-    const total = Number(v.totalMcg)||0;
-    const remaining = total-used;
-    const pct = total>0 ? Math.max(0,Math.min(100,(remaining/total)*100)) : 0;
-    const concentration = Number(v.concentrationMcgMl)||0;
-    const concentrationText = concentration>=1000
-      ? fmtNumber(concentration/1000,2)+' mg/mL'
-      : fmtNumber(concentration,0)+' mcg/mL';
-    const status = v.status || 'active';
-
-    return `
-      <article id="vial-${Number(v.id)}" class="vialCard ${status==='archived'?'archived':''}">
-        <div class="vialCardTop">
-          <div>
-            <div class="vialName">${escHtml(v.peptideName || 'Unnamed vial')}</div>
-            <div class="vialSub">Reconstituted ${escHtml(formatRecordDate(v.reconstitutedAt || v.createdAt))}</div>
-          </div>
-          <div class="vialStatus ${status==='archived'?'archived':''}">${escHtml(status)}</div>
-        </div>
-
-        <div class="vialRemainingBlock">
-          <div class="vialRemainingLabel">Calculated Remaining</div>
-          <div class="vialRemainingValue">${mcgDisplay(remaining)}</div>
-          <div class="vialProgress"><div class="vialProgressFill" style="width:${pct.toFixed(1)}%"></div></div>
-          <div class="vialProgressMeta">
-            <span>${fmtNumber(pct,0)}% remaining</span>
-            <span>${mcgDisplay(used)} logged</span>
-          </div>
-        </div>
-
-        <div class="vialStats">
-          <div class="vialStat"><span>Original</span><strong>${mcgDisplay(total)}</strong></div>
-          <div class="vialStat"><span>BAC Water</span><strong>${fmtNumber(v.waterVolumeMl,3)} mL</strong></div>
-          <div class="vialStat"><span>Concentration</span><strong>${concentrationText}</strong></div>
-          <div class="vialStat"><span>Linked Use</span><strong>${mcgDisplay(used)}</strong></div>
-        </div>
-
-        ${v.notes ? `<div class="vialNotes">${escHtml(v.notes)}</div>` : ''}
-
-        <div class="vialActions">
-          ${status==='active'
-            ? `<button class="vialActionBtn primary" type="button" onclick="logFromVial(${Number(v.id)})">Log Use</button>
-               <button class="vialActionBtn warn" type="button" onclick="setVialStatus(${Number(v.id)},'archived')">Archive</button>`
-            : `<button class="vialActionBtn primary" type="button" onclick="setVialStatus(${Number(v.id)},'active')">Restore</button>`}
-        </div>
-      </article>
-    `;
-  }).join('');
+  const active=vials.filter(v=>v.status==='active'), totalStock=stock.reduce((sum,s)=>sum+Math.max(0,Number(s.quantity)||0),0);
+  q('inventorySummary').innerHTML=`<div class="trackerSummaryCard"><span>Unopened Stock</span><strong>${totalStock} vial${totalStock===1?'':'s'}</strong></div><div class="trackerSummaryCard"><span>Active Vials</span><strong>${active.length}</strong></div><div class="trackerSummaryCard"><span>Archived Active</span><strong>${vials.filter(v=>v.status==='archived').length}</strong></div>`;
+  const parts=[];
+  if(inventoryFilter==='stock'||inventoryFilter==='all'){
+    stock.forEach(s=>parts.push(`<article class="stockCard"><div class="stockCardTop"><div><div class="stockName">${escHtml(s.peptideName||'Unnamed vial')}</div><div class="stockSub">${fmtNumber(s.strength,3)} ${escHtml(s.strengthUnit)} per vial${s.receivedDate?' · received '+escHtml(formatShortDate(s.receivedDate)):''}</div></div><div class="stockQtyBadge"><strong>${Math.max(0,Number(s.quantity)||0)}</strong><span>vials</span></div></div><div class="stockStats"><div class="stockStat"><span>Strength</span><strong>${fmtNumber(s.strength,3)} ${escHtml(s.strengthUnit)}</strong></div><div class="stockStat"><span>Source</span><strong>${escHtml(s.source||'—')}</strong></div><div class="stockStat"><span>Lot / Batch</span><strong>${escHtml(s.lot||'—')}</strong></div></div>${s.notes?`<div class="stockNotes">${escHtml(s.notes)}</div>`:''}<div class="stockActions"><button class="stockActionBtn primary" type="button" onclick="startReconstitutionFromStock(${Number(s.id)})" ${Number(s.quantity)<=0?'disabled':''}>Reconstitute 1</button><button class="stockActionBtn" type="button" onclick="openStockComposer(${Number(s.id)})">Edit</button><button class="stockActionBtn danger" type="button" onclick="removeStockItem(${Number(s.id)})">Delete</button></div></article>`));
+  }
+  if(inventoryFilter==='active'||inventoryFilter==='all'){
+    const shown=inventoryFilter==='active'?active:active.concat(vials.filter(v=>v.status==='archived'));
+    shown.forEach(v=>{
+      const used=usage.get(Number(v.id))||0,total=Number(v.totalMcg)||0,remaining=total-used,pct=total>0?Math.max(0,Math.min(100,(remaining/total)*100)):0,concentration=Number(v.concentrationMcgMl)||0;
+      const conc=concentration>=1000?fmtNumber(concentration/1000,2)+' mg/mL':fmtNumber(concentration,0)+' mcg/mL',status=v.status||'active';
+      parts.push(`<article id="vial-${Number(v.id)}" class="vialCard ${status==='archived'?'archived':''}"><div class="vialCardTop"><div><div class="vialName">${escHtml(v.peptideName||'Unnamed vial')}</div><div class="vialSub">Reconstituted ${escHtml(formatRecordDate(v.reconstitutedAt||v.createdAt))}</div></div><div class="vialStatus ${status==='archived'?'archived':''}">${escHtml(status)}</div></div><div class="vialRemainingBlock"><div class="vialRemainingLabel">Calculated Remaining</div><div class="vialRemainingValue">${mcgDisplay(remaining)}</div><div class="vialProgress"><div class="vialProgressFill" style="width:${pct.toFixed(1)}%"></div></div><div class="vialProgressMeta"><span>${fmtNumber(pct,0)}% remaining</span><span>${mcgDisplay(used)} logged</span></div></div><div class="vialStats"><div class="vialStat"><span>Original</span><strong>${mcgDisplay(total)}</strong></div><div class="vialStat"><span>BAC Water</span><strong>${fmtNumber(v.waterVolumeMl,3)} mL</strong></div><div class="vialStat"><span>Concentration</span><strong>${conc}</strong></div><div class="vialStat"><span>Linked Use</span><strong>${mcgDisplay(used)}</strong></div></div>${v.notes?`<div class="vialNotes">${escHtml(v.notes)}</div>`:''}<div class="vialActions">${status==='active'?`<button class="vialActionBtn primary" type="button" onclick="logFromVial(${Number(v.id)})">Log Use</button><button class="vialActionBtn warn" type="button" onclick="setVialStatus(${Number(v.id)},'archived')">Archive</button>`:`<button class="vialActionBtn primary" type="button" onclick="setVialStatus(${Number(v.id)},'active')">Restore</button>`}</div></article>`);
+    });
+  }
+  empty.classList.toggle('hidden',parts.length>0);list.innerHTML=parts.join('');
 }
 
 async function populateTrackerActiveVials(selectedId=null){
-  const select = q('trackerActiveVialId');
-  if(!select) return;
-  let vials = [];
-  let usage = new Map();
-  try{
-    vials = (await getAllActiveVials()).filter(v=>v.status==='active');
-    usage = await vialUsageMap();
-  }catch(e){}
-
-  const current = selectedId!==null ? String(selectedId||'') : String(select.value||'');
-  select.innerHTML = '<option value="">Not linked to a vial</option>' +
-    vials.map(v=>{
-      const used = usage.get(Number(v.id))||0;
-      const remaining = (Number(v.totalMcg)||0)-used;
-      return `<option value="${Number(v.id)}">${escHtml(v.peptideName)} · ${mcgDisplay(remaining)} remaining</option>`;
-    }).join('');
-
-  if(Array.from(select.options).some(o=>o.value===current)){
-    select.value = current;
-  }
-  trackerVialChanged(false);
+  const select=q('trackerActiveVialId');if(!select)return;let vials=[],usage=new Map();
+  try{vials=(await getAllActiveVials()).filter(v=>v.status==='active');usage=await vialUsageMap();}catch(e){}
+  const current=selectedId!==null?String(selectedId||''):String(select.value||'');
+  select.innerHTML='<option value="">Not linked to a vial</option>'+vials.map(v=>{const remaining=(Number(v.totalMcg)||0)-(usage.get(Number(v.id))||0);return `<option value="${Number(v.id)}">${escHtml(v.peptideName)} · ${mcgDisplay(remaining)} remaining</option>`}).join('');
+  if(Array.from(select.options).some(o=>o.value===current))select.value=current;trackerVialChanged(false);
 }
-
 async function trackerVialChanged(updateName=true){
-  const select = q('trackerActiveVialId');
-  const hint = q('trackerVialRemaining');
-  const id = Number(select?.value||0);
-
-  if(!id){
-    if(hint) hint.textContent = 'Optional. Linking an entry lets VialTrack calculate remaining quantity.';
-    return;
-  }
-
-  const vial = await getActiveVial(id);
-  if(!vial) return;
-  const usage = await vialUsageMap();
-  const remaining = (Number(vial.totalMcg)||0) - (usage.get(id)||0);
-
-  if(updateName && q('trackerPeptideName')){
-    q('trackerPeptideName').value = vial.peptideName || '';
-  }
-  if(hint){
-    hint.textContent = 'Calculated remaining before this entry: ' + mcgDisplay(remaining);
-  }
+  const select=q('trackerActiveVialId'),hint=q('trackerVialRemaining'),id=Number(select?.value||0);
+  if(!id){if(hint)hint.textContent='Optional. Linking an entry lets VialTrack calculate remaining quantity.';return;}
+  const vial=await getActiveVial(id);if(!vial)return;const usage=await vialUsageMap(),remaining=(Number(vial.totalMcg)||0)-(usage.get(id)||0);
+  if(updateName&&q('trackerPeptideName'))q('trackerPeptideName').value=vial.peptideName||'';if(hint)hint.textContent='Calculated remaining before this entry: '+mcgDisplay(remaining);
 }
-
 async function logFromVial(id){
-  showView('tracker');
-  await prepareTracker();
-  await openTrackerComposer();
-  await populateTrackerActiveVials(id);
-  q('trackerActiveVialId').value = String(id);
-  await trackerVialChanged(true);
+  showView('tracker');await prepareTracker();await openTrackerComposer();await populateTrackerActiveVials(id);q('trackerActiveVialId').value=String(id);await trackerVialChanged(true);
 }
-
-window.addEventListener('DOMContentLoaded',()=>{
-  updateHomeActiveVialCount();
-});
+window.addEventListener('DOMContentLoaded',()=>{updateHomeActiveVialCount();updateHomeStockVialCount();});
 </script>
 
 <script>
@@ -3524,11 +3654,13 @@ async function refreshHomeDashboard(){
 
   let logs = [];
   let vials = [];
+  let stock = [];
   let history = [];
   let usage = new Map();
 
   try{ logs = await getAllTrackerLogs(); }catch(e){}
   try{ vials = await getAllActiveVials(); }catch(e){}
+  try{ stock = await getAllStockItems(); }catch(e){}
   try{ history = await getAllHistoryRecords(); }catch(e){}
   try{ usage = await vialUsageMap(); }catch(e){}
 
@@ -3550,6 +3682,7 @@ async function refreshHomeDashboard(){
   if(q('homeTodayEntryCount')) q('homeTodayEntryCount').textContent = todayLogs.length;
   if(q('homeWeekEntryCount')) q('homeWeekEntryCount').textContent = weekLogs.length;
   if(q('homeActiveVialCount')) q('homeActiveVialCount').textContent = activeVials.length;
+  if(q('homeStockVialCount')) q('homeStockVialCount').textContent = stock.reduce((sum,s)=>sum+Math.max(0,Number(s.quantity)||0),0);
   if(q('homeHistoryCount')) q('homeHistoryCount').textContent = history.length;
 
   const todayContainer = q('homeTodayEntries');
@@ -3633,7 +3766,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 
 <script>
 (function(){
-  const STATE_KEY = 'vialTrackState_v7';
+  const STATE_KEY = 'vialTrackState_v8';
   let deferredInstallPrompt = null;
 
   function byId(id){ return document.getElementById(id); }

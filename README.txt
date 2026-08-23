@@ -1,22 +1,23 @@
-VialTrack PWA v7
+VialTrack PWA v8
 
-NEW IN v7
-- Home screen rebuilt as a true Today dashboard
-- Current date and streamlined VialTrack identity
-- One-tap quick actions: Log Entry, Reconstitute, Active Vials, History
-- Today entry count
-- This-week entry count
-- Active vial count
-- Saved reconstitution count
-- Today's tracker entries shown directly on Home
-- Up to 3 active vials shown with calculated remaining amount and progress
-- Up to 3 recent reconstitutions shown on Home
-- Home data refreshes after relevant saves, edits, deletes, and vial changes
+NEW IN v8
+- Real Stock inventory for unopened vials
+- Inventory tabs: Stock / Active / All
+- + Add Stock
+- Track peptide/vial name, vial strength, quantity, date received, source/vendor, lot/batch, and notes
+- Edit or delete stock items
+- Reconstitute 1 directly from Stock
+- Stock peptide name and vial strength load automatically into the calculator
+- Stock reconstitution opens with 2 mL BAC water, 2 mg target, and 1.0 mL / 100 U syringe
+- Saving that calculation with Save + Add to Vials reduces unopened stock by 1
+- Canceling or calculating does NOT reduce stock
+- + Add Active Vial for already-reconstituted vials
+- Home dashboard shows total unopened stock vial count
+- Backup / restore includes Stock, Active Vials, Tracker logs, and Reconstitution History
 
-PRESERVED
-- Calculator and syringe behavior
-- Reconstitution History
-- Day / Week / All Tracker
-- Active Vials / Inventory
-- Backup / Restore
-- Offline PWA support
+INVENTORY MODEL
+Stock = unopened vials you own.
+Active = reconstituted vials currently in use.
+
+Active-vial remaining quantity is calculated from Tracker entries linked to that vial.
+It is an estimate based on logged use and does not measure actual vial contents.
