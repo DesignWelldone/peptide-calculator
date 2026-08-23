@@ -1,7 +1,7 @@
 {
-  "name": "VialTrack",
-  "short_name": "VialTrack",
-  "description": "VialTrack offline vial inventory, calculator, peptide tracker, weight trends, and in-app update support.",
+  "name": "Vial",
+  "short_name": "Vial",
+  "description": "Vial offline vial inventory, reconstitution calculator, tracker, history, and weight trends.",
   "id": "./",
   "start_url": "./index.html",
   "scope": "./",

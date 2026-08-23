@@ -65,3 +65,16 @@ future versions (V13+) can use this in-app update prompt.
 V12.0.1 HOTFIX
 - Removed the visible literal \\n text from the top of the app.
 - Bumped the service-worker cache so installed V12 can prompt for this hotfix.
+
+
+V13 REBRAND
+- App name updated from VialTrack to Vial
+- Replaced app icon with the selected minimal vial + progress icon
+- Regenerated icon-192.png and icon-512.png
+- Updated browser title, manifest, and in-app branding
+- Updated in-app updater prompt to use the new name
+- Bumped app version to 13.0.0
+- Bumped service-worker cache to vial-v13-1
+
+NOTE
+Internal storage/database keys were intentionally left compatible so existing local data should continue to work after update.

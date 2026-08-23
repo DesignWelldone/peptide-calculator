@@ -8,12 +8,12 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="VialTrack">
+<meta name="apple-mobile-web-app-title" content="Vial">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
 
-<title>VialTrack</title>
-<meta name="vialtrack-version" content="12.0.1">
+<title>Vial</title>
+<meta name="vialtrack-version" content="13.0.0">
 <meta name="description" content="Offline peptide reconstitution and intranasal calculator.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -2373,14 +2373,14 @@ body{
 <body>
 <div class="container">
   <header class="header">
-    <div class="brand brandWithIcon"><img src="./icon-192.png" alt="VialTrack" class="brandIcon"> <span>VialTrack</span></div>
-    <h1>VialTrack</h1>
+    <div class="brand brandWithIcon"><img src="./icon-192.png" alt="Vial" class="brandIcon"> <span>Vial</span></div>
+    <h1>Vial</h1>
     <div class="subtitle">A cleaner offline app for vial math, reconstitution, and dose planning.</div>
     <div class="offline-badge">Installable Offline App</div>
   </header>
 
   <div id="installArea" class="installArea">
-    <button id="installButton" class="installButton hidden" type="button">Install VialTrack</button>
+    <button id="installButton" class="installButton hidden" type="button">Install Vial</button>
     <button id="iosInstallButton" class="installButton hidden" type="button">Install on iPhone</button>
     <div id="iosInstallHelp" class="iosInstallHelp hidden">
       In Safari, tap Share, then choose <strong>Add to Home Screen</strong>.
@@ -2392,13 +2392,13 @@ body{
   <section id="homePanel" class="homePanel appView">
     <div class="todayHero">
       <div class="todayHeroText">
-        <div class="heroEyebrow">VialTrack</div>
+        <div class="heroEyebrow">Vial</div>
         <div id="homeTodayDate" class="todayDate"></div>
         <h2>Today</h2>
         <p>Reconstitution, tracking, and active vial inventory in one offline app.</p>
       </div>
       <div class="todayHeroIcon">
-        <img src="./icon-512.png" alt="VialTrack app icon" class="heroIcon">
+        <img src="./icon-512.png" alt="Vial app icon" class="heroIcon">
       </div>
     </div>
 
@@ -2528,7 +2528,7 @@ body{
           <select id="trackerActiveVialId" class="textInput trackerVialSelect" onchange="trackerVialChanged()">
             <option value="">Not linked to a vial</option>
           </select>
-          <div id="trackerVialRemaining" class="vialRemainingHint">Optional. Linking an entry lets VialTrack calculate remaining quantity.</div>
+          <div id="trackerVialRemaining" class="vialRemainingHint">Optional. Linking an entry lets Vial calculate remaining quantity.</div>
         </div>
 
         <div class="inputcard">
@@ -2709,7 +2709,7 @@ body{
   <section id="weightPanel" class="weightPanel appView hidden">
     <div class="weightTopBar">
       <div>
-        <div class="screenEyebrow">VialTrack</div>
+        <div class="screenEyebrow">Vial</div>
         <h2>Weight</h2>
       </div>
       <button class="roundAddBtn" type="button" onclick="openWeightComposer()">+</button>
@@ -2835,13 +2835,13 @@ body{
       <div class="appUpdateIconWrap">
         <img src="./icon-192.png" alt="" class="appUpdateIcon">
       </div>
-      <div class="appUpdateEyebrow">VialTrack Update</div>
+      <div class="appUpdateEyebrow">Vial Update</div>
       <h3 id="appUpdateTitle">Update available</h3>
-      <p id="appUpdateMessage">A newer version of VialTrack is ready. Update now to get the latest features and fixes.</p>
+      <p id="appUpdateMessage">A newer version of Vial is ready. Update now to get the latest features and fixes.</p>
       <div id="appUpdateVersion" class="appUpdateVersion"></div>
       <div class="appUpdateActions">
         <button id="appUpdateLaterBtn" class="appUpdateBtn secondary" type="button" onclick="dismissAppUpdate()">Later</button>
-        <button id="appUpdateNowBtn" class="appUpdateBtn primary" type="button" onclick="applyAppUpdate()">Update VialTrack</button>
+        <button id="appUpdateNowBtn" class="appUpdateBtn primary" type="button" onclick="applyAppUpdate()">Update Vial</button>
       </div>
       <div id="appUpdateStatus" class="appUpdateStatus hidden">Updating…</div>
     </div>
@@ -2939,7 +2939,7 @@ body{
           <div class="saveReconstitution">
             <div class="saveHeader">
               <div>
-                <div class="dashLabel">Save to VialTrack</div>
+                <div class="dashLabel">Save to Vial</div>
                 <h3>Save this reconstitution</h3>
               </div>
             </div>
@@ -3088,7 +3088,7 @@ body{
     </div>
   </aside>
 
-  <div class="footer">VialTrack runs locally on your device. Calculations and saved settings stay on the device.</div>
+  <div class="footer">Vial runs locally on your device. Calculations and saved settings stay on the device.</div>
 </div>
 
 <script>
@@ -3321,12 +3321,12 @@ buildTicks();calculateRecon(false,true);showView('home');
 
 
 <script>
-const VT_DB_NAME = 'VialTrackDB';
+const VT_DB_NAME = 'VialDB';
 const VT_DB_VERSION = 5;
 const VT_HISTORY_STORE = 'reconstitutions';
 let vtDbPromise = null;
 
-function openVialTrackDB(){
+function openVialDB(){
   if(vtDbPromise) return vtDbPromise;
   vtDbPromise = new Promise((resolve,reject)=>{
     const req = indexedDB.open(VT_DB_NAME, VT_DB_VERSION);
@@ -3368,7 +3368,7 @@ function openVialTrackDB(){
 }
 
 async function addHistoryRecord(record){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_HISTORY_STORE,'readwrite');
     const req = tx.objectStore(VT_HISTORY_STORE).add(record);
@@ -3378,7 +3378,7 @@ async function addHistoryRecord(record){
 }
 
 async function getAllHistoryRecords(){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_HISTORY_STORE,'readonly');
     const req = tx.objectStore(VT_HISTORY_STORE).getAll();
@@ -3388,7 +3388,7 @@ async function getAllHistoryRecords(){
 }
 
 async function getHistoryRecord(id){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_HISTORY_STORE,'readonly');
     const req = tx.objectStore(VT_HISTORY_STORE).get(Number(id));
@@ -3398,7 +3398,7 @@ async function getHistoryRecord(id){
 }
 
 async function deleteHistoryRecord(id){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_HISTORY_STORE,'readwrite');
     const req = tx.objectStore(VT_HISTORY_STORE).delete(Number(id));
@@ -3408,7 +3408,7 @@ async function deleteHistoryRecord(id){
 }
 
 async function clearHistoryRecords(){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_HISTORY_STORE,'readwrite');
     const req = tx.objectStore(VT_HISTORY_STORE).clear();
@@ -3628,7 +3628,7 @@ async function exportHistory(){
   try{ stockInventory = await getAllStockItems(); }catch(e){}
   try{ weightLogs = await getAllWeightLogs(); }catch(e){}
   const payload = {
-    app:'VialTrack',
+    app:'Vial',
     version:'v9',
     exportedAt:new Date().toISOString(),
     reconstitutions:records,
@@ -3642,7 +3642,7 @@ async function exportHistory(){
   const a = document.createElement('a');
   const stamp = new Date().toISOString().slice(0,10);
   a.href = url;
-  a.download = 'VialTrack-Backup-' + stamp + '.json';
+  a.download = 'Vial-Backup-' + stamp + '.json';
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -3739,7 +3739,7 @@ async function importHistoryFile(event){
       ' imported.');
   }catch(err){
     event.target.value = '';
-    alert('That file could not be imported as VialTrack history.');
+    alert('That file could not be imported as Vial history.');
   }
 }
 
@@ -3757,7 +3757,7 @@ let inventoryFilter = 'stock';
 let pendingStockId = null;
 
 async function addActiveVial(record){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_VIAL_STORE,'readwrite');
     const req = tx.objectStore(VT_VIAL_STORE).add(record);
@@ -3765,7 +3765,7 @@ async function addActiveVial(record){
   });
 }
 async function updateActiveVial(record){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_VIAL_STORE,'readwrite');
     const req = tx.objectStore(VT_VIAL_STORE).put(record);
@@ -3773,7 +3773,7 @@ async function updateActiveVial(record){
   });
 }
 async function getActiveVial(id){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_VIAL_STORE,'readonly');
     const req = tx.objectStore(VT_VIAL_STORE).get(Number(id));
@@ -3781,7 +3781,7 @@ async function getActiveVial(id){
   });
 }
 async function getAllActiveVials(){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_VIAL_STORE,'readonly');
     const req = tx.objectStore(VT_VIAL_STORE).getAll();
@@ -3789,7 +3789,7 @@ async function getAllActiveVials(){
   });
 }
 async function addStockItem(record){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_STOCK_STORE,'readwrite');
     const req = tx.objectStore(VT_STOCK_STORE).add(record);
@@ -3797,7 +3797,7 @@ async function addStockItem(record){
   });
 }
 async function updateStockItem(record){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_STOCK_STORE,'readwrite');
     const req = tx.objectStore(VT_STOCK_STORE).put(record);
@@ -3805,7 +3805,7 @@ async function updateStockItem(record){
   });
 }
 async function getStockItem(id){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_STOCK_STORE,'readonly');
     const req = tx.objectStore(VT_STOCK_STORE).get(Number(id));
@@ -3813,7 +3813,7 @@ async function getStockItem(id){
   });
 }
 async function getAllStockItems(){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_STOCK_STORE,'readonly');
     const req = tx.objectStore(VT_STOCK_STORE).getAll();
@@ -3821,7 +3821,7 @@ async function getAllStockItems(){
   });
 }
 async function deleteStockItem(id){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_STOCK_STORE,'readwrite');
     const req = tx.objectStore(VT_STOCK_STORE).delete(Number(id));
@@ -3996,7 +3996,7 @@ async function populateTrackerActiveVials(selectedId=null){
 }
 async function trackerVialChanged(updateName=true){
   const select=q('trackerActiveVialId'),hint=q('trackerVialRemaining'),id=Number(select?.value||0);
-  if(!id){if(hint)hint.textContent='Optional. Linking an entry lets VialTrack calculate remaining quantity.';return;}
+  if(!id){if(hint)hint.textContent='Optional. Linking an entry lets Vial calculate remaining quantity.';return;}
   const vial=await getActiveVial(id);if(!vial)return;const usage=await vialUsageMap(),remaining=(Number(vial.totalMcg)||0)-(usage.get(id)||0);
   if(updateName&&q('trackerPeptideName'))q('trackerPeptideName').value=vial.peptideName||'';if(hint)hint.textContent='Calculated remaining before this entry: '+mcgDisplay(remaining);
 }
@@ -4061,7 +4061,7 @@ function formatLogTime(t){
 }
 
 async function addTrackerLog(record){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_TRACKER_STORE,'readwrite');
     const req = tx.objectStore(VT_TRACKER_STORE).add(record);
@@ -4071,7 +4071,7 @@ async function addTrackerLog(record){
 }
 
 async function updateTrackerLog(record){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_TRACKER_STORE,'readwrite');
     const req = tx.objectStore(VT_TRACKER_STORE).put(record);
@@ -4081,7 +4081,7 @@ async function updateTrackerLog(record){
 }
 
 async function getTrackerLog(id){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_TRACKER_STORE,'readonly');
     const req = tx.objectStore(VT_TRACKER_STORE).get(Number(id));
@@ -4091,7 +4091,7 @@ async function getTrackerLog(id){
 }
 
 async function getAllTrackerLogs(){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_TRACKER_STORE,'readonly');
     const req = tx.objectStore(VT_TRACKER_STORE).getAll();
@@ -4101,7 +4101,7 @@ async function getAllTrackerLogs(){
 }
 
 async function deleteTrackerLog(id){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_TRACKER_STORE,'readwrite');
     const req = tx.objectStore(VT_TRACKER_STORE).delete(Number(id));
@@ -4232,7 +4232,7 @@ async function saveTrackerEntry(){
         const proceed = confirm(
           'This entry is larger than the calculated remaining amount for this vial (' +
           mcgDisplay(remainingMcg) +
-          '). VialTrack inventory is only an estimate based on linked logs. Save anyway?'
+          '). Vial inventory is only an estimate based on linked logs. Save anyway?'
         );
         if(!proceed) return;
       }
@@ -4647,7 +4647,7 @@ const VT_WEIGHT_SEED = [
 ];
 
 async function addWeightLog(record){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_WEIGHT_STORE,'readwrite');
     const req = tx.objectStore(VT_WEIGHT_STORE).add(record);
@@ -4656,7 +4656,7 @@ async function addWeightLog(record){
   });
 }
 async function updateWeightLog(record){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_WEIGHT_STORE,'readwrite');
     const req = tx.objectStore(VT_WEIGHT_STORE).put(record);
@@ -4665,7 +4665,7 @@ async function updateWeightLog(record){
   });
 }
 async function getWeightLog(id){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_WEIGHT_STORE,'readonly');
     const req = tx.objectStore(VT_WEIGHT_STORE).get(Number(id));
@@ -4674,7 +4674,7 @@ async function getWeightLog(id){
   });
 }
 async function getAllWeightLogs(){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_WEIGHT_STORE,'readonly');
     const req = tx.objectStore(VT_WEIGHT_STORE).getAll();
@@ -4683,7 +4683,7 @@ async function getAllWeightLogs(){
   });
 }
 async function deleteWeightLog(id){
-  const db = await openVialTrackDB();
+  const db = await openVialDB();
   return new Promise((resolve,reject)=>{
     const tx = db.transaction(VT_WEIGHT_STORE,'readwrite');
     const req = tx.objectStore(VT_WEIGHT_STORE).delete(Number(id));
@@ -5039,7 +5039,7 @@ window.addEventListener('DOMContentLoaded',()=>seedWeightData().then(renderWeigh
 
 
 <script>
-const VIALTRACK_APP_VERSION = '12.0.1';
+const VIAL_APP_VERSION = '13.0.0';
 let vialTrackRegistration = null;
 let vialTrackWaitingWorker = null;
 let vialTrackUpdateDismissed = false;
@@ -5050,7 +5050,7 @@ function showAppUpdate(worker=null) {
   vialTrackWaitingWorker = worker || vialTrackWaitingWorker;
   const overlay = document.getElementById('appUpdateOverlay');
   const version = document.getElementById('appUpdateVersion');
-  if(version) version.textContent = 'Installed: v' + VIALTRACK_APP_VERSION + ' · New version ready';
+  if(version) version.textContent = 'Installed: v' + VIAL_APP_VERSION + ' · New version ready';
   if(overlay) overlay.classList.remove('hidden');
 }
 
@@ -5098,7 +5098,7 @@ async function applyAppUpdate() {
     setUpdateBusy(false);
     const status = document.getElementById('appUpdateStatus');
     if(status) {
-      status.textContent = 'Could not update automatically. Reopen VialTrack and try again.';
+      status.textContent = 'Could not update automatically. Reopen Vial and try again.';
       status.classList.remove('hidden');
     }
   }
@@ -5113,7 +5113,7 @@ function watchInstallingWorker(worker) {
   });
 }
 
-async function checkForVialTrackUpdate() {
+async function checkForVialUpdate() {
   if(!('serviceWorker' in navigator) || location.protocol === 'file:') return;
 
   try {
@@ -5149,7 +5149,7 @@ if('serviceWorker' in navigator && location.protocol !== 'file:') {
       });
 
       // Explicitly check whenever the app opens.
-      await checkForVialTrackUpdate();
+      await checkForVialUpdate();
     } catch(err) {}
   });
 
@@ -5162,12 +5162,12 @@ if('serviceWorker' in navigator && location.protocol !== 'file:') {
   // Re-check after returning to an app that has been sitting open.
   document.addEventListener('visibilitychange', () => {
     if(document.visibilityState === 'visible') {
-      checkForVialTrackUpdate();
+      checkForVialUpdate();
     }
   });
 
   // Also re-check periodically while the app remains open.
-  setInterval(checkForVialTrackUpdate, 60 * 60 * 1000);
+  setInterval(checkForVialUpdate, 60 * 60 * 1000);
 }
 </script>
 
