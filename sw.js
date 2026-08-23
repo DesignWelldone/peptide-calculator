@@ -1,5 +1,5 @@
-const CACHE_NAME = 'vialtrack-v12-1';
-const APP_VERSION = '12.0.0';
+const CACHE_NAME = 'vialtrack-v12-2';
+const APP_VERSION = '12.0.1';
 const APP_SHELL = [
   './',
   './index.html',

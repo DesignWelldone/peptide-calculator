@@ -60,3 +60,8 @@ V12 UPDATE SYSTEM
 IMPORTANT
 V11 and earlier do not contain this updater logic. After V12 is published and installed once,
 future versions (V13+) can use this in-app update prompt.
+
+
+V12.0.1 HOTFIX
+- Removed the visible literal \\n text from the top of the app.
+- Bumped the service-worker cache so installed V12 can prompt for this hotfix.
