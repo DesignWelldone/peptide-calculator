@@ -12,7 +12,7 @@
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
 
-<title>VialTrack</title>
+<title>VialTrack</title>\n<meta name="vialtrack-version" content="12.0.0">
 <meta name="description" content="Offline peptide reconstitution and intranasal calculator.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -2128,6 +2128,245 @@ h1{
   border-radius:14px!important;
 }
 
+
+/* V11 native-app polish */
+html{
+  scroll-behavior:auto!important;
+  scroll-padding-top:12px;
+  scroll-padding-bottom:calc(78px + env(safe-area-inset-bottom));
+  overscroll-behavior-y:auto;
+}
+body{
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior-y:auto!important;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+}
+.container{
+  min-height:100dvh;
+}
+.appView{
+  scroll-margin-top:12px;
+  scroll-margin-bottom:calc(82px + env(safe-area-inset-bottom));
+}
+.trackerComposer,.weightComposer,#stockComposer,#manualActiveComposer,
+.vialCard,.stockCard,.historyCard{
+  scroll-margin-top:14px;
+  scroll-margin-bottom:calc(84px + env(safe-area-inset-bottom));
+}
+.appNavSvg{
+  width:22px;
+  height:22px;
+  display:block;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.navIcon{
+  width:24px;
+  height:24px;
+  display:grid!important;
+  place-items:center;
+  color:#8f9297;
+}
+.navBtn.active .navIcon{
+  color:#19c7a2!important;
+}
+.navLabel{
+  font-weight:600;
+  letter-spacing:.01em;
+}
+.quickAction{
+  position:relative;
+}
+.quickActionIcon{
+  width:24px;
+  height:24px;
+  display:grid;
+  place-items:center;
+  color:#a7aaaf;
+  margin-bottom:9px;
+}
+.quickAction.primary .quickActionIcon{
+  color:#081511;
+}
+.quickActionIcon .appNavSvg{
+  width:24px;
+  height:24px;
+}
+@media(max-width:640px){
+  .header{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    min-height:34px;
+    margin:0 2px 4px!important;
+    padding:0!important;
+    text-align:left!important;
+  }
+  .header h1,
+  .header .subtitle,
+  .header .offline-badge{
+    display:none!important;
+  }
+  .brandWithIcon{
+    font-size:.78rem!important;
+    color:#d7d9dc!important;
+    text-transform:none!important;
+    letter-spacing:.02em!important;
+    font-weight:700!important;
+  }
+  .brandIcon{
+    width:25px!important;
+    height:25px!important;
+    border-radius:7px!important;
+  }
+  .container{
+    padding:8px 10px calc(76px + env(safe-area-inset-bottom))!important;
+  }
+  .footer{
+    padding-bottom:8px!important;
+  }
+  .bottomNav{
+    height:calc(62px + env(safe-area-inset-bottom));
+    align-items:start!important;
+    padding:7px 3px env(safe-area-inset-bottom)!important;
+  }
+  .navBtn{
+    min-height:50px!important;
+    gap:4px!important;
+  }
+  .navLabel{
+    font-size:.60rem!important;
+  }
+  .navIcon{
+    width:23px!important;
+    height:23px!important;
+  }
+  .navIcon .appNavSvg{
+    width:21px!important;
+    height:21px!important;
+  }
+  .quickAction{
+    min-height:88px!important;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .quickActionTitle{
+    font-size:.9rem!important;
+  }
+  .quickActionSub{
+    font-size:.68rem!important;
+  }
+  main,#mainContent{
+    overflow:visible!important;
+  }
+  .tabbar{
+    margin-top:2px!important;
+  }
+  .sidebar{
+    margin-bottom:4px;
+  }
+}
+
+
+/* V12 in-app updater */
+.appUpdateOverlay{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:grid;
+  place-items:end center;
+  padding:18px 14px calc(18px + env(safe-area-inset-bottom));
+  background:rgba(0,0,0,.58);
+  backdrop-filter:blur(8px);
+}
+.appUpdateOverlay.hidden{display:none!important}
+.appUpdateCard{
+  width:min(100%,430px);
+  padding:22px 18px 18px;
+  border-radius:24px;
+  background:#1d1f22;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 22px 70px rgba(0,0,0,.48);
+}
+.appUpdateIconWrap{
+  width:54px;
+  height:54px;
+  border-radius:15px;
+  overflow:hidden;
+  margin-bottom:14px;
+}
+.appUpdateIcon{
+  width:100%;
+  height:100%;
+  display:block;
+}
+.appUpdateEyebrow{
+  color:#19c7a2;
+  font-size:.68rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+.appUpdateCard h3{
+  margin:4px 0 8px;
+  font-size:1.35rem;
+  color:#f5f5f6;
+}
+.appUpdateCard p{
+  margin:0;
+  color:#a0a2a7;
+  font-size:.88rem;
+  line-height:1.45;
+}
+.appUpdateVersion{
+  margin-top:11px;
+  color:#777b81;
+  font-size:.73rem;
+}
+.appUpdateActions{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:8px;
+  margin-top:18px;
+}
+.appUpdateBtn{
+  min-height:48px;
+  border-radius:13px;
+  font-weight:760;
+  cursor:pointer;
+}
+.appUpdateBtn.secondary{
+  background:#26282c;
+  border:1px solid rgba(255,255,255,.08);
+  color:#efeff1;
+}
+.appUpdateBtn.primary{
+  background:#19c7a2;
+  border:0;
+  color:#081511;
+}
+.appUpdateBtn:disabled{
+  opacity:.6;
+  cursor:default;
+}
+.appUpdateStatus{
+  margin-top:11px;
+  text-align:center;
+  color:#a0a2a7;
+  font-size:.78rem;
+}
+@media(min-width:641px){
+  .appUpdateOverlay{
+    place-items:center;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2164,23 +2403,23 @@ h1{
 
     <div class="quickActions">
       <button class="quickAction primary" type="button" onclick="homeQuickLog()">
-        <span class="quickActionTitle">+ Log Entry</span>
+        <span class="quickActionIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span><span class="quickActionTitle">Log Entry</span>
         <span class="quickActionSub">Add today’s use</span>
       </button>
       <button class="quickAction" type="button" onclick="showView('calculator')">
-        <span class="quickActionTitle">Reconstitute</span>
+        <span class="quickActionIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="3.5" width="14" height="17" rx="2.3"/><path d="M8 7h8M8 11h2M14 11h2M8 15h2M14 15h2M8 18h2M14 18h2"/></svg></span><span class="quickActionTitle">Reconstitute</span>
         <span class="quickActionSub">Open calculator</span>
       </button>
       <button class="quickAction" type="button" onclick="showView('inventory')">
-        <span class="quickActionTitle">Active Vials</span>
+        <span class="quickActionIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 3.5h8M9 6h6v2.2l1.9 2.1a3.6 3.6 0 0 1 .9 2.4v6.1a2.2 2.2 0 0 1-2.2 2.2H8.4a2.2 2.2 0 0 1-2.2-2.2v-6.1a3.6 3.6 0 0 1 .9-2.4L9 8.2Z"/><path d="M6.3 15.2h11.4"/></svg></span><span class="quickActionTitle">Active Vials</span>
         <span class="quickActionSub">Check remaining</span>
       </button>
       <button class="quickAction" type="button" onclick="showView('weight')">
-        <span class="quickActionTitle">Weight</span>
+        <span class="quickActionIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 10a4 4 0 0 1 8 0"/><path d="m12 10 2-2"/><circle cx="12" cy="10" r=".8"/></svg></span><span class="quickActionTitle">Weight</span>
         <span class="quickActionSub">Log or view trend</span>
       </button>
       <button class="quickAction" type="button" onclick="showView('history')">
-        <span class="quickActionTitle">History</span>
+        <span class="quickActionIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 6h14M5 12h14M5 18h14"/><circle cx="3" cy="6" r=".7"/><circle cx="3" cy="12" r=".7"/><circle cx="3" cy="18" r=".7"/></svg></span><span class="quickActionTitle">History</span>
         <span class="quickActionSub">Review setups</span>
       </button>
     </div>
@@ -2589,13 +2828,31 @@ h1{
     <div id="historyList" class="historyList"></div>
   </section>
 
+
+  <div id="appUpdateOverlay" class="appUpdateOverlay hidden" role="dialog" aria-modal="true" aria-labelledby="appUpdateTitle">
+    <div class="appUpdateCard">
+      <div class="appUpdateIconWrap">
+        <img src="./icon-192.png" alt="" class="appUpdateIcon">
+      </div>
+      <div class="appUpdateEyebrow">VialTrack Update</div>
+      <h3 id="appUpdateTitle">Update available</h3>
+      <p id="appUpdateMessage">A newer version of VialTrack is ready. Update now to get the latest features and fixes.</p>
+      <div id="appUpdateVersion" class="appUpdateVersion"></div>
+      <div class="appUpdateActions">
+        <button id="appUpdateLaterBtn" class="appUpdateBtn secondary" type="button" onclick="dismissAppUpdate()">Later</button>
+        <button id="appUpdateNowBtn" class="appUpdateBtn primary" type="button" onclick="applyAppUpdate()">Update VialTrack</button>
+      </div>
+      <div id="appUpdateStatus" class="appUpdateStatus hidden">Updating…</div>
+    </div>
+  </div>
+
   <nav class="bottomNav" aria-label="Primary">
-    <button id="navHome" class="navBtn active" type="button" onclick="showView('home')"><span class="navIcon">⌂</span><span class="navLabel">Home</span></button>
-    <button id="navCalc" class="navBtn" type="button" onclick="showView('calculator')"><span class="navIcon">◌</span><span class="navLabel">Calc</span></button>
-    <button id="navTracker" class="navBtn" type="button" onclick="showView('tracker')"><span class="navIcon">↗</span><span class="navLabel">Tracker</span></button>
-    <button id="navInventory" class="navBtn" type="button" onclick="showView('inventory')"><span class="navIcon">◫</span><span class="navLabel">Vials</span></button>
-    <button id="navWeight" class="navBtn" type="button" onclick="showView('weight')"><span class="navIcon">⚖</span><span class="navLabel">Weight</span></button>
-    <button id="navHistory" class="navBtn" type="button" onclick="showView('history')"><span class="navIcon">☰</span><span class="navLabel">History</span></button>
+    <button id="navHome" class="navBtn active" type="button" onclick="showView('home')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3.5 10.5 12 3.8l8.5 6.7v9.1a1.4 1.4 0 0 1-1.4 1.4h-5.2v-6.3h-3.8V21H4.9a1.4 1.4 0 0 1-1.4-1.4Z"/><path d="M8.8 21v-6.3h6.4V21"/></svg></span><span class="navLabel">Home</span></button>
+    <button id="navCalc" class="navBtn" type="button" onclick="showView('calculator')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="3.5" width="14" height="17" rx="2.3"/><path d="M8 7h8M8 11h2M14 11h2M8 15h2M14 15h2M8 18h2M14 18h2"/></svg></span><span class="navLabel">Calc</span></button>
+    <button id="navTracker" class="navBtn" type="button" onclick="showView('tracker')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 18.5h16"/><path d="m5.5 15 4-4 3 2.7 6-7"/><circle cx="5.5" cy="15" r="1"/><circle cx="9.5" cy="11" r="1"/><circle cx="12.5" cy="13.7" r="1"/><circle cx="18.5" cy="6.7" r="1"/></svg></span><span class="navLabel">Tracker</span></button>
+    <button id="navInventory" class="navBtn" type="button" onclick="showView('inventory')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 3.5h8M9 6h6v2.2l1.9 2.1a3.6 3.6 0 0 1 .9 2.4v6.1a2.2 2.2 0 0 1-2.2 2.2H8.4a2.2 2.2 0 0 1-2.2-2.2v-6.1a3.6 3.6 0 0 1 .9-2.4L9 8.2Z"/><path d="M6.3 15.2h11.4"/></svg></span><span class="navLabel">Vials</span></button>
+    <button id="navWeight" class="navBtn" type="button" onclick="showView('weight')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 10a4 4 0 0 1 8 0"/><path d="m12 10 2-2"/><circle cx="12" cy="10" r=".8"/></svg></span><span class="navLabel">Weight</span></button>
+    <button id="navHistory" class="navBtn" type="button" onclick="showView('history')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 6h14M5 12h14M5 18h14"/><circle cx="3" cy="6" r=".7"/><circle cx="3" cy="12" r=".7"/><circle cx="3" cy="18" r=".7"/></svg></span><span class="navLabel">History</span></button>
   </nav>
 
   <main id="mainContent">
@@ -2844,7 +3101,11 @@ function animate(el){el.classList.remove('fade');void el.offsetWidth;el.classLis
 
 let currentView = 'home';
 function showView(view){
+  const previousView = currentView;
   currentView = view;
+  if(previousView !== view){
+    window.scrollTo({top:0,left:0,behavior:'auto'});
+  }
   const home = q('homePanel');
   const recon = q('panelRecon');
   const tracker = q('trackerPanel');
@@ -3335,7 +3596,7 @@ async function reuseHistoryRecord(id){
 
   calculateRecon(false,true);
   showView('calculator');
-  window.scrollTo({top:0, behavior:'smooth'});
+  window.scrollTo({top:0, behavior:'auto'});
 }
 
 async function removeHistoryRecord(id){
@@ -3599,7 +3860,7 @@ function openStockComposer(id=null){
     q('stockPeptideName').value=''; q('stockStrength').value=20; applyStockUnit('mg'); q('stockQuantity').value=1;
     q('stockReceivedDate').value=localDateString(); q('stockSource').value=''; q('stockLot').value=''; q('stockNotes').value='';
   }else loadStockForEdit(id);
-  q('stockComposer').scrollIntoView({behavior:'smooth',block:'start'});
+  q('stockComposer').scrollIntoView({behavior:'auto',block:'start'});
 }
 async function loadStockForEdit(id){
   const s=await getStockItem(id); if(!s)return;
@@ -3638,7 +3899,7 @@ function openAddActiveVial(){
   q('manualActiveStrengthDisplayUnit').textContent='MG';
   document.querySelectorAll('[data-manual-active-unit]').forEach(b=>b.classList.toggle('active',b.dataset.manualActiveUnit==='mg'));
   q('manualActiveWater').value=2;q('manualActiveDate').value=localDateString();q('manualActiveNotes').value='';
-  q('manualActiveComposer').scrollIntoView({behavior:'smooth',block:'start'});
+  q('manualActiveComposer').scrollIntoView({behavior:'auto',block:'start'});
 }
 function closeManualActiveVial(){q('manualActiveComposer').classList.add('hidden');}
 async function saveManualActiveVial(){
@@ -3657,7 +3918,7 @@ async function activateHistoryRecord(historyId,openInventory=false,sourceStockId
   const h=await getHistoryRecord(historyId); if(!h){alert('That reconstitution record could not be found.');return;}
   const all=await getAllActiveVials();
   const existing=all.find(v=>Number(v.historyId)===Number(historyId)&&v.status==='active');
-  if(existing){if(openInventory){showView('inventory');setTimeout(()=>document.getElementById('vial-'+existing.id)?.scrollIntoView({behavior:'smooth',block:'center'}),100);}return existing.id;}
+  if(existing){if(openInventory){showView('inventory');setTimeout(()=>document.getElementById('vial-'+existing.id)?.scrollIntoView({behavior:'auto',block:'center'}),100);}return existing.id;}
   const totalMcg=amountToMcg(h.vialAmount,h.vialUnit);
   const id=await addActiveVial({historyId:Number(historyId),peptideName:h.peptideName||'Unnamed vial',notes:h.notes||'',createdAt:new Date().toISOString(),reconstitutedAt:h.createdAt||new Date().toISOString(),vialAmount:Number(h.vialAmount)||0,vialUnit:h.vialUnit||'mg',totalMcg,waterVolumeMl:Number(h.waterVolumeMl)||0,concentrationMcgMl:Number(h.concentrationMcgMl)||0,status:'active',sourceStockId:sourceStockId?Number(sourceStockId):null});
   await updateHomeActiveVialCount(); await populateTrackerActiveVials(); await refreshHomeDashboard();
@@ -3688,7 +3949,7 @@ async function startReconstitutionFromStock(id){
   q('waterVolume').value=2; q('desiredDose').value=2; q('doseUnit').value='mg'; q('doseDisplayUnit').textContent='MG';
   document.querySelectorAll('[data-group="doseUnit"]').forEach(b=>b.classList.toggle('active',b.textContent.trim().toLowerCase()==='mg'));
   setSyringeByUnits(100);
-  q('savePeptideName').value=s.peptideName||'';q('saveReconstitutionNotes').value=s.notes||'';showPendingStockNotice(s);calculateRecon(false,true);showView('calculator');window.scrollTo({top:0,behavior:'smooth'});
+  q('savePeptideName').value=s.peptideName||'';q('saveReconstitutionNotes').value=s.notes||'';showPendingStockNotice(s);calculateRecon(false,true);showView('calculator');window.scrollTo({top:0,behavior:'auto'});
 }
 function showPendingStockNotice(s){
   const n=q('pendingStockNotice');if(!n)return;
@@ -3919,7 +4180,7 @@ async function openTrackerComposer(id=null){
     resetTrackerComposer();
   }
 
-  q('trackerComposer').scrollIntoView({behavior:'smooth',block:'start'});
+  q('trackerComposer').scrollIntoView({behavior:'auto',block:'start'});
 }
 
 function closeTrackerComposer(){
@@ -4320,7 +4581,7 @@ async function refreshHomeDashboard(){
         const remaining = total-used;
         const pct = total>0 ? Math.max(0,Math.min(100,(remaining/total)*100)) : 0;
         return `
-          <div class="homeVialMini" onclick="showView('inventory');setTimeout(()=>document.getElementById('vial-${Number(v.id)}')?.scrollIntoView({behavior:'smooth',block:'center'}),80)">
+          <div class="homeVialMini" onclick="showView('inventory');setTimeout(()=>document.getElementById('vial-${Number(v.id)}')?.scrollIntoView({behavior:'auto',block:'center'}),80)">
             <div class="homeVialMiniName">${escHtml(v.peptideName || 'Unnamed vial')}</div>
             <div class="homeVialMiniRemaining">${mcgDisplay(remaining)}</div>
             <div class="homeVialMiniProgress"><div style="width:${pct.toFixed(1)}%"></div></div>
@@ -4596,7 +4857,7 @@ function openWeightComposer(id=null){
   }else{
     loadWeightForEdit(id);
   }
-  q('weightComposer').scrollIntoView({behavior:'smooth',block:'start'});
+  q('weightComposer').scrollIntoView({behavior:'auto',block:'start'});
 }
 async function loadWeightForEdit(id){
   const r = await getWeightLog(id);
@@ -4656,7 +4917,7 @@ window.addEventListener('DOMContentLoaded',()=>seedWeightData().then(renderWeigh
 
 <script>
 (function(){
-  const STATE_KEY = 'vialTrackState_v9';
+  const STATE_KEY = 'vialTrackState_v12';
   let deferredInstallPrompt = null;
 
   function byId(id){ return document.getElementById(id); }
@@ -4736,12 +4997,7 @@ window.addEventListener('DOMContentLoaded',()=>seedWeightData().then(renderWeigh
   // Restore saved state on subsequent launches.
   if(!restoreState()){ showView('home'); }
 
-  // PWA service worker.
-  if('serviceWorker' in navigator && location.protocol !== 'file:'){
-    window.addEventListener('load', function(){
-      navigator.serviceWorker.register('./sw.js').catch(function(){});
-    });
-  }
+
 
   // Android/Chromium installation.
   window.addEventListener('beforeinstallprompt', function(e){
@@ -4778,6 +5034,140 @@ window.addEventListener('DOMContentLoaded',()=>seedWeightData().then(renderWeigh
     });
   }
 })();
+</script>
+
+
+<script>
+const VIALTRACK_APP_VERSION = '12.0.0';
+let vialTrackRegistration = null;
+let vialTrackWaitingWorker = null;
+let vialTrackUpdateDismissed = false;
+let vialTrackRefreshingForUpdate = false;
+
+function showAppUpdate(worker=null) {
+  if(vialTrackUpdateDismissed) return;
+  vialTrackWaitingWorker = worker || vialTrackWaitingWorker;
+  const overlay = document.getElementById('appUpdateOverlay');
+  const version = document.getElementById('appUpdateVersion');
+  if(version) version.textContent = 'Installed: v' + VIALTRACK_APP_VERSION + ' · New version ready';
+  if(overlay) overlay.classList.remove('hidden');
+}
+
+function dismissAppUpdate() {
+  vialTrackUpdateDismissed = true;
+  document.getElementById('appUpdateOverlay')?.classList.add('hidden');
+}
+
+function setUpdateBusy(busy) {
+  const now = document.getElementById('appUpdateNowBtn');
+  const later = document.getElementById('appUpdateLaterBtn');
+  const status = document.getElementById('appUpdateStatus');
+  if(now) now.disabled = busy;
+  if(later) later.disabled = busy;
+  if(status) status.classList.toggle('hidden', !busy);
+}
+
+async function applyAppUpdate() {
+  setUpdateBusy(true);
+
+  try {
+    if(vialTrackWaitingWorker) {
+      vialTrackWaitingWorker.postMessage({type:'SKIP_WAITING'});
+      return;
+    }
+
+    if(vialTrackRegistration?.waiting) {
+      vialTrackWaitingWorker = vialTrackRegistration.waiting;
+      vialTrackWaitingWorker.postMessage({type:'SKIP_WAITING'});
+      return;
+    }
+
+    if(vialTrackRegistration) {
+      await vialTrackRegistration.update();
+      if(vialTrackRegistration.waiting) {
+        vialTrackWaitingWorker = vialTrackRegistration.waiting;
+        vialTrackWaitingWorker.postMessage({type:'SKIP_WAITING'});
+        return;
+      }
+    }
+
+    // Fallback if the browser already activated the update.
+    window.location.reload();
+  } catch(err) {
+    setUpdateBusy(false);
+    const status = document.getElementById('appUpdateStatus');
+    if(status) {
+      status.textContent = 'Could not update automatically. Reopen VialTrack and try again.';
+      status.classList.remove('hidden');
+    }
+  }
+}
+
+function watchInstallingWorker(worker) {
+  if(!worker) return;
+  worker.addEventListener('statechange', () => {
+    if(worker.state === 'installed' && navigator.serviceWorker.controller) {
+      showAppUpdate(worker);
+    }
+  });
+}
+
+async function checkForVialTrackUpdate() {
+  if(!('serviceWorker' in navigator) || location.protocol === 'file:') return;
+
+  try {
+    if(!vialTrackRegistration) {
+      vialTrackRegistration = await navigator.serviceWorker.getRegistration('./');
+    }
+    if(!vialTrackRegistration) return;
+
+    vialTrackUpdateDismissed = false;
+    await vialTrackRegistration.update();
+
+    if(vialTrackRegistration.waiting) {
+      showAppUpdate(vialTrackRegistration.waiting);
+    }
+  } catch(err) {
+    // Stay silent offline. The existing installed app keeps working.
+  }
+}
+
+if('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', async () => {
+    try {
+      vialTrackRegistration = await navigator.serviceWorker.register('./sw.js');
+
+      if(vialTrackRegistration.waiting && navigator.serviceWorker.controller) {
+        showAppUpdate(vialTrackRegistration.waiting);
+      }
+
+      watchInstallingWorker(vialTrackRegistration.installing);
+
+      vialTrackRegistration.addEventListener('updatefound', () => {
+        watchInstallingWorker(vialTrackRegistration.installing);
+      });
+
+      // Explicitly check whenever the app opens.
+      await checkForVialTrackUpdate();
+    } catch(err) {}
+  });
+
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if(vialTrackRefreshingForUpdate) return;
+    vialTrackRefreshingForUpdate = true;
+    window.location.reload();
+  });
+
+  // Re-check after returning to an app that has been sitting open.
+  document.addEventListener('visibilitychange', () => {
+    if(document.visibilityState === 'visible') {
+      checkForVialTrackUpdate();
+    }
+  });
+
+  // Also re-check periodically while the app remains open.
+  setInterval(checkForVialTrackUpdate, 60 * 60 * 1000);
+}
 </script>
 
 </body>

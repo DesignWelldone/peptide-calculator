@@ -1,7 +1,7 @@
 {
   "name": "VialTrack",
   "short_name": "VialTrack",
-  "description": "Offline vial calculator, inventory, peptide tracking, and weight trends with a dark health-app style.",
+  "description": "VialTrack offline vial inventory, calculator, peptide tracker, weight trends, and in-app update support.",
   "id": "./",
   "start_url": "./index.html",
   "scope": "./",

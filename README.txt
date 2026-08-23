@@ -32,3 +32,31 @@ V10
 - Brand chip now uses the new icon
 - Bottom navigation now includes compact glyph icons
 - Small UI polish so the icon language matches the in-app visual style more closely
+
+
+V11
+- Replaced temporary navigation glyphs with custom outline SVG icons
+- Added matching icons to Home quick actions
+- Unified icon stroke style and teal active state
+- Simplified mobile header into a compact native-app brand bar
+- Fixed view switching so each tab starts at a predictable scroll position
+- Removed smooth-scroll chaining that could make scrolling feel jumpy
+- Added correct scroll padding for the fixed bottom navigation
+- Added safe-area spacing for Android/iPhone installed-app mode
+- Prevented the bottom navigation from covering the final rows/cards
+
+
+V12 UPDATE SYSTEM
+- App version: 12.0.0
+- Checks GitHub Pages for a newer service worker whenever VialTrack opens
+- Also checks when returning to the app after it has been in the background
+- Re-checks hourly while left open
+- Shows an in-app "Update available" prompt
+- "Later" keeps the current version running
+- "Update VialTrack" activates the waiting version and reloads automatically
+- Update prompt works while online; the current app continues working normally offline
+- New service workers wait for user approval instead of silently taking over
+
+IMPORTANT
+V11 and earlier do not contain this updater logic. After V12 is published and installed once,
+future versions (V13+) can use this in-app update prompt.
