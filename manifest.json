@@ -1,13 +1,13 @@
 {
   "name": "VialTrack",
   "short_name": "VialTrack",
-  "description": "Offline vial calculator with stock inventory, active vials, daily tracking, and reconstitution history.",
+  "description": "Offline vial calculator, inventory, peptide tracking, and weight trends with a dark health-app style.",
   "id": "./",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#07111f",
-  "theme_color": "#07111f",
+  "background_color": "#101113",
+  "theme_color": "#101113",
   "orientation": "any",
   "icons": [
     {

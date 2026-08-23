@@ -1,23 +1,34 @@
-VialTrack PWA v8
+VialTrack PWA v9
 
-NEW IN v8
-- Real Stock inventory for unopened vials
-- Inventory tabs: Stock / Active / All
-- + Add Stock
-- Track peptide/vial name, vial strength, quantity, date received, source/vendor, lot/batch, and notes
-- Edit or delete stock items
-- Reconstitute 1 directly from Stock
-- Stock peptide name and vial strength load automatically into the calculator
-- Stock reconstitution opens with 2 mL BAC water, 2 mg target, and 1.0 mL / 100 U syringe
-- Saving that calculation with Save + Add to Vials reduces unopened stock by 1
-- Canceling or calculating does NOT reduce stock
-- + Add Active Vial for already-reconstituted vials
-- Home dashboard shows total unopened stock vial count
-- Backup / restore includes Stock, Active Vials, Tracker logs, and Reconstitution History
+NEW IN v9
+- Calculator mobile layout rebuilt to remove the old oversized/zoomed syringe behavior
+- Full-width responsive syringe visualization, no transform scaling hack
+- New Weight tab
+- Recent / Week / Month / Year weight views
+- Large current-weight card
+- Interactive local trend charts without external libraries
+- Weight trend comparisons
+- Weight history with add, edit, and delete
+- Historical weight data from the supplied screenshots is preloaded on first run
+- Latest weight appears on the Home dashboard
+- Weight history is included in VialTrack backup/export
+- Visual system redesigned toward a restrained dark health-app look:
+  charcoal cards, near-black background, white selected pills, green/teal trend accent
 
-INVENTORY MODEL
-Stock = unopened vials you own.
-Active = reconstituted vials currently in use.
+PRELOADED WEIGHT HISTORY
+Jun 10 through Aug 23, 2026, including the supplied 331.2 lb Aug 23 entry.
 
-Active-vial remaining quantity is calculated from Tracker entries linked to that vial.
-It is an estimate based on logged use and does not measure actual vial contents.
+PRESERVED
+- Stock inventory
+- Active vials
+- Reconstitution calculator and history
+- Day / Week / All peptide tracker
+- Offline PWA operation
+
+
+V10
+- App icon replaced with the new VialTrack feature icon
+- 192px and 512px PWA icons regenerated from the new design
+- Brand chip now uses the new icon
+- Bottom navigation now includes compact glyph icons
+- Small UI polish so the icon language matches the in-app visual style more closely

@@ -1660,12 +1660,480 @@ h1{
 @media(max-width:900px){.stockFormGrid{grid-template-columns:1fr 1fr}.stockNotesCard{grid-column:1/-1}}
 @media(max-width:640px){.inventoryHeaderActions{width:100%}.inventoryHeaderActions .heroBtn{flex:1}.stockFormGrid{grid-template-columns:1fr}.stockNotesCard{grid-column:auto}.stockStats{grid-template-columns:1fr 1fr}.stockActions{flex-direction:column}.stockActionBtn{width:100%}}
 
+
+/* V9 visual reset: phone-first, neutral dark health-app aesthetic */
+:root{
+  --bg:#101113;
+  --bg2:#151619;
+  --panel:#1d1f22;
+  --panel2:#202226;
+  --panel3:#24262a;
+  --line:rgba(255,255,255,.055);
+  --line2:rgba(255,255,255,.08);
+  --text:#f5f5f6;
+  --muted:#a0a2a7;
+  --muted2:#73767c;
+  --aqua:#19c7a2;
+  --blue:#19a7dd;
+  --blue2:#5e7cff;
+  --cyan:#19c7a2;
+  --teal:#19c7a2;
+  --warn:#d7a447;
+  --shadow:none;
+}
+html,body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  background:#101113;
+}
+body{
+  background:#101113!important;
+}
+.container{
+  width:100%;
+  max-width:1000px;
+  padding:16px;
+  gap:18px;
+}
+.header{
+  padding-top:4px;
+}
+.brand{
+  background:transparent;
+  border:0;
+  padding:0;
+  min-width:0;
+  color:var(--muted);
+  font-size:.76rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+h1{
+  background:none;
+  -webkit-background-clip:initial;
+  background-clip:initial;
+  color:var(--text);
+  font-size:2.15rem;
+}
+.subtitle{color:var(--muted)}
+.offline-badge{
+  background:#24262a;
+  border-color:var(--line2);
+  color:#b6b8bd;
+}
+.card,.sidebar,.specs,.verify,.tips,.detail,.results,.roadmapCard,.dashCard,
+.homeSection,.todayStatCard,.trackerSummaryCard,.historyCard,.vialCard,.stockCard,
+.weightHeroCard,.weightTrendCard,.weightHistoryCard{
+  background:#1d1f22!important;
+  border:1px solid var(--line)!important;
+  box-shadow:none!important;
+}
+.tabbar,.subtabs,.viewToggle,.weightRangeTabs{
+  background:#303236!important;
+  border:0!important;
+  padding:3px!important;
+  border-radius:999px!important;
+}
+.tab,.subtab,.viewToggleBtn,.weightRangeBtn{
+  color:#d0d1d4!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.tab.active,.subtab.active,.viewToggleBtn.active,.weightRangeBtn.active{
+  background:#f1f1f2!important;
+  color:#202124!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.inputcard,.metric,.spec,.vialStat,.stockStat{
+  background:#202226!important;
+  border:1px solid var(--line)!important;
+}
+.inputcard:focus-within,.inputcard:hover{
+  background:#222428!important;
+  border-color:rgba(25,199,162,.32)!important;
+}
+.calc,.heroBtn.primary,.saveBtn,.quickAction.primary{
+  background:#19c7a2!important;
+  color:#081511!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.calc:hover,.heroBtn.primary:hover,.saveBtn:hover{
+  background:#22d7b0!important;
+  box-shadow:none!important;
+}
+.heroBtn,.homeTextBtn,.historyActionBtn,.logActionBtn,.vialActionBtn,.stockActionBtn{
+  background:#26282c!important;
+  border:1px solid var(--line2)!important;
+  color:#efeff1!important;
+}
+.drawbox,.bigresult,.recommend,.warning,.reference,.vialRemainingBlock{
+  background:#202226!important;
+  border:1px solid var(--line)!important;
+}
+.drawval,.bigresult .rval,.drawlabel,.bigresult .rlabel,.recommend,
+.vialRemainingValue,.homeVialMiniRemaining,.homeEntryValue{
+  color:#19c7a2!important;
+}
+.bottomNav{
+  background:#1d1f22!important;
+  border:0!important;
+  border-top:1px solid var(--line)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+.navBtn{
+  color:#8f9297!important;
+}
+.navBtn.active{
+  background:transparent!important;
+  border:0!important;
+  color:#19c7a2!important;
+}
+.todayHero,.trackerHeader,.inventoryHeader,.historyHeader{
+  background:#1d1f22!important;
+  border:1px solid var(--line)!important;
+  box-shadow:none!important;
+}
+.heroIcon{
+  box-shadow:none!important;
+}
+
+/* Weight screen */
+.weightTopBar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:2px 4px 12px;
+}
+.screenEyebrow{
+  color:var(--muted);
+  font-size:.7rem;
+  font-weight:750;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+.weightTopBar h2{
+  font-size:1.5rem;
+  margin:2px 0 0;
+}
+.roundAddBtn{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  border:1px solid var(--line2);
+  background:#24262a;
+  color:#f4f4f5;
+  font-size:1.85rem;
+  font-weight:300;
+  line-height:1;
+  cursor:pointer;
+}
+.weightRangeTabs{
+  display:grid!important;
+  grid-template-columns:repeat(4,1fr);
+  margin:0 0 16px!important;
+}
+.weightRangeBtn{
+  min-height:43px;
+  border-radius:999px;
+  background:transparent;
+  font-size:.92rem;
+  font-weight:650;
+  cursor:pointer;
+}
+.weightComposer{
+  background:#1d1f22;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:14px;
+}
+.weightFormGrid{
+  display:grid;
+  grid-template-columns:1.1fr 1fr 1fr 1.2fr;
+  gap:9px;
+  margin-top:12px;
+}
+.weightHeroCard{
+  border-radius:18px;
+  padding:24px 18px 16px;
+  text-align:center;
+}
+.weightCurrentValue{
+  display:inline-block;
+  font-size:3.2rem;
+  font-weight:420;
+  line-height:1;
+  letter-spacing:-.04em;
+}
+.weightCurrentUnit{
+  display:inline-block;
+  font-size:1.2rem;
+  color:#dedfe1;
+  margin-left:4px;
+}
+.weightCurrentDate{
+  color:var(--muted);
+  margin-top:8px;
+  font-size:.92rem;
+}
+.weightChart{
+  margin-top:16px;
+  width:100%;
+  height:220px;
+}
+.weightChart svg,.weightMiniChart svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
+.weightTrendCard{
+  border-radius:18px;
+  padding:18px;
+  margin-top:14px;
+}
+.weightTrendCard h3{
+  font-size:1.2rem;
+  margin-bottom:16px;
+}
+.weightTrendGrid{
+  display:grid;
+  grid-template-columns:1fr 1px 1fr;
+  align-items:center;
+  gap:14px;
+}
+.weightTrendDivider{
+  width:1px;
+  height:64px;
+  background:var(--line2);
+}
+.weightTrendMetric{
+  text-align:center;
+}
+.weightTrendValue{
+  color:#19c7a2;
+  font-size:1.42rem;
+  font-weight:730;
+}
+.weightTrendValue.up{
+  color:#e39a69;
+}
+.weightTrendLabel{
+  color:var(--muted);
+  font-size:.78rem;
+  margin-top:5px;
+}
+.weightMiniChart{
+  height:105px;
+  margin-top:18px;
+}
+.weightHistoryCard{
+  border-radius:18px;
+  padding:18px;
+  margin-top:14px;
+}
+.weightHistoryHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:10px;
+  margin-bottom:8px;
+}
+.weightHistoryHeader h3{
+  font-size:1.18rem;
+  margin-top:2px;
+}
+.historyCount{
+  color:var(--muted2);
+  font-size:.75rem;
+}
+.weightHistoryList{
+  display:grid;
+}
+.weightHistoryRow{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:12px;
+  min-height:67px;
+  padding:10px 2px;
+  border-bottom:1px solid rgba(255,255,255,.035);
+}
+.weightHistoryRow:last-child{border-bottom:0}
+.weightHistoryMain{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+.weightHistoryValue{
+  font-size:1rem;
+  font-weight:780;
+  color:#f5f5f6;
+  white-space:nowrap;
+}
+.weightHistoryNote{
+  color:#777b81;
+  font-size:.72rem;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.weightHistoryRight{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.weightHistoryDate{
+  color:#92959a;
+  font-size:.82rem;
+  text-align:right;
+  white-space:nowrap;
+}
+.weightEditBtn{
+  width:30px;
+  height:30px;
+  border:0;
+  background:transparent;
+  color:#8f9297;
+  cursor:pointer;
+  font-size:.9rem;
+}
+.weightEmpty{
+  text-align:center;
+  color:var(--muted);
+  padding:28px 10px;
+}
+
+/* Calculator mobile fix: remove the old oversized-svg scale hack */
+@media(max-width:640px){
+  .container{
+    padding:10px 10px 82px!important;
+    max-width:100%!important;
+    overflow-x:hidden!important;
+  }
+  main,#mainContent,.appView,.card,.results,.sidebar,.specs{
+    min-width:0!important;
+    max-width:100%!important;
+    width:100%!important;
+  }
+  .card{
+    padding:14px!important;
+    border-radius:17px!important;
+  }
+  .inputs{
+    grid-template-columns:1fr!important;
+  }
+  .syringeWrap{
+    width:100%!important;
+    overflow:hidden!important;
+    margin:8px 0 12px!important;
+  }
+  .syringeCanvas{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    height:auto!important;
+    transform:none!important;
+    transform-origin:initial!important;
+    display:block!important;
+  }
+  .calc{
+    position:static!important;
+    width:100%!important;
+    min-height:50px!important;
+  }
+  .metrics{
+    grid-template-columns:1fr 1fr!important;
+  }
+  .tabbar{
+    position:static!important;
+    top:auto!important;
+    z-index:auto!important;
+    backdrop-filter:none!important;
+  }
+  .drawval{font-size:2.8rem!important}
+  .bottomNav{
+    display:grid!important;
+    grid-template-columns:repeat(6,1fr)!important;
+    left:0!important;
+    right:0!important;
+    bottom:0!important;
+    padding:7px 5px max(7px,env(safe-area-inset-bottom))!important;
+  }
+  .navBtn{
+    min-height:43px!important;
+    font-size:.61rem!important;
+    padding:0 1px!important;
+  }
+  .weightFormGrid{grid-template-columns:1fr!important}
+  .weightHeroCard{padding:22px 12px 14px}
+  .weightCurrentValue{font-size:3rem}
+  .weightChart{height:190px}
+  .weightHistoryRow{min-height:64px}
+  .weightHistoryDate{font-size:.76rem}
+  .quickActions{grid-template-columns:1fr 1fr!important}
+  .todayStats{grid-template-columns:1fr 1fr!important}
+}
+@media(min-width:641px){
+  .bottomNav{grid-template-columns:repeat(6,1fr)!important}
+}
+
+
+.brandWithIcon{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+.brandIcon{
+  width:22px;
+  height:22px;
+  border-radius:6px;
+  display:block;
+}
+.navBtn{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:3px!important;
+}
+.navIcon{
+  display:block;
+  font-size:1rem;
+  line-height:1;
+  opacity:.95;
+}
+.navLabel{
+  display:block;
+  font-size:.66rem;
+  line-height:1.05;
+}
+.navBtn.active .navIcon,
+.navBtn.active .navLabel{
+  color:#19c7a2;
+}
+.heroIcon{
+  border-radius:24px!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+}
+.todayHero,.weightHeroCard,.weightTrendCard,.weightHistoryCard,.inventoryHeader,.trackerHeader,.historyHeader,.homeSection,.card,.sidebar,.results,.stockCard,.vialCard,.historyCard{
+  border-radius:22px!important;
+}
+.quickAction,.todayStatCard,.trackerSummaryCard,.inputcard,.stockStat,.vialStat{
+  border-radius:14px!important;
+}
+
 </style>
 </head>
 <body>
 <div class="container">
   <header class="header">
-    <div class="brand">VialTrack</div>
+    <div class="brand brandWithIcon"><img src="./icon-192.png" alt="VialTrack" class="brandIcon"> <span>VialTrack</span></div>
     <h1>VialTrack</h1>
     <div class="subtitle">A cleaner offline app for vial math, reconstitution, and dose planning.</div>
     <div class="offline-badge">Installable Offline App</div>
@@ -1707,6 +2175,10 @@ h1{
         <span class="quickActionTitle">Active Vials</span>
         <span class="quickActionSub">Check remaining</span>
       </button>
+      <button class="quickAction" type="button" onclick="showView('weight')">
+        <span class="quickActionTitle">Weight</span>
+        <span class="quickActionSub">Log or view trend</span>
+      </button>
       <button class="quickAction" type="button" onclick="showView('history')">
         <span class="quickActionTitle">History</span>
         <span class="quickActionSub">Review setups</span>
@@ -1733,6 +2205,11 @@ h1{
         <span>This Week</span>
         <strong id="homeWeekEntryCount">0</strong>
         <small>tracked entries</small>
+      </div>
+      <div class="todayStatCard" onclick="showView('weight')">
+        <span>Weight</span>
+        <strong id="homeWeightValue">—</strong>
+        <small>latest lbs</small>
       </div>
       <div class="todayStatCard" onclick="showView('history')">
         <span>Reconstitutions</span>
@@ -1988,6 +2465,95 @@ h1{
   </section>
 
 
+
+  <section id="weightPanel" class="weightPanel appView hidden">
+    <div class="weightTopBar">
+      <div>
+        <div class="screenEyebrow">VialTrack</div>
+        <h2>Weight</h2>
+      </div>
+      <button class="roundAddBtn" type="button" onclick="openWeightComposer()">+</button>
+    </div>
+
+    <div class="weightRangeTabs">
+      <button id="weightRecentBtn" class="weightRangeBtn active" type="button" onclick="setWeightRange('recent')">Recent</button>
+      <button id="weightWeekBtn" class="weightRangeBtn" type="button" onclick="setWeightRange('week')">Week</button>
+      <button id="weightMonthBtn" class="weightRangeBtn" type="button" onclick="setWeightRange('month')">Month</button>
+      <button id="weightYearBtn" class="weightRangeBtn" type="button" onclick="setWeightRange('year')">Year</button>
+    </div>
+
+    <div id="weightComposer" class="weightComposer hidden">
+      <div class="composerHeader">
+        <div>
+          <div class="screenEyebrow">Weight Entry</div>
+          <h3 id="weightComposerTitle">Add weight</h3>
+        </div>
+        <button class="iconTextBtn" type="button" onclick="closeWeightComposer()">Close</button>
+      </div>
+      <input id="weightEditingId" type="hidden" value="">
+      <div class="weightFormGrid">
+        <div class="inputcard">
+          <label class="label">Weight</label>
+          <div class="inrow">
+            <input id="weightValue" type="number" min="0" step="0.1" value="">
+            <span class="unitlabel">LBS</span>
+          </div>
+        </div>
+        <div class="inputcard">
+          <label class="label">Date</label>
+          <input id="weightDate" class="textInput dateTimeInput" type="date">
+        </div>
+        <div class="inputcard">
+          <label class="label">Time</label>
+          <input id="weightTime" class="textInput dateTimeInput" type="time">
+        </div>
+        <div class="inputcard">
+          <label class="label">Notes</label>
+          <input id="weightNotes" class="textInput" type="text" placeholder="Optional">
+        </div>
+      </div>
+      <div class="trackerComposerActions">
+        <button class="heroBtn" type="button" onclick="closeWeightComposer()">Cancel</button>
+        <button id="weightDeleteButton" class="heroBtn hidden" type="button" onclick="deleteWeightEntry(Number(q('weightEditingId').value))">Delete</button>
+        <button id="weightSaveButton" class="heroBtn primary" type="button" onclick="saveWeightEntry()">Save Weight</button>
+      </div>
+    </div>
+
+    <div class="weightHeroCard">
+      <div id="weightCurrentValue" class="weightCurrentValue">—</div>
+      <div class="weightCurrentUnit">lbs</div>
+      <div id="weightCurrentDate" class="weightCurrentDate">No data yet</div>
+      <div id="weightChart" class="weightChart"></div>
+    </div>
+
+    <div class="weightTrendCard">
+      <h3>Weight Trends</h3>
+      <div class="weightTrendGrid">
+        <div class="weightTrendMetric">
+          <div id="weightPreviousTrend" class="weightTrendValue">—</div>
+          <div id="weightPreviousLabel" class="weightTrendLabel">Previous entry</div>
+        </div>
+        <div class="weightTrendDivider"></div>
+        <div class="weightTrendMetric">
+          <div id="weightRangeTrend" class="weightTrendValue">—</div>
+          <div id="weightRangeLabel" class="weightTrendLabel">Selected range</div>
+        </div>
+      </div>
+      <div id="weightMiniChart" class="weightMiniChart"></div>
+    </div>
+
+    <div class="weightHistoryCard">
+      <div class="weightHistoryHeader">
+        <div>
+          <div class="screenEyebrow">History Data</div>
+          <h3>Entries</h3>
+        </div>
+        <span id="weightHistoryCount" class="historyCount">0 entries</span>
+      </div>
+      <div id="weightHistoryList" class="weightHistoryList"></div>
+    </div>
+  </section>
+
   <section id="historyPanel" class="historyPanel appView hidden">
     <div class="historyHeader">
       <div>
@@ -2024,11 +2590,12 @@ h1{
   </section>
 
   <nav class="bottomNav" aria-label="Primary">
-    <button id="navHome" class="navBtn active" type="button" onclick="showView('home')">Home</button>
-    <button id="navCalc" class="navBtn" type="button" onclick="showView('calculator')">Calc</button>
-    <button id="navTracker" class="navBtn" type="button" onclick="showView('tracker')">Tracker</button>
-    <button id="navInventory" class="navBtn" type="button" onclick="showView('inventory')">Vials</button>
-    <button id="navHistory" class="navBtn" type="button" onclick="showView('history')">History</button>
+    <button id="navHome" class="navBtn active" type="button" onclick="showView('home')"><span class="navIcon">⌂</span><span class="navLabel">Home</span></button>
+    <button id="navCalc" class="navBtn" type="button" onclick="showView('calculator')"><span class="navIcon">◌</span><span class="navLabel">Calc</span></button>
+    <button id="navTracker" class="navBtn" type="button" onclick="showView('tracker')"><span class="navIcon">↗</span><span class="navLabel">Tracker</span></button>
+    <button id="navInventory" class="navBtn" type="button" onclick="showView('inventory')"><span class="navIcon">◫</span><span class="navLabel">Vials</span></button>
+    <button id="navWeight" class="navBtn" type="button" onclick="showView('weight')"><span class="navIcon">⚖</span><span class="navLabel">Weight</span></button>
+    <button id="navHistory" class="navBtn" type="button" onclick="showView('history')"><span class="navIcon">☰</span><span class="navLabel">History</span></button>
   </nav>
 
   <main id="mainContent">
@@ -2282,17 +2849,19 @@ function showView(view){
   const recon = q('panelRecon');
   const tracker = q('trackerPanel');
   const inventory = q('inventoryPanel');
+  const weight = q('weightPanel');
   const history = q('historyPanel');
   const nasal = q('panelNasal');
   if(home) home.classList.toggle('hidden', view !== 'home');
   if(recon) recon.classList.toggle('hidden', view !== 'calculator');
   if(tracker) tracker.classList.toggle('hidden', view !== 'tracker');
   if(inventory) inventory.classList.toggle('hidden', view !== 'inventory');
+  if(weight) weight.classList.toggle('hidden', view !== 'weight');
   if(history) history.classList.toggle('hidden', view !== 'history');
   if(nasal) nasal.classList.toggle('hidden', view !== 'nasal');
 
-  const navMap = {home:'navHome', calculator:'navCalc', tracker:'navTracker', inventory:'navInventory', history:'navHistory'};
-  ['navHome','navCalc','navTracker','navInventory','navHistory'].forEach(id => {
+  const navMap = {home:'navHome', calculator:'navCalc', tracker:'navTracker', inventory:'navInventory', weight:'navWeight', history:'navHistory'};
+  ['navHome','navCalc','navTracker','navInventory','navWeight','navHistory'].forEach(id => {
     const el = q(id);
     if(el) el.classList.toggle('active', id === navMap[view]);
   });
@@ -2309,6 +2878,8 @@ function showView(view){
     prepareTracker();
   }else if(view === 'inventory'){
     renderInventory();
+  }else if(view === 'weight'){
+    prepareWeightTracker();
   }else if(view === 'home'){
     refreshHomeDashboard();
   }
@@ -2489,7 +3060,7 @@ buildTicks();calculateRecon(false,true);showView('home');
 
 <script>
 const VT_DB_NAME = 'VialTrackDB';
-const VT_DB_VERSION = 4;
+const VT_DB_VERSION = 5;
 const VT_HISTORY_STORE = 'reconstitutions';
 let vtDbPromise = null;
 
@@ -2521,6 +3092,11 @@ function openVialTrackDB(){
         const stockStore = db.createObjectStore('stockInventory', {keyPath:'id', autoIncrement:true});
         stockStore.createIndex('peptideName','peptideName',{unique:false});
         stockStore.createIndex('createdAt','createdAt',{unique:false});
+      }
+      if(!db.objectStoreNames.contains('weightLogs')){
+        const weightStore = db.createObjectStore('weightLogs', {keyPath:'id', autoIncrement:true});
+        weightStore.createIndex('date','date',{unique:false});
+        weightStore.createIndex('createdAt','createdAt',{unique:false});
       }
     };
     req.onsuccess = () => resolve(req.result);
@@ -2784,17 +3360,20 @@ async function exportHistory(){
   let trackerLogs = [];
   let activeVials = [];
   let stockInventory = [];
+  let weightLogs = [];
   try{ trackerLogs = await getAllTrackerLogs(); }catch(e){}
   try{ activeVials = await getAllActiveVials(); }catch(e){}
   try{ stockInventory = await getAllStockItems(); }catch(e){}
+  try{ weightLogs = await getAllWeightLogs(); }catch(e){}
   const payload = {
     app:'VialTrack',
-    version:'v8',
+    version:'v9',
     exportedAt:new Date().toISOString(),
     reconstitutions:records,
     stockInventory,
     activeVials,
-    trackerLogs
+    trackerLogs,
+    weightLogs
   };
   const blob = new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
   const url = URL.createObjectURL(blob);
@@ -2825,6 +3404,18 @@ async function importHistoryFile(event){
     }
 
     const stockIdMap = new Map();
+    let importedWeights = 0;
+    if(Array.isArray(data.weightLogs)){
+      for(const raw of data.weightLogs){
+        const w = {...raw};
+        delete w.id;
+        if(!w.createdAt) w.createdAt = new Date().toISOString();
+        await addWeightLog(w);
+        importedWeights++;
+      }
+      localStorage.setItem(VT_WEIGHT_SEED_KEY,'done');
+    }
+
     let importedStock = 0;
     if(Array.isArray(data.stockInventory)){
       for(const raw of data.stockInventory){
@@ -3658,10 +4249,12 @@ async function refreshHomeDashboard(){
   let history = [];
   let usage = new Map();
 
+  let weights = [];
   try{ logs = await getAllTrackerLogs(); }catch(e){}
   try{ vials = await getAllActiveVials(); }catch(e){}
   try{ stock = await getAllStockItems(); }catch(e){}
   try{ history = await getAllHistoryRecords(); }catch(e){}
+  try{ weights = await getAllWeightLogs(); }catch(e){}
   try{ usage = await vialUsageMap(); }catch(e){}
 
   const today = localDateString();
@@ -3683,6 +4276,10 @@ async function refreshHomeDashboard(){
   if(q('homeWeekEntryCount')) q('homeWeekEntryCount').textContent = weekLogs.length;
   if(q('homeActiveVialCount')) q('homeActiveVialCount').textContent = activeVials.length;
   if(q('homeStockVialCount')) q('homeStockVialCount').textContent = stock.reduce((sum,s)=>sum+Math.max(0,Number(s.quantity)||0),0);
+  if(q('homeWeightValue')){
+    const latestWeight = weights.slice().sort((a,b)=>weightTimestamp(a).localeCompare(weightTimestamp(b))).pop();
+    q('homeWeightValue').textContent = latestWeight ? Number(latestWeight.weight).toFixed(1) : '—';
+  }
   if(q('homeHistoryCount')) q('homeHistoryCount').textContent = history.length;
 
   const todayContainer = q('homeTodayEntries');
@@ -3764,9 +4361,302 @@ window.addEventListener('DOMContentLoaded',()=>{
 });
 </script>
 
+
+<script>
+const VT_WEIGHT_STORE = 'weightLogs';
+const VT_WEIGHT_SEED_KEY = 'vialTrackWeightSeed_v9';
+let weightRangeMode = 'recent';
+
+const VT_WEIGHT_SEED = [
+  {weight:331.2,date:'2026-08-23',time:'00:02',notes:''},
+  {weight:333.6,date:'2026-08-15',time:'09:46',notes:''},
+  {weight:333.8,date:'2026-08-11',time:'07:14',notes:''},
+  {weight:334.8,date:'2026-08-10',time:'06:12',notes:''},
+  {weight:336.6,date:'2026-07-31',time:'10:39',notes:''},
+  {weight:340.0,date:'2026-07-27',time:'07:12',notes:''},
+  {weight:338.6,date:'2026-07-16',time:'21:44',notes:''},
+  {weight:342.6,date:'2026-07-11',time:'08:14',notes:''},
+  {weight:348.6,date:'2026-07-06',time:'07:21',notes:''},
+  {weight:346.0,date:'2026-06-29',time:'07:36',notes:''},
+  {weight:350.0,date:'2026-06-22',time:'11:33',notes:''},
+  {weight:345.4,date:'2026-06-18',time:'07:14',notes:''},
+  {weight:347.2,date:'2026-06-14',time:'08:38',notes:''},
+  {weight:349.6,date:'2026-06-10',time:'07:08',notes:''}
+];
+
+async function addWeightLog(record){
+  const db = await openVialTrackDB();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction(VT_WEIGHT_STORE,'readwrite');
+    const req = tx.objectStore(VT_WEIGHT_STORE).add(record);
+    req.onsuccess = ()=>resolve(req.result);
+    req.onerror = ()=>reject(req.error);
+  });
+}
+async function updateWeightLog(record){
+  const db = await openVialTrackDB();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction(VT_WEIGHT_STORE,'readwrite');
+    const req = tx.objectStore(VT_WEIGHT_STORE).put(record);
+    req.onsuccess = ()=>resolve(req.result);
+    req.onerror = ()=>reject(req.error);
+  });
+}
+async function getWeightLog(id){
+  const db = await openVialTrackDB();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction(VT_WEIGHT_STORE,'readonly');
+    const req = tx.objectStore(VT_WEIGHT_STORE).get(Number(id));
+    req.onsuccess = ()=>resolve(req.result || null);
+    req.onerror = ()=>reject(req.error);
+  });
+}
+async function getAllWeightLogs(){
+  const db = await openVialTrackDB();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction(VT_WEIGHT_STORE,'readonly');
+    const req = tx.objectStore(VT_WEIGHT_STORE).getAll();
+    req.onsuccess = ()=>resolve(req.result || []);
+    req.onerror = ()=>reject(req.error);
+  });
+}
+async function deleteWeightLog(id){
+  const db = await openVialTrackDB();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction(VT_WEIGHT_STORE,'readwrite');
+    const req = tx.objectStore(VT_WEIGHT_STORE).delete(Number(id));
+    req.onsuccess = ()=>resolve();
+    req.onerror = ()=>reject(req.error);
+  });
+}
+async function seedWeightData(){
+  try{
+    const existing = await getAllWeightLogs();
+    if(existing.length || localStorage.getItem(VT_WEIGHT_SEED_KEY)==='done') return;
+    for(const r of VT_WEIGHT_SEED){
+      await addWeightLog({
+        ...r,
+        createdAt:new Date(r.date+'T'+r.time+':00').toISOString(),
+        updatedAt:new Date().toISOString()
+      });
+    }
+    localStorage.setItem(VT_WEIGHT_SEED_KEY,'done');
+  }catch(e){}
+}
+function weightTimestamp(r){
+  return `${r.date||''}T${r.time||'00:00'}`;
+}
+function weightDateLabel(r){
+  const d = trackerDateObj(r.date);
+  const datePart = d.toLocaleDateString(undefined,{month:'short',day:'numeric'});
+  return datePart + (r.time ? ', ' + formatLogTime(r.time) : '');
+}
+function weightFullDateLabel(r){
+  const d = trackerDateObj(r.date);
+  return d.toLocaleDateString(undefined,{month:'short',day:'numeric'}) + (r.time ? ', ' + formatLogTime(r.time) : '');
+}
+function setWeightRange(mode){
+  weightRangeMode = mode;
+  ['recent','week','month','year'].forEach(m=>{
+    const id = 'weight'+m.charAt(0).toUpperCase()+m.slice(1)+'Btn';
+    q(id)?.classList.toggle('active',m===mode);
+  });
+  renderWeightTracker();
+}
+function filterWeightRange(sortedAsc){
+  if(!sortedAsc.length) return [];
+  const latest = sortedAsc[sortedAsc.length-1];
+  const latestDate = trackerDateObj(latest.date);
+  let days = 90;
+  if(weightRangeMode==='week') days = 7;
+  if(weightRangeMode==='month') days = 30;
+  if(weightRangeMode==='year') days = 365;
+  if(weightRangeMode==='recent') days = 90;
+  const cutoff = addDays(latestDate,-days);
+  return sortedAsc.filter(r=>trackerDateObj(r.date)>=cutoff);
+}
+function makeWeightSvg(records, mini=false){
+  if(!records.length) return '<div class="weightEmpty">No weight data in this range.</div>';
+  const width = mini ? 700 : 700;
+  const height = mini ? 110 : 230;
+  const padL = mini ? 8 : 18;
+  const padR = mini ? 8 : 46;
+  const padT = mini ? 10 : 18;
+  const padB = mini ? 12 : 26;
+  const vals = records.map(r=>Number(r.weight));
+  let min = Math.min(...vals), max = Math.max(...vals);
+  const spread = Math.max(2,max-min);
+  min -= spread*.12;
+  max += spread*.12;
+  const x = i => padL + (records.length===1 ? (width-padL-padR)/2 : i*(width-padL-padR)/(records.length-1));
+  const y = v => padT + (max-v)*(height-padT-padB)/(max-min);
+  const points = records.map((r,i)=>`${x(i).toFixed(1)},${y(Number(r.weight)).toFixed(1)}`).join(' ');
+  const area = `${padL},${height-padB} ${points} ${x(records.length-1)},${height-padB}`;
+  const gridVals = mini ? [] : [max, (max+min)/2, min];
+  const grids = gridVals.map(g=>`
+    <line x1="${padL}" y1="${y(g)}" x2="${width-padR}" y2="${y(g)}" stroke="rgba(255,255,255,.10)" stroke-width="1"/>
+    <text x="${width-padR+7}" y="${y(g)+4}" fill="#777b81" font-size="13">${g.toFixed(1)}</text>
+  `).join('');
+  const dots = mini ? '' : records.map((r,i)=>`
+    <circle cx="${x(i)}" cy="${y(Number(r.weight))}" r="${i===records.length-1?5:0}" fill="#19c7a2" stroke="#f0f0f1" stroke-width="${i===records.length-1?2:0}"/>
+  `).join('');
+  const labels = mini ? '' : `
+    <text x="${padL}" y="${height-5}" fill="#777b81" font-size="12">${escHtml(formatShortDate(records[0].date))}</text>
+    <text x="${width-padR}" y="${height-5}" fill="#777b81" font-size="12" text-anchor="end">${escHtml(formatShortDate(records[records.length-1].date))}</text>
+  `;
+  return `
+    <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" aria-label="Weight trend chart">
+      <defs>
+        <linearGradient id="weightAreaGradient${mini?'Mini':''}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#19c7a2" stop-opacity=".28"/>
+          <stop offset="100%" stop-color="#19c7a2" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      ${grids}
+      <polygon points="${area}" fill="url(#weightAreaGradient${mini?'Mini':''})"/>
+      <polyline points="${points}" fill="none" stroke="#19c7a2" stroke-width="${mini?3:3}" stroke-linecap="round" stroke-linejoin="round"/>
+      ${dots}
+      ${labels}
+    </svg>
+  `;
+}
+function trendText(diff){
+  if(!Number.isFinite(diff)) return '—';
+  const abs = Math.abs(diff).toFixed(1);
+  if(Math.abs(diff)<0.05) return '0.0 lbs';
+  return `${diff<0?'▼':'▲'} ${abs} lbs`;
+}
+function setTrendEl(id,diff){
+  const el = q(id);
+  if(!el) return;
+  el.textContent = trendText(diff);
+  el.classList.toggle('up',diff>0);
+}
+async function renderWeightTracker(){
+  await seedWeightData();
+  let all = [];
+  try{ all = await getAllWeightLogs(); }catch(e){}
+  const asc = all.slice().sort((a,b)=>weightTimestamp(a).localeCompare(weightTimestamp(b)));
+  const desc = asc.slice().reverse();
+  const ranged = filterWeightRange(asc);
+  const latest = asc[asc.length-1];
+
+  if(!latest){
+    q('weightCurrentValue').textContent='—';
+    q('weightCurrentDate').textContent='No data yet';
+    q('weightChart').innerHTML='<div class="weightEmpty">Add your first weight entry.</div>';
+    q('weightMiniChart').innerHTML='';
+    q('weightHistoryList').innerHTML='<div class="weightEmpty">No weight entries yet.</div>';
+    q('weightHistoryCount').textContent='0 entries';
+    return;
+  }
+
+  q('weightCurrentValue').textContent=Number(latest.weight).toFixed(1);
+  q('weightCurrentDate').textContent=weightFullDateLabel(latest);
+  q('weightChart').innerHTML=makeWeightSvg(ranged,false);
+  q('weightMiniChart').innerHTML=makeWeightSvg(ranged,true);
+
+  const previous = asc.length>1 ? asc[asc.length-2] : null;
+  const prevDiff = previous ? Number(latest.weight)-Number(previous.weight) : NaN;
+  setTrendEl('weightPreviousTrend',prevDiff);
+  q('weightPreviousLabel').textContent=previous ? `Since ${formatShortDate(previous.date)}` : 'Previous entry';
+
+  const rangeStart = ranged.length ? ranged[0] : latest;
+  const rangeDiff = Number(latest.weight)-Number(rangeStart.weight);
+  setTrendEl('weightRangeTrend',rangeDiff);
+  const dayDiff = Math.max(0,Math.round((trackerDateObj(latest.date)-trackerDateObj(rangeStart.date))/(86400000)));
+  q('weightRangeLabel').textContent = dayDiff ? `Compared with ${dayDiff}d ago` : 'Selected range';
+
+  q('weightHistoryCount').textContent = `${desc.length} entr${desc.length===1?'y':'ies'}`;
+  q('weightHistoryList').innerHTML = desc.map(r=>`
+    <div class="weightHistoryRow">
+      <div class="weightHistoryMain">
+        <div class="weightHistoryValue">${Number(r.weight).toFixed(1)} lbs</div>
+        ${r.notes ? `<div class="weightHistoryNote">${escHtml(r.notes)}</div>` : ''}
+      </div>
+      <div class="weightHistoryRight">
+        <div class="weightHistoryDate">${escHtml(weightDateLabel(r))}</div>
+        <button class="weightEditBtn" type="button" onclick="openWeightComposer(${Number(r.id)})">Edit</button>
+      </div>
+    </div>
+  `).join('');
+
+  if(q('homeWeightValue')) q('homeWeightValue').textContent=Number(latest.weight).toFixed(1);
+}
+function openWeightComposer(id=null){
+  q('weightComposer').classList.remove('hidden');
+  if(!id){
+    q('weightEditingId').value='';
+    q('weightComposerTitle').textContent='Add weight';
+    q('weightSaveButton').textContent='Save Weight'; q('weightDeleteButton').classList.add('hidden');
+    q('weightValue').value='';
+    q('weightDate').value=localDateString();
+    q('weightTime').value=currentTimeString();
+    q('weightNotes').value='';
+  }else{
+    loadWeightForEdit(id);
+  }
+  q('weightComposer').scrollIntoView({behavior:'smooth',block:'start'});
+}
+async function loadWeightForEdit(id){
+  const r = await getWeightLog(id);
+  if(!r) return;
+  q('weightEditingId').value=r.id;
+  q('weightComposerTitle').textContent='Edit weight';
+  q('weightSaveButton').textContent='Save Changes'; q('weightDeleteButton').classList.remove('hidden');
+  q('weightValue').value=r.weight;
+  q('weightDate').value=r.date;
+  q('weightTime').value=r.time || '';
+  q('weightNotes').value=r.notes || '';
+}
+function closeWeightComposer(){
+  q('weightComposer').classList.add('hidden');
+  q('weightEditingId').value='';
+}
+async function saveWeightEntry(){
+  const weight=parseFloat(q('weightValue').value);
+  const date=q('weightDate').value;
+  const time=q('weightTime').value;
+  const notes=(q('weightNotes').value||'').trim();
+  const id=Number(q('weightEditingId').value||0);
+  if(!Number.isFinite(weight)||weight<=0){
+    alert('Enter a valid weight.');
+    return;
+  }
+  if(!date){
+    alert('Choose a date.');
+    return;
+  }
+  const record={weight,date,time,notes,updatedAt:new Date().toISOString(),createdAt:new Date().toISOString()};
+  if(id){
+    const existing=await getWeightLog(id);
+    record.id=id;
+    record.createdAt=existing?.createdAt||record.createdAt;
+    await updateWeightLog(record);
+  }else{
+    await addWeightLog(record);
+  }
+  closeWeightComposer();
+  await renderWeightTracker();
+  await refreshHomeDashboard();
+}
+async function deleteWeightEntry(id){
+  if(!confirm('Delete this weight entry?')) return;
+  await deleteWeightLog(id);
+  closeWeightComposer();
+  await renderWeightTracker();
+  await refreshHomeDashboard();
+}
+async function prepareWeightTracker(){
+  await seedWeightData();
+  await renderWeightTracker();
+}
+window.addEventListener('DOMContentLoaded',()=>seedWeightData().then(renderWeightTracker));
+</script>
+
 <script>
 (function(){
-  const STATE_KEY = 'vialTrackState_v8';
+  const STATE_KEY = 'vialTrackState_v9';
   let deferredInstallPrompt = null;
 
   function byId(id){ return document.getElementById(id); }
@@ -3828,7 +4718,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     }
 
     calculateRecon(false, true);
-    if(state.currentView && ['home','calculator','tracker','inventory','history','nasal'].includes(state.currentView)){
+    if(state.currentView && ['home','calculator','tracker','inventory','weight','history','nasal'].includes(state.currentView)){
       showView(state.currentView);
     }
     return true;
