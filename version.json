@@ -1,0 +1,6 @@
+{
+  "app": "Vial",
+  "version": "14.0.0",
+  "build": 14,
+  "update_behavior": "prompt"
+}
