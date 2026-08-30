@@ -1,0 +1,39 @@
+name: Build Vial v14
+
+on:
+  push:
+    branches:
+      - v14-simplify
+    paths:
+      - scripts/build_v14.py
+      - .github/workflows/build-v14.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v14-simplify
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build simplified public app
+        run: python scripts/build_v14.py
+      - name: Verify personal seed data is absent
+        run: |
+          ! grep -R "331.2\|333.6\|Lilipetide\|WanShun\|RT20\|TR30" index.html VialTrack.html
+      - name: Commit generated v14 files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html VialTrack.html manifest.json version.json sw.js README.txt
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+          else
+            git commit -m "Build simplified Vial v14"
+            git push origin HEAD:v14-simplify
+          fi
