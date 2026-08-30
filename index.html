@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<meta name="theme-color" content="#0a0f1e">
+<meta id="themeColorMeta" name="theme-color" content="#101113">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -13,8 +13,20 @@
 <link rel="apple-touch-icon" href="./icon-192.png">
 
 <title>VialTrack</title>
-<meta name="vialtrack-version" content="14.0.1">
+<meta name="vialtrack-version" content="14.0.2">
 <meta name="description" content="Offline vial calculations, inventory, history, and weight tracking.">
+<script>
+(function(){
+  const key = 'vialtrack-theme';
+  let saved = null;
+  try { saved = localStorage.getItem(key); } catch(e) {}
+  const theme = saved === 'light' || saved === 'dark'
+    ? saved
+    : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  document.documentElement.dataset.theme = theme;
+  document.documentElement.style.colorScheme = theme;
+})();
+</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -2372,6 +2384,181 @@ body{
 /* V14 simplified product structure */
 .bottomNav{grid-template-columns:repeat(5,1fr)!important}.simpleHomeHead{display:flex;justify-content:space-between;align-items:center;padding:8px 2px 12px}.simpleHomeHead h2{font-size:2rem;margin:3px 0 0}.simpleHomeIcon{width:48px;height:48px;border-radius:14px}.homePrimaryActions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px}.homePrimaryBtn{min-height:52px;border:0;border-radius:14px;background:#19c7a2;color:#081511;font-size:.96rem;font-weight:800}.homePrimaryBtn.secondary{background:#26282c;color:#f5f5f6;border:1px solid var(--line2)}.homeCompactStats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:10px}.homeCompactStats button{min-height:64px;padding:9px;border-radius:13px;background:#1d1f22;border:1px solid var(--line);color:var(--text);text-align:left}.homeCompactStats span{display:block;font-size:.62rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted2);font-weight:800}.homeCompactStats strong{display:block;font-size:1.2rem;margin-top:3px}.homeSectionTight{margin-top:9px!important}.simplifiedVialActions{display:grid!important;grid-template-columns:1fr 1fr;gap:7px!important}.subtleAction{opacity:.72}.simpleScreenHeader{padding:5px 2px 12px}.simpleScreenHeader h2{font-size:1.7rem;margin:2px 0}.morePanel{max-width:760px;margin:0 auto}.moreGroup{margin-bottom:14px;border-radius:18px;background:#1d1f22;border:1px solid var(--line);overflow:hidden}.moreGroupTitle{padding:13px 14px 7px;color:var(--muted2);font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.moreRow,.moreStaticRow{width:100%;min-height:64px;display:grid;grid-template-columns:34px 1fr 18px;align-items:center;gap:10px;padding:10px 14px;border:0;border-top:1px solid rgba(255,255,255,.035);background:transparent;color:var(--text);text-align:left}.moreStaticRow{grid-template-columns:1fr}.moreRowIcon{width:30px;height:30px;display:grid;place-items:center;color:#19c7a2}.moreRowIcon .appNavSvg{width:21px;height:21px}.eraseIcon{font-size:1.4rem}.moreRow strong,.moreStaticRow strong{display:block;font-size:.9rem}.moreRow small,.moreStaticRow small{display:block;color:var(--muted);font-size:.72rem;margin-top:2px}.moreChevron{color:var(--muted2);font-size:1.3rem}.importMoreRow{cursor:pointer}.importMoreRow input{display:none}.dangerRow .moreRowIcon,.dangerRow strong{color:#dc8b8b}.header .offline-badge,.header .subtitle,.header h1{display:none!important}@media(max-width:640px){.bottomNav{grid-template-columns:repeat(5,1fr)!important}.navLabel{font-size:.63rem!important}.homeCompactStats button{min-height:58px;padding:7px}.homeCompactStats strong{font-size:1.05rem}}
 
+/* V14.0.2 light and dark appearance */
+.themeRow{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:12px;
+  min-height:72px;
+  padding:10px 14px;
+  border-top:1px solid var(--line);
+}
+.themeRowText strong{display:block;font-size:.9rem}
+.themeRowText small{display:block;color:var(--muted);font-size:.72rem;margin-top:2px}
+.themeToggle{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3px;
+  padding:3px;
+  border-radius:999px;
+  background:#303236;
+}
+.themeToggle button{
+  min-width:64px;
+  min-height:36px;
+  padding:0 13px;
+  border:0;
+  border-radius:999px;
+  background:transparent;
+  color:#d0d1d4;
+  font:inherit;
+  font-size:.78rem;
+  font-weight:750;
+  cursor:pointer;
+}
+.themeToggle button.active{
+  background:#f1f1f2;
+  color:#202124;
+}
+
+html[data-theme="light"]{
+  --bg:#f4f6f8;
+  --bg2:#eef1f4;
+  --panel:#ffffff;
+  --panel2:#f2f4f6;
+  --panel3:#e8ebee;
+  --line:rgba(20,28,38,.09);
+  --line2:rgba(20,28,38,.14);
+  --text:#18212b;
+  --muted:#5f6873;
+  --muted2:#777f89;
+  --warn:#9a6714;
+}
+html[data-theme="light"],
+html[data-theme="light"] body{
+  background:#f4f6f8!important;
+  color:var(--text)!important;
+}
+html[data-theme="light"] .card,
+html[data-theme="light"] .sidebar,
+html[data-theme="light"] .specs,
+html[data-theme="light"] .verify,
+html[data-theme="light"] .tips,
+html[data-theme="light"] .detail,
+html[data-theme="light"] .results,
+html[data-theme="light"] .roadmapCard,
+html[data-theme="light"] .dashCard,
+html[data-theme="light"] .homeSection,
+html[data-theme="light"] .todayStatCard,
+html[data-theme="light"] .trackerSummaryCard,
+html[data-theme="light"] .historyCard,
+html[data-theme="light"] .vialCard,
+html[data-theme="light"] .stockCard,
+html[data-theme="light"] .weightHeroCard,
+html[data-theme="light"] .weightTrendCard,
+html[data-theme="light"] .weightHistoryCard,
+html[data-theme="light"] .todayHero,
+html[data-theme="light"] .trackerHeader,
+html[data-theme="light"] .inventoryHeader,
+html[data-theme="light"] .historyHeader,
+html[data-theme="light"] .weightComposer,
+html[data-theme="light"] .moreGroup{
+  background:#ffffff!important;
+  border-color:var(--line)!important;
+}
+html[data-theme="light"] .inputcard,
+html[data-theme="light"] .metric,
+html[data-theme="light"] .spec,
+html[data-theme="light"] .vialStat,
+html[data-theme="light"] .stockStat,
+html[data-theme="light"] .drawbox,
+html[data-theme="light"] .bigresult,
+html[data-theme="light"] .recommend,
+html[data-theme="light"] .warning,
+html[data-theme="light"] .reference,
+html[data-theme="light"] .vialRemainingBlock{
+  background:#f2f4f6!important;
+  border-color:var(--line)!important;
+}
+html[data-theme="light"] .tabbar,
+html[data-theme="light"] .subtabs,
+html[data-theme="light"] .viewToggle,
+html[data-theme="light"] .weightRangeTabs,
+html[data-theme="light"] .themeToggle{
+  background:#e7eaee!important;
+}
+html[data-theme="light"] .tab,
+html[data-theme="light"] .subtab,
+html[data-theme="light"] .viewToggleBtn,
+html[data-theme="light"] .weightRangeBtn,
+html[data-theme="light"] .themeToggle button{
+  color:#4f5964!important;
+}
+html[data-theme="light"] .tab.active,
+html[data-theme="light"] .subtab.active,
+html[data-theme="light"] .viewToggleBtn.active,
+html[data-theme="light"] .weightRangeBtn.active,
+html[data-theme="light"] .themeToggle button.active{
+  background:#ffffff!important;
+  color:#18212b!important;
+  box-shadow:0 1px 3px rgba(20,28,38,.12)!important;
+}
+html[data-theme="light"] .heroBtn,
+html[data-theme="light"] .homeTextBtn,
+html[data-theme="light"] .historyActionBtn,
+html[data-theme="light"] .logActionBtn,
+html[data-theme="light"] .vialActionBtn,
+html[data-theme="light"] .stockActionBtn,
+html[data-theme="light"] .homePrimaryBtn.secondary,
+html[data-theme="light"] .roundAddBtn{
+  background:#eef1f4!important;
+  border-color:var(--line2)!important;
+  color:#18212b!important;
+}
+html[data-theme="light"] .homeCompactStats button{
+  background:#ffffff!important;
+  border-color:var(--line)!important;
+  color:var(--text)!important;
+}
+html[data-theme="light"] .bottomNav{
+  background:rgba(255,255,255,.96)!important;
+  border-top-color:var(--line2)!important;
+}
+html[data-theme="light"] .navBtn{color:#68717b!important}
+html[data-theme="light"] .moreRow,
+html[data-theme="light"] .moreStaticRow,
+html[data-theme="light"] .themeRow{
+  border-top-color:var(--line)!important;
+  color:var(--text)!important;
+}
+html[data-theme="light"] .brandWithIcon{color:#2e3741!important}
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] .metric .mval,
+html[data-theme="light"] .weightHistoryValue,
+html[data-theme="light"] .stockName,
+html[data-theme="light"] .refrow span:first-child,
+html[data-theme="light"] .refrow span:last-child{
+  color:var(--text)!important;
+}
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea{
+  color:var(--text)!important;
+}
+html[data-theme="light"] .warning strong{color:#8a5a0b!important}
+html[data-theme="light"] .warning p{color:#74561d!important}
+html[data-theme="light"] .dangerRow .moreRowIcon,
+html[data-theme="light"] .dangerRow strong{color:#a64040!important}
+
+@media(max-width:500px){
+  .themeRow{grid-template-columns:1fr;align-items:start}
+  .themeToggle{width:100%}
+  .themeToggle button{min-height:40px}
+}
+
 </style>
 </head>
 <body>
@@ -2740,6 +2927,15 @@ body{
 
   <section id="morePanel" class="morePanel appView hidden">
     <div class="simpleScreenHeader"><div class="screenEyebrow">VialTrack</div><h2>More</h2></div>
+    <div class="moreGroup"><div class="moreGroupTitle">Appearance</div>
+      <div class="themeRow">
+        <span class="themeRowText"><strong>Color mode</strong><small>Choose how VialTrack looks on this device</small></span>
+        <span class="themeToggle" role="group" aria-label="Color mode">
+          <button id="themeLightButton" type="button" onclick="setTheme('light')" aria-pressed="false">Light</button>
+          <button id="themeDarkButton" type="button" onclick="setTheme('dark')" aria-pressed="false">Dark</button>
+        </span>
+      </div>
+    </div>
     <div class="moreGroup"><div class="moreGroupTitle">Tools</div>
       <button class="moreRow" type="button" onclick="showView('nasal')"><span class="moreRowIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3c2 2.5 3 5 3 7.5 0 3-1.2 5.2-3.6 6.6"/><path d="M13 8c3 .5 5 2.3 6 5"/><path d="M15.5 14.5h3"/></svg></span><span><strong>Intranasal Calculator</strong><small>Nasal spray calculations</small></span><span class="moreChevron">›</span></button>
     </div>
@@ -2749,7 +2945,7 @@ body{
       <button class="moreRow dangerRow" type="button" onclick="eraseAllLocalData()"><span class="moreRowIcon eraseIcon">×</span><span><strong>Erase All Local Data</strong><small>Remove this device's VialTrack data</small></span><span class="moreChevron">›</span></button>
     </div>
     <div class="moreGroup"><div class="moreGroupTitle">About</div>
-      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.0.1</small></span></div>
+      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.0.2</small></span></div>
       <div class="moreStaticRow"><span><strong>Data</strong><small>Stored on this device unless you export it</small></span></div>
     </div>
   </section>
@@ -3021,6 +3217,53 @@ function q(id){return document.getElementById(id)}
 function val(id){return parseFloat(q(id).value)}
 function validPositive(n){return Number.isFinite(n)&&n>0}
 function animate(el){el.classList.remove('fade');void el.offsetWidth;el.classList.add('fade')}
+
+const VT_THEME_KEY = 'vialtrack-theme';
+function preferredTheme(){
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
+function savedTheme(){
+  try {
+    const value = localStorage.getItem(VT_THEME_KEY);
+    return value === 'light' || value === 'dark' ? value : null;
+  } catch(e) {
+    return null;
+  }
+}
+function syncThemeControls(theme){
+  const light = q('themeLightButton');
+  const dark = q('themeDarkButton');
+  if(light){
+    light.classList.toggle('active', theme === 'light');
+    light.setAttribute('aria-pressed', String(theme === 'light'));
+  }
+  if(dark){
+    dark.classList.toggle('active', theme === 'dark');
+    dark.setAttribute('aria-pressed', String(theme === 'dark'));
+  }
+}
+function applyTheme(theme, persist){
+  const next = theme === 'light' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  document.documentElement.style.colorScheme = next;
+  const meta = q('themeColorMeta');
+  if(meta) meta.setAttribute('content', next === 'light' ? '#f4f6f8' : '#101113');
+  syncThemeControls(next);
+  if(persist){
+    try { localStorage.setItem(VT_THEME_KEY, next); } catch(e) {}
+  }
+}
+function setTheme(theme){
+  applyTheme(theme, true);
+}
+
+applyTheme(savedTheme() || preferredTheme(), false);
+const themePreference = window.matchMedia('(prefers-color-scheme: light)');
+const followDeviceTheme = event => {
+  if(!savedTheme()) applyTheme(event.matches ? 'light' : 'dark', false);
+};
+if(themePreference.addEventListener) themePreference.addEventListener('change', followDeviceTheme);
+else if(themePreference.addListener) themePreference.addListener(followDeviceTheme);
 
 
 let currentView = 'home';
@@ -3556,7 +3799,7 @@ async function exportHistory(){
   try{ weightLogs = await getAllWeightLogs(); }catch(e){}
   const payload = {
     app:'VialTrack',
-    version:'14.0.1',
+    version:'14.0.2',
     exportedAt:new Date().toISOString(),
     reconstitutions:records,
     stockInventory,
@@ -4952,7 +5195,7 @@ window.addEventListener('DOMContentLoaded',()=>seedWeightData().then(renderWeigh
 
 
 <script>
-const VIAL_APP_VERSION = '14.0.1';
+const VIAL_APP_VERSION = '14.0.2';
 let vialTrackRegistration = null;
 let vialTrackWaitingWorker = null;
 let vialTrackUpdateDismissed = false;
