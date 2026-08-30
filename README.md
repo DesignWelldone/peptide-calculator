@@ -2,7 +2,7 @@
 
 An offline-capable app for vial calculations, inventory, history, and weight tracking. Personal records stay on the device unless the user exports a backup.
 
-VialTrack follows the device color setting on first launch. Light and dark modes can then be selected in More and are remembered on the device.
+VialTrack follows the device color setting on first launch. Light and dark modes can then be selected from the app header and are remembered on the device.
 
 ## GitHub Pages
 Publish from the repository root on the `main` branch.
