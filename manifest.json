@@ -1,7 +1,7 @@
 {
-  "name": "Vial",
-  "short_name": "Vial",
-  "description": "Vial: local vial inventory, tracking, reconstitution, and weight.",
+  "name": "VialTrack",
+  "short_name": "VialTrack",
+  "description": "VialTrack: local vial inventory, tracking, reconstitution, and weight.",
   "id": "./",
   "start_url": "./index.html",
   "scope": "./",

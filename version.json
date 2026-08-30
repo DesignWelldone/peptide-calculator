@@ -1,6 +1,6 @@
 {
-  "app": "Vial",
-  "version": "14.0.0",
-  "build": 14,
+  "app": "VialTrack",
+  "version": "14.0.1",
+  "build": 1401,
   "update_behavior": "prompt"
 }

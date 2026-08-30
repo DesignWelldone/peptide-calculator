@@ -8,13 +8,13 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Vial">
+<meta name="apple-mobile-web-app-title" content="VialTrack">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
 
-<title>Vial</title>
-<meta name="vialtrack-version" content="14.0.0">
-<meta name="description" content="Offline peptide reconstitution and intranasal calculator.">
+<title>VialTrack</title>
+<meta name="vialtrack-version" content="14.0.1">
+<meta name="description" content="Offline vial calculations, inventory, history, and weight tracking.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -2377,14 +2377,14 @@ body{
 <body>
 <div class="container">
   <header class="header">
-    <div class="brand brandWithIcon"><img src="./icon-192.png" alt="Vial" class="brandIcon"> <span>Vial</span></div>
-    <h1>Vial</h1>
+    <div class="brand brandWithIcon"><img src="./icon-192.png" alt="VialTrack" class="brandIcon"> <span>VialTrack</span></div>
+    <h1>VialTrack</h1>
     <div class="subtitle">A cleaner offline app for vial math, reconstitution, and dose planning.</div>
     <div class="offline-badge">Installable Offline App</div>
   </header>
 
   <div id="installArea" class="installArea">
-    <button id="installButton" class="installButton hidden" type="button">Install Vial</button>
+    <button id="installButton" class="installButton hidden" type="button">Install VialTrack</button>
     <button id="iosInstallButton" class="installButton hidden" type="button">Install on iPhone</button>
     <div id="iosInstallHelp" class="iosInstallHelp hidden">
       In Safari, tap Share, then choose <strong>Add to Home Screen</strong>.
@@ -2395,7 +2395,7 @@ body{
   
   
   <section id="homePanel" class="homePanel appView">
-    <div class="simpleHomeHead"><div><div id="homeTodayDate" class="todayDate"></div><h2>Today</h2></div><img src="./icon-192.png" class="simpleHomeIcon" alt="Vial"></div>
+    <div class="simpleHomeHead"><div><div id="homeTodayDate" class="todayDate"></div><h2>Today</h2></div><img src="./icon-192.png" class="simpleHomeIcon" alt="VialTrack"></div>
     <div class="homePrimaryActions"><button class="homePrimaryBtn" type="button" onclick="homeQuickLog()">Log</button><button class="homePrimaryBtn secondary" type="button" onclick="showView('calculator')">Reconstitute</button></div>
     <div class="homeCompactStats">
       <button onclick="showView('tracker')"><span>Today</span><strong id="homeTodayEntryCount">0</strong></button>
@@ -2739,17 +2739,17 @@ body{
 
 
   <section id="morePanel" class="morePanel appView hidden">
-    <div class="simpleScreenHeader"><div class="screenEyebrow">Vial</div><h2>More</h2></div>
+    <div class="simpleScreenHeader"><div class="screenEyebrow">VialTrack</div><h2>More</h2></div>
     <div class="moreGroup"><div class="moreGroupTitle">Tools</div>
       <button class="moreRow" type="button" onclick="showView('nasal')"><span class="moreRowIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3c2 2.5 3 5 3 7.5 0 3-1.2 5.2-3.6 6.6"/><path d="M13 8c3 .5 5 2.3 6 5"/><path d="M15.5 14.5h3"/></svg></span><span><strong>Intranasal Calculator</strong><small>Nasal spray calculations</small></span><span class="moreChevron">›</span></button>
     </div>
     <div class="moreGroup"><div class="moreGroupTitle">Data & Backup</div>
-      <button class="moreRow" type="button" onclick="exportHistory()"><span class="moreRowIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M5 19h14"/></svg></span><span><strong>Export Backup</strong><small>Save a copy of all Vial data</small></span><span class="moreChevron">›</span></button>
-      <label class="moreRow importMoreRow"><span class="moreRowIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h14"/><circle cx="3" cy="6" r=".7"/><circle cx="3" cy="12" r=".7"/><circle cx="3" cy="18" r=".7"/></svg></span><span><strong>Import Backup</strong><small>Restore a Vial JSON backup</small></span><span class="moreChevron">›</span><input type="file" accept="application/json,.json" onchange="importHistoryFile(event)"></label>
-      <button class="moreRow dangerRow" type="button" onclick="eraseAllLocalData()"><span class="moreRowIcon eraseIcon">×</span><span><strong>Erase All Local Data</strong><small>Remove this device's Vial data</small></span><span class="moreChevron">›</span></button>
+      <button class="moreRow" type="button" onclick="exportHistory()"><span class="moreRowIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M5 19h14"/></svg></span><span><strong>Export Backup</strong><small>Save a copy of all VialTrack data</small></span><span class="moreChevron">›</span></button>
+      <label class="moreRow importMoreRow"><span class="moreRowIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h14"/><circle cx="3" cy="6" r=".7"/><circle cx="3" cy="12" r=".7"/><circle cx="3" cy="18" r=".7"/></svg></span><span><strong>Import Backup</strong><small>Restore a VialTrack JSON backup</small></span><span class="moreChevron">›</span><input type="file" accept="application/json,.json" onchange="importHistoryFile(event)"></label>
+      <button class="moreRow dangerRow" type="button" onclick="eraseAllLocalData()"><span class="moreRowIcon eraseIcon">×</span><span><strong>Erase All Local Data</strong><small>Remove this device's VialTrack data</small></span><span class="moreChevron">›</span></button>
     </div>
     <div class="moreGroup"><div class="moreGroupTitle">About</div>
-      <div class="moreStaticRow"><span><strong>Vial</strong><small>Version 14.0.0</small></span></div>
+      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.0.1</small></span></div>
       <div class="moreStaticRow"><span><strong>Data</strong><small>Stored on this device unless you export it</small></span></div>
     </div>
   </section>
@@ -2759,13 +2759,13 @@ body{
       <div class="appUpdateIconWrap">
         <img src="./icon-192.png" alt="" class="appUpdateIcon">
       </div>
-      <div class="appUpdateEyebrow">Vial Update</div>
+      <div class="appUpdateEyebrow">VialTrack Update</div>
       <h3 id="appUpdateTitle">Update available</h3>
-      <p id="appUpdateMessage">A newer version of Vial is ready. Update now to get the latest features and fixes.</p>
+      <p id="appUpdateMessage">A newer version of VialTrack is ready. Update now to get the latest features and fixes.</p>
       <div id="appUpdateVersion" class="appUpdateVersion"></div>
       <div class="appUpdateActions">
         <button id="appUpdateLaterBtn" class="appUpdateBtn secondary" type="button" onclick="dismissAppUpdate()">Later</button>
-        <button id="appUpdateNowBtn" class="appUpdateBtn primary" type="button" onclick="applyAppUpdate()">Update Vial</button>
+        <button id="appUpdateNowBtn" class="appUpdateBtn primary" type="button" onclick="applyAppUpdate()">Update VialTrack</button>
       </div>
       <div id="appUpdateStatus" class="appUpdateStatus hidden">Updating…</div>
     </div>
@@ -2862,7 +2862,7 @@ body{
           <div class="saveReconstitution">
             <div class="saveHeader">
               <div>
-                <div class="dashLabel">Save to Vial</div>
+                <div class="dashLabel">Save in VialTrack</div>
                 <h3>Save this reconstitution</h3>
               </div>
             </div>
@@ -3011,7 +3011,7 @@ body{
     </div>
   </aside>
 
-  <div class="footer">Vial runs locally on your device. Calculations and saved settings stay on the device.</div>
+  <div class="footer">VialTrack runs locally on your device. Calculations and saved settings stay on the device.</div>
 </div>
 
 <script>
@@ -3555,8 +3555,8 @@ async function exportHistory(){
   try{ stockInventory = await getAllStockItems(); }catch(e){}
   try{ weightLogs = await getAllWeightLogs(); }catch(e){}
   const payload = {
-    app:'Vial',
-    version:'v9',
+    app:'VialTrack',
+    version:'14.0.1',
     exportedAt:new Date().toISOString(),
     reconstitutions:records,
     stockInventory,
@@ -3569,7 +3569,7 @@ async function exportHistory(){
   const a = document.createElement('a');
   const stamp = new Date().toISOString().slice(0,10);
   a.href = url;
-  a.download = 'Vial-Backup-' + stamp + '.json';
+  a.download = 'VialTrack-Backup-' + stamp + '.json';
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -3666,7 +3666,7 @@ async function importHistoryFile(event){
       ' imported.');
   }catch(err){
     event.target.value = '';
-    alert('That file could not be imported as Vial history.');
+    alert('That file could not be imported as VialTrack history.');
   }
 }
 
@@ -3923,7 +3923,7 @@ async function populateTrackerActiveVials(selectedId=null){
 }
 async function trackerVialChanged(updateName=true){
   const select=q('trackerActiveVialId'),hint=q('trackerVialRemaining'),id=Number(select?.value||0);
-  if(!id){if(hint)hint.textContent='Optional. Linking an entry lets Vial calculate remaining quantity.';return;}
+  if(!id){if(hint)hint.textContent='Optional. Linking an entry lets VialTrack calculate remaining quantity.';return;}
   const vial=await getActiveVial(id);if(!vial)return;const usage=await vialUsageMap(),remaining=(Number(vial.totalMcg)||0)-(usage.get(id)||0);
   if(updateName&&q('trackerPeptideName'))q('trackerPeptideName').value=vial.peptideName||'';if(hint)hint.textContent='Calculated remaining before this entry: '+mcgDisplay(remaining);
 }
@@ -4952,7 +4952,7 @@ window.addEventListener('DOMContentLoaded',()=>seedWeightData().then(renderWeigh
 
 
 <script>
-const VIAL_APP_VERSION = '14.0.0';
+const VIAL_APP_VERSION = '14.0.1';
 let vialTrackRegistration = null;
 let vialTrackWaitingWorker = null;
 let vialTrackUpdateDismissed = false;
@@ -5011,7 +5011,7 @@ async function applyAppUpdate() {
     setUpdateBusy(false);
     const status = document.getElementById('appUpdateStatus');
     if(status) {
-      status.textContent = 'Could not update automatically. Reopen Vial and try again.';
+      status.textContent = 'Could not update automatically. Reopen VialTrack and try again.';
       status.classList.remove('hidden');
     }
   }
@@ -5086,9 +5086,9 @@ if('serviceWorker' in navigator && location.protocol !== 'file:') {
 
 <script>
 async function eraseAllLocalData(){
-  if(!confirm('Erase all Vial data stored on this device? Export a backup first if you may want it later.')) return;
+  if(!confirm('Erase all VialTrack data stored on this device? Export a backup first if you may want it later.')) return;
   if(!confirm('This permanently removes local vials, logs, history, and weights from this device. Continue?')) return;
-  try{ if(vtDbPromise){ try{(await vtDbPromise).close()}catch(e){} } await new Promise((resolve,reject)=>{const r=indexedDB.deleteDatabase(VT_DB_NAME);r.onsuccess=resolve;r.onerror=()=>reject(r.error);r.onblocked=resolve;}); Object.keys(localStorage).filter(k=>k.toLowerCase().includes('vial')).forEach(k=>localStorage.removeItem(k)); location.reload(); }catch(e){alert('Could not erase local data. Close other Vial tabs and try again.')}
+  try{ if(vtDbPromise){ try{(await vtDbPromise).close()}catch(e){} } await new Promise((resolve,reject)=>{const r=indexedDB.deleteDatabase(VT_DB_NAME);r.onsuccess=resolve;r.onerror=()=>reject(r.error);r.onblocked=resolve;}); Object.keys(localStorage).filter(k=>k.toLowerCase().includes('vial')).forEach(k=>localStorage.removeItem(k)); location.reload(); }catch(e){alert('Could not erase local data. Close other VialTrack tabs and try again.')}
 }
 </script>
 </body>

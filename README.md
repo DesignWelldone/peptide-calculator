@@ -1,6 +1,6 @@
-# Peptide Calculator PWA
+# VialTrack
 
-A fully offline-capable Progressive Web App.
+An offline-capable app for vial calculations, inventory, history, and weight tracking. Personal records stay on the device unless the user exports a backup.
 
 ## GitHub Pages
 Publish from the repository root on the `main` branch.
