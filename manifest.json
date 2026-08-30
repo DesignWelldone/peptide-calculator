@@ -1,7 +1,7 @@
 {
   "name": "Vial",
   "short_name": "Vial",
-  "description": "Vial offline vial inventory, reconstitution calculator, tracker, history, and weight trends.",
+  "description": "Vial: local vial inventory, tracking, reconstitution, and weight.",
   "id": "./",
   "start_url": "./index.html",
   "scope": "./",

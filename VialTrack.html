@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="./icon-192.png">
 
 <title>Vial</title>
-<meta name="vialtrack-version" content="13.0.0">
+<meta name="vialtrack-version" content="14.0.0">
 <meta name="description" content="Offline peptide reconstitution and intranasal calculator.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -2368,6 +2368,10 @@ body{
   }
 }
 
+
+/* V14 simplified product structure */
+.bottomNav{grid-template-columns:repeat(5,1fr)!important}.simpleHomeHead{display:flex;justify-content:space-between;align-items:center;padding:8px 2px 12px}.simpleHomeHead h2{font-size:2rem;margin:3px 0 0}.simpleHomeIcon{width:48px;height:48px;border-radius:14px}.homePrimaryActions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px}.homePrimaryBtn{min-height:52px;border:0;border-radius:14px;background:#19c7a2;color:#081511;font-size:.96rem;font-weight:800}.homePrimaryBtn.secondary{background:#26282c;color:#f5f5f6;border:1px solid var(--line2)}.homeCompactStats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:10px}.homeCompactStats button{min-height:64px;padding:9px;border-radius:13px;background:#1d1f22;border:1px solid var(--line);color:var(--text);text-align:left}.homeCompactStats span{display:block;font-size:.62rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted2);font-weight:800}.homeCompactStats strong{display:block;font-size:1.2rem;margin-top:3px}.homeSectionTight{margin-top:9px!important}.simplifiedVialActions{display:grid!important;grid-template-columns:1fr 1fr;gap:7px!important}.subtleAction{opacity:.72}.simpleScreenHeader{padding:5px 2px 12px}.simpleScreenHeader h2{font-size:1.7rem;margin:2px 0}.morePanel{max-width:760px;margin:0 auto}.moreGroup{margin-bottom:14px;border-radius:18px;background:#1d1f22;border:1px solid var(--line);overflow:hidden}.moreGroupTitle{padding:13px 14px 7px;color:var(--muted2);font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.moreRow,.moreStaticRow{width:100%;min-height:64px;display:grid;grid-template-columns:34px 1fr 18px;align-items:center;gap:10px;padding:10px 14px;border:0;border-top:1px solid rgba(255,255,255,.035);background:transparent;color:var(--text);text-align:left}.moreStaticRow{grid-template-columns:1fr}.moreRowIcon{width:30px;height:30px;display:grid;place-items:center;color:#19c7a2}.moreRowIcon .appNavSvg{width:21px;height:21px}.eraseIcon{font-size:1.4rem}.moreRow strong,.moreStaticRow strong{display:block;font-size:.9rem}.moreRow small,.moreStaticRow small{display:block;color:var(--muted);font-size:.72rem;margin-top:2px}.moreChevron{color:var(--muted2);font-size:1.3rem}.importMoreRow{cursor:pointer}.importMoreRow input{display:none}.dangerRow .moreRowIcon,.dangerRow strong{color:#dc8b8b}.header .offline-badge,.header .subtitle,.header h1{display:none!important}@media(max-width:640px){.bottomNav{grid-template-columns:repeat(5,1fr)!important}.navLabel{font-size:.63rem!important}.homeCompactStats button{min-height:58px;padding:7px}.homeCompactStats strong{font-size:1.05rem}}
+
 </style>
 </head>
 <body>
@@ -2389,107 +2393,20 @@ body{
 
 
   
+  
   <section id="homePanel" class="homePanel appView">
-    <div class="todayHero">
-      <div class="todayHeroText">
-        <div class="heroEyebrow">Vial</div>
-        <div id="homeTodayDate" class="todayDate"></div>
-        <h2>Today</h2>
-        <p>Reconstitution, tracking, and active vial inventory in one offline app.</p>
-      </div>
-      <div class="todayHeroIcon">
-        <img src="./icon-512.png" alt="Vial app icon" class="heroIcon">
-      </div>
+    <div class="simpleHomeHead"><div><div id="homeTodayDate" class="todayDate"></div><h2>Today</h2></div><img src="./icon-192.png" class="simpleHomeIcon" alt="Vial"></div>
+    <div class="homePrimaryActions"><button class="homePrimaryBtn" type="button" onclick="homeQuickLog()">Log</button><button class="homePrimaryBtn secondary" type="button" onclick="showView('calculator')">Reconstitute</button></div>
+    <div class="homeCompactStats">
+      <button onclick="showView('tracker')"><span>Today</span><strong id="homeTodayEntryCount">0</strong></button>
+      <button onclick="showView('inventory')"><span>Active</span><strong id="homeActiveVialCount">0</strong></button>
+      <button onclick="showView('inventory')"><span>Stock</span><strong id="homeStockVialCount">0</strong></button>
+      <button onclick="showView('weight')"><span>Weight</span><strong id="homeWeightValue">—</strong></button>
+      <span id="homeWeekEntryCount" class="hidden">0</span><span id="homeHistoryCount" class="hidden">0</span>
     </div>
-
-    <div class="quickActions">
-      <button class="quickAction primary" type="button" onclick="homeQuickLog()">
-        <span class="quickActionIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span><span class="quickActionTitle">Log Entry</span>
-        <span class="quickActionSub">Add today’s use</span>
-      </button>
-      <button class="quickAction" type="button" onclick="showView('calculator')">
-        <span class="quickActionIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="3.5" width="14" height="17" rx="2.3"/><path d="M8 7h8M8 11h2M14 11h2M8 15h2M14 15h2M8 18h2M14 18h2"/></svg></span><span class="quickActionTitle">Reconstitute</span>
-        <span class="quickActionSub">Open calculator</span>
-      </button>
-      <button class="quickAction" type="button" onclick="showView('inventory')">
-        <span class="quickActionIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 3.5h8M9 6h6v2.2l1.9 2.1a3.6 3.6 0 0 1 .9 2.4v6.1a2.2 2.2 0 0 1-2.2 2.2H8.4a2.2 2.2 0 0 1-2.2-2.2v-6.1a3.6 3.6 0 0 1 .9-2.4L9 8.2Z"/><path d="M6.3 15.2h11.4"/></svg></span><span class="quickActionTitle">Active Vials</span>
-        <span class="quickActionSub">Check remaining</span>
-      </button>
-      <button class="quickAction" type="button" onclick="showView('weight')">
-        <span class="quickActionIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 10a4 4 0 0 1 8 0"/><path d="m12 10 2-2"/><circle cx="12" cy="10" r=".8"/></svg></span><span class="quickActionTitle">Weight</span>
-        <span class="quickActionSub">Log or view trend</span>
-      </button>
-      <button class="quickAction" type="button" onclick="showView('history')">
-        <span class="quickActionIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 6h14M5 12h14M5 18h14"/><circle cx="3" cy="6" r=".7"/><circle cx="3" cy="12" r=".7"/><circle cx="3" cy="18" r=".7"/></svg></span><span class="quickActionTitle">History</span>
-        <span class="quickActionSub">Review setups</span>
-      </button>
-    </div>
-
-    <div class="todayStats">
-      <div class="todayStatCard" onclick="showView('tracker')">
-        <span>Today</span>
-        <strong id="homeTodayEntryCount">0</strong>
-        <small>logged entries</small>
-      </div>
-      <div class="todayStatCard" onclick="showView('inventory')">
-        <span>Active Vials</span>
-        <strong id="homeActiveVialCount">0</strong>
-        <small>currently active</small>
-      </div>
-      <div class="todayStatCard" onclick="showView('inventory')">
-        <span>Stock Vials</span>
-        <strong id="homeStockVialCount">0</strong>
-        <small>unopened on hand</small>
-      </div>
-      <div class="todayStatCard" onclick="showView('tracker')">
-        <span>This Week</span>
-        <strong id="homeWeekEntryCount">0</strong>
-        <small>tracked entries</small>
-      </div>
-      <div class="todayStatCard" onclick="showView('weight')">
-        <span>Weight</span>
-        <strong id="homeWeightValue">—</strong>
-        <small>latest lbs</small>
-      </div>
-      <div class="todayStatCard" onclick="showView('history')">
-        <span>Reconstitutions</span>
-        <strong id="homeHistoryCount">0</strong>
-        <small>saved setups</small>
-      </div>
-    </div>
-
-    <div class="homeSection">
-      <div class="homeSectionHeader">
-        <div>
-          <div class="dashLabel">Today’s Log</div>
-          <h3>Entries</h3>
-        </div>
-        <button class="homeTextBtn" type="button" onclick="openTrackerToday()">View Tracker</button>
-      </div>
-      <div id="homeTodayEntries" class="homeList"></div>
-    </div>
-
-    <div class="homeSection">
-      <div class="homeSectionHeader">
-        <div>
-          <div class="dashLabel">Active Vials</div>
-          <h3>Current inventory</h3>
-        </div>
-        <button class="homeTextBtn" type="button" onclick="showView('inventory')">View All</button>
-      </div>
-      <div id="homeVialCards" class="homeVialGrid"></div>
-    </div>
-
-    <div class="homeSection">
-      <div class="homeSectionHeader">
-        <div>
-          <div class="dashLabel">Recent</div>
-          <h3>Reconstitutions</h3>
-        </div>
-        <button class="homeTextBtn" type="button" onclick="showView('history')">View History</button>
-      </div>
-      <div id="homeRecentHistory" class="homeList"></div>
-    </div>
+    <div class="homeSection homeSectionTight"><div class="homeSectionHeader"><div><div class="dashLabel">Today</div><h3>Log</h3></div><button class="homeTextBtn" onclick="openTrackerToday()">View</button></div><div id="homeTodayEntries" class="homeList"></div></div>
+    <div class="homeSection homeSectionTight"><div class="homeSectionHeader"><div><div class="dashLabel">Active</div><h3>Vials</h3></div><button class="homeTextBtn" onclick="showView('inventory')">View</button></div><div id="homeVialCards" class="homeVialGrid"></div></div>
+    <div id="homeRecentHistory" class="hidden"></div>
   </section>
 
 
@@ -2590,14 +2507,11 @@ body{
   <section id="inventoryPanel" class="inventoryPanel appView hidden">
     <div class="inventoryHeader">
       <div>
-        <div class="heroEyebrow">Vial Inventory</div>
-        <h2>Inventory</h2>
-        <p>Track unopened stock and active reconstituted vials. Remaining active-vial quantity is calculated from linked tracker entries.</p>
+        <div class="heroEyebrow">Vials</div>
+        <h2>Vials</h2>
+        <p>Stock and active vials.</p>
       </div>
-      <div class="inventoryHeaderActions">
-        <button class="heroBtn" type="button" onclick="openAddActiveVial()">+ Add Active Vial</button>
-        <button class="heroBtn primary" type="button" onclick="openStockComposer()">+ Add Stock</button>
-      </div>
+      <div class="inventoryHeaderActions simplifiedVialActions"><button class="heroBtn primary" type="button" onclick="showView('calculator')">Reconstitute</button><button class="heroBtn" type="button" onclick="openStockComposer()">Add Stock</button><button class="heroBtn" type="button" onclick="showView('history')">History</button><button class="heroBtn subtleAction" type="button" onclick="openAddActiveVial()">Add Active</button></div>
     </div>
 
     <div id="stockComposer" class="trackerComposer hidden">
@@ -2696,7 +2610,7 @@ body{
 
     <div id="inventorySummary" class="trackerSummary"></div>
     <div id="inventoryEmpty" class="emptyState hidden">
-      <div class="emptyIcon">VT</div>
+      <div class="emptyIcon">V</div>
       <h3>No inventory yet</h3>
       <p>Add unopened stock or an active vial to get started.</p>
       <button class="heroBtn primary" type="button" onclick="openStockComposer()">+ Add Stock</button>
@@ -2798,15 +2712,8 @@ body{
     <div class="historyHeader">
       <div>
         <div class="heroEyebrow">Reconstitution History</div>
-        <h2>Saved vial setups</h2>
-        <p>Saved locally on this device. Reuse a prior setup to load it back into the calculator.</p>
-      </div>
-      <div class="historyActions">
-        <button class="heroBtn" type="button" onclick="exportHistory()">Export</button>
-        <label class="heroBtn importLabel">
-          Import
-          <input id="historyImportInput" type="file" accept="application/json,.json" onchange="importHistoryFile(event)">
-        </label>
+        <h2>Reconstitution History</h2>
+        <p>Saved vial setups.</p>
       </div>
     </div>
 
@@ -2820,7 +2727,7 @@ body{
     </div>
 
     <div id="historyEmpty" class="emptyState">
-      <div class="emptyIcon">VT</div>
+      <div class="emptyIcon">V</div>
       <h3>No saved reconstitutions yet</h3>
       <p>Run a calculation, add a peptide name, and tap Save Reconstitution.</p>
       <button class="heroBtn primary" type="button" onclick="showView('calculator')">Open Calculator</button>
@@ -2829,6 +2736,23 @@ body{
     <div id="historyList" class="historyList"></div>
   </section>
 
+
+
+  <section id="morePanel" class="morePanel appView hidden">
+    <div class="simpleScreenHeader"><div class="screenEyebrow">Vial</div><h2>More</h2></div>
+    <div class="moreGroup"><div class="moreGroupTitle">Tools</div>
+      <button class="moreRow" type="button" onclick="showView('nasal')"><span class="moreRowIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3c2 2.5 3 5 3 7.5 0 3-1.2 5.2-3.6 6.6"/><path d="M13 8c3 .5 5 2.3 6 5"/><path d="M15.5 14.5h3"/></svg></span><span><strong>Intranasal Calculator</strong><small>Nasal spray calculations</small></span><span class="moreChevron">›</span></button>
+    </div>
+    <div class="moreGroup"><div class="moreGroupTitle">Data & Backup</div>
+      <button class="moreRow" type="button" onclick="exportHistory()"><span class="moreRowIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M5 19h14"/></svg></span><span><strong>Export Backup</strong><small>Save a copy of all Vial data</small></span><span class="moreChevron">›</span></button>
+      <label class="moreRow importMoreRow"><span class="moreRowIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h14"/><circle cx="3" cy="6" r=".7"/><circle cx="3" cy="12" r=".7"/><circle cx="3" cy="18" r=".7"/></svg></span><span><strong>Import Backup</strong><small>Restore a Vial JSON backup</small></span><span class="moreChevron">›</span><input type="file" accept="application/json,.json" onchange="importHistoryFile(event)"></label>
+      <button class="moreRow dangerRow" type="button" onclick="eraseAllLocalData()"><span class="moreRowIcon eraseIcon">×</span><span><strong>Erase All Local Data</strong><small>Remove this device's Vial data</small></span><span class="moreChevron">›</span></button>
+    </div>
+    <div class="moreGroup"><div class="moreGroupTitle">About</div>
+      <div class="moreStaticRow"><span><strong>Vial</strong><small>Version 14.0.0</small></span></div>
+      <div class="moreStaticRow"><span><strong>Data</strong><small>Stored on this device unless you export it</small></span></div>
+    </div>
+  </section>
 
   <div id="appUpdateOverlay" class="appUpdateOverlay hidden" role="dialog" aria-modal="true" aria-labelledby="appUpdateTitle">
     <div class="appUpdateCard">
@@ -2848,12 +2772,11 @@ body{
   </div>
 
   <nav class="bottomNav" aria-label="Primary">
-    <button id="navHome" class="navBtn active" type="button" onclick="showView('home')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3.5 10.5 12 3.8l8.5 6.7v9.1a1.4 1.4 0 0 1-1.4 1.4h-5.2v-6.3h-3.8V21H4.9a1.4 1.4 0 0 1-1.4-1.4Z"/><path d="M8.8 21v-6.3h6.4V21"/></svg></span><span class="navLabel">Home</span></button>
-    <button id="navCalc" class="navBtn" type="button" onclick="showView('calculator')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="3.5" width="14" height="17" rx="2.3"/><path d="M8 7h8M8 11h2M14 11h2M8 15h2M14 15h2M8 18h2M14 18h2"/></svg></span><span class="navLabel">Calc</span></button>
-    <button id="navTracker" class="navBtn" type="button" onclick="showView('tracker')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 18.5h16"/><path d="m5.5 15 4-4 3 2.7 6-7"/><circle cx="5.5" cy="15" r="1"/><circle cx="9.5" cy="11" r="1"/><circle cx="12.5" cy="13.7" r="1"/><circle cx="18.5" cy="6.7" r="1"/></svg></span><span class="navLabel">Tracker</span></button>
-    <button id="navInventory" class="navBtn" type="button" onclick="showView('inventory')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 3.5h8M9 6h6v2.2l1.9 2.1a3.6 3.6 0 0 1 .9 2.4v6.1a2.2 2.2 0 0 1-2.2 2.2H8.4a2.2 2.2 0 0 1-2.2-2.2v-6.1a3.6 3.6 0 0 1 .9-2.4L9 8.2Z"/><path d="M6.3 15.2h11.4"/></svg></span><span class="navLabel">Vials</span></button>
-    <button id="navWeight" class="navBtn" type="button" onclick="showView('weight')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 10a4 4 0 0 1 8 0"/><path d="m12 10 2-2"/><circle cx="12" cy="10" r=".8"/></svg></span><span class="navLabel">Weight</span></button>
-    <button id="navHistory" class="navBtn" type="button" onclick="showView('history')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 6h14M5 12h14M5 18h14"/><circle cx="3" cy="6" r=".7"/><circle cx="3" cy="12" r=".7"/><circle cx="3" cy="18" r=".7"/></svg></span><span class="navLabel">History</span></button>
+    <button id="navHome" class="navBtn active" onclick="showView('home')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3.8l8.5 6.7v9.1a1.4 1.4 0 0 1-1.4 1.4h-5.2v-6.3h-3.8V21H4.9a1.4 1.4 0 0 1-1.4-1.4Z"/><path d="M8.8 21v-6.3h6.4V21"/></svg></span><span class="navLabel">Home</span></button>
+    <button id="navTracker" class="navBtn" onclick="showView('tracker')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18.5h16"/><path d="m5.5 15 4-4 3 2.7 6-7"/><circle cx="5.5" cy="15" r="1"/><circle cx="9.5" cy="11" r="1"/><circle cx="12.5" cy="13.7" r="1"/><circle cx="18.5" cy="6.7" r="1"/></svg></span><span class="navLabel">Track</span></button>
+    <button id="navInventory" class="navBtn" onclick="showView('inventory')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3.5h8M9 6h6v2.2l1.9 2.1a3.6 3.6 0 0 1 .9 2.4v6.1a2.2 2.2 0 0 1-2.2 2.2H8.4a2.2 2.2 0 0 1-2.2-2.2v-6.1a3.6 3.6 0 0 1 .9-2.4L9 8.2Z"/><path d="M6.3 15.2h11.4"/></svg></span><span class="navLabel">Vials</span></button>
+    <button id="navWeight" class="navBtn" onclick="showView('weight')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 10a4 4 0 0 1 8 0"/><path d="m12 10 2-2"/><circle cx="12" cy="10" r=".8"/></svg></span><span class="navLabel">Weight</span></button>
+    <button id="navMore" class="navBtn" onclick="showView('more')"><span class="navIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="18" cy="12" r="1.4"/></svg></span><span class="navLabel">More</span></button>
   </nav>
 
   <main id="mainContent">
@@ -3113,6 +3036,7 @@ function showView(view){
   const inventory = q('inventoryPanel');
   const weight = q('weightPanel');
   const history = q('historyPanel');
+  const more = q('morePanel');
   const nasal = q('panelNasal');
   if(home) home.classList.toggle('hidden', view !== 'home');
   if(recon) recon.classList.toggle('hidden', view !== 'calculator');
@@ -3120,10 +3044,11 @@ function showView(view){
   if(inventory) inventory.classList.toggle('hidden', view !== 'inventory');
   if(weight) weight.classList.toggle('hidden', view !== 'weight');
   if(history) history.classList.toggle('hidden', view !== 'history');
+  if(more) more.classList.toggle('hidden', view !== 'more');
   if(nasal) nasal.classList.toggle('hidden', view !== 'nasal');
 
-  const navMap = {home:'navHome', calculator:'navCalc', tracker:'navTracker', inventory:'navInventory', weight:'navWeight', history:'navHistory'};
-  ['navHome','navCalc','navTracker','navInventory','navWeight','navHistory'].forEach(id => {
+  const navMap = {home:'navHome', tracker:'navTracker', inventory:'navInventory', weight:'navWeight', more:'navMore', calculator:'navInventory', history:'navInventory', nasal:'navMore'};
+  ['navHome','navTracker','navInventory','navWeight','navMore'].forEach(id => {
     const el = q(id);
     if(el) el.classList.toggle('active', id === navMap[view]);
   });
@@ -3142,6 +3067,8 @@ function showView(view){
     renderInventory();
   }else if(view === 'weight'){
     prepareWeightTracker();
+  }else if(view === 'more'){
+    // Static screen.
   }else if(view === 'home'){
     refreshHomeDashboard();
   }
@@ -4629,22 +4556,7 @@ const VT_WEIGHT_STORE = 'weightLogs';
 const VT_WEIGHT_SEED_KEY = 'vialTrackWeightSeed_v9';
 let weightRangeMode = 'recent';
 
-const VT_WEIGHT_SEED = [
-  {weight:331.2,date:'2026-08-23',time:'00:02',notes:''},
-  {weight:333.6,date:'2026-08-15',time:'09:46',notes:''},
-  {weight:333.8,date:'2026-08-11',time:'07:14',notes:''},
-  {weight:334.8,date:'2026-08-10',time:'06:12',notes:''},
-  {weight:336.6,date:'2026-07-31',time:'10:39',notes:''},
-  {weight:340.0,date:'2026-07-27',time:'07:12',notes:''},
-  {weight:338.6,date:'2026-07-16',time:'21:44',notes:''},
-  {weight:342.6,date:'2026-07-11',time:'08:14',notes:''},
-  {weight:348.6,date:'2026-07-06',time:'07:21',notes:''},
-  {weight:346.0,date:'2026-06-29',time:'07:36',notes:''},
-  {weight:350.0,date:'2026-06-22',time:'11:33',notes:''},
-  {weight:345.4,date:'2026-06-18',time:'07:14',notes:''},
-  {weight:347.2,date:'2026-06-14',time:'08:38',notes:''},
-  {weight:349.6,date:'2026-06-10',time:'07:08',notes:''}
-];
+const VT_WEIGHT_SEED = [];
 
 async function addWeightLog(record){
   const db = await openVialDB();
@@ -4695,6 +4607,7 @@ async function seedWeightData(){
   try{
     const existing = await getAllWeightLogs();
     if(existing.length || localStorage.getItem(VT_WEIGHT_SEED_KEY)==='done') return;
+    if(!VT_WEIGHT_SEED.length){ localStorage.setItem(VT_WEIGHT_SEED_KEY,'done'); return; }
     for(const r of VT_WEIGHT_SEED){
       await addWeightLog({
         ...r,
@@ -4980,7 +4893,7 @@ window.addEventListener('DOMContentLoaded',()=>seedWeightData().then(renderWeigh
     }
 
     calculateRecon(false, true);
-    if(state.currentView && ['home','calculator','tracker','inventory','weight','history','nasal'].includes(state.currentView)){
+    if(state.currentView && ['home','calculator','tracker','inventory','weight','history','more','nasal'].includes(state.currentView)){
       showView(state.currentView);
     }
     return true;
@@ -5039,7 +4952,7 @@ window.addEventListener('DOMContentLoaded',()=>seedWeightData().then(renderWeigh
 
 
 <script>
-const VIAL_APP_VERSION = '13.0.0';
+const VIAL_APP_VERSION = '14.0.0';
 let vialTrackRegistration = null;
 let vialTrackWaitingWorker = null;
 let vialTrackUpdateDismissed = false;
@@ -5171,5 +5084,12 @@ if('serviceWorker' in navigator && location.protocol !== 'file:') {
 }
 </script>
 
+<script>
+async function eraseAllLocalData(){
+  if(!confirm('Erase all Vial data stored on this device? Export a backup first if you may want it later.')) return;
+  if(!confirm('This permanently removes local vials, logs, history, and weights from this device. Continue?')) return;
+  try{ if(vtDbPromise){ try{(await vtDbPromise).close()}catch(e){} } await new Promise((resolve,reject)=>{const r=indexedDB.deleteDatabase(VT_DB_NAME);r.onsuccess=resolve;r.onerror=()=>reject(r.error);r.onblocked=resolve;}); Object.keys(localStorage).filter(k=>k.toLowerCase().includes('vial')).forEach(k=>localStorage.removeItem(k)); location.reload(); }catch(e){alert('Could not erase local data. Close other Vial tabs and try again.')}
+}
+</script>
 </body>
 </html>
