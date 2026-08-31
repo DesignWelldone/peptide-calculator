@@ -2,7 +2,9 @@
 
 An offline-capable app for vial calculations, inventory, history, weight tracking, and a local status board. Personal records stay on the device unless the user exports a backup.
 
-Version 14.1.1 improves light-theme contrast across calculator controls, labels, status accents, and secondary actions.
+Version 14.3.0 adds local protocol planning with daily, weekday, interval, and on/rest schedules; a Today board with complete, skip, and undo; linked-vial inventory updates; pause/resume/end controls; and protocol backup/restore.
+
+Version 14.1.1 improved light-theme contrast across calculator controls, labels, status accents, and secondary actions.
 
 VialTrack follows the device color setting on first launch. Light and dark modes can then be selected from the app header and are remembered on the device.
 

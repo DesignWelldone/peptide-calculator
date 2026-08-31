@@ -1,8 +1,10 @@
-VialTrack 14.1.1
+VialTrack 14.3.0
 
 Public build. Contains no personal seed data.
 
-This release improves light-theme readability across controls and labels.
+This release adds user-created protocols, flexible schedules and cycles, a Today board, one-tap complete/skip/undo actions, linked-vial inventory updates, and pause/resume/end controls. Protocols are included in backup and restore.
+
+The optional one-time Support VialTrack payment entry is prepared for a verified checkout URL.
 
 Navigation: Home, Track, Vials, Weight, More.
 Vials contains stock, active vials, reconstitution, and reconstitution history.

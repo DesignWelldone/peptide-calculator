@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 60837)
+Total output lines: 5840
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +16,8 @@
 <link rel="apple-touch-icon" href="./icon-192.png">
 
 <title>VialTrack</title>
-<meta name="vialtrack-version" content="14.1.1">
-<meta name="description" content="Offline vial calculations, inventory, history, and weight tracking.">
+<meta name="vialtrack-version" content="14.3.0">
+<meta name="description" content="Offline vial calculations, user-created protocols, inventory, history, and weight tracking.">
 <script>
 (function(){
   const key = 'vialtrack-theme';
@@ -839,6 +842,7 @@ h1{
   max-width:680px;
   font-size:.9rem;
 }
+.trackerHeaderActions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .trackerComposer{
   margin-top:14px;
   padding:18px;
@@ -1109,8 +1113,16 @@ h1{
 .trackerEmpty p{color:var(--muted);font-size:.84rem;margin-bottom:12px}
 .trackerShortcut{cursor:pointer}
 .trackerShortcut:hover{border-color:rgba(53,215,234,.22)}
+.protocolSection{margin-top:14px;padding:16px;border-radius:18px;background:linear-gradient(180deg,rgba(13,27,45,.96),rgba(9,19,33,.98));border:1px solid var(--line)}
+.protocolSectionHeader{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:12px}.protocolSectionHeader h3{font-size:1.12rem;margin:2px 0 0}.protocolSectionHeader p{color:var(--muted);font-size:.76rem;margin-top:3px}
+.protocolTodayGrid,.protocolList{display:grid;gap:9px}.protocolCard{padding:14px;border-radius:14px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.055)}.protocolCard.completed{border-color:rgba(25,199,162,.28);background:rgba(25,199,162,.055)}.protocolCard.skipped{opacity:.72}.protocolCard.paused{opacity:.68}
+.protocolCardTop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.protocolName{font-size:1rem;font-weight:820;color:var(--text)}.protocolMeta{color:var(--muted);font-size:.74rem;margin-top:3px;line-height:1.45}.protocolDose{color:#94f7ff;font-size:1.02rem;font-weight:850;white-space:nowrap}
+.protocolStatus{display:inline-flex;align-items:center;min-height:24px;margin-top:8px;padding:0 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted2);font-size:.65rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}.protocolStatus.completed{color:#8ff0d8}.protocolStatus.skipped{color:#d7c28b}
+.protocolActions{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}.protocolActionBtn{min-height:36px;padding:0 12px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--text);font-size:.76rem;font-weight:760;cursor:pointer}.protocolActionBtn.primary{background:#19c7a2;border-color:#19c7a2;color:#071713}.protocolActionBtn.warn{color:#e4cd98}
+.protocolEmpty{padding:18px;border:1px dashed var(--line);border-radius:13px;color:var(--muted);font-size:.82rem;text-align:center}.protocolFormGrid{display:grid;grid-template-columns:1.2fr .8fr .8fr .9fr;gap:10px}.protocolWide{grid-column:1/-1}.protocolWeekdays{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.protocolWeekdays label{display:flex;align-items:center;gap:5px;min-height:34px;padding:0 9px;border:1px solid var(--line);border-radius:9px;color:var(--muted);font-size:.72rem}.protocolWeekdays input,.protocolCycleToggle input{width:auto;min-height:0;margin:0}.protocolInlineFields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.protocolCycleToggle{display:flex;align-items:center;gap:8px;color:var(--text);font-size:.78rem;font-weight:750}
 @media(max-width:900px){
   .trackerFormGrid{grid-template-columns:1fr 1fr}
+  .protocolFormGrid{grid-template-columns:1fr 1fr}
   .trackerNotesCard{grid-column:1/-1}
   .weekGrid{
     grid-template-columns:1fr;
@@ -1132,9 +1144,11 @@ h1{
   .trackerHeader .heroBtn{
     width:100%;
   }
+  .trackerHeaderActions{width:100%;display:grid;grid-template-columns:1fr 1fr}
   .trackerHeader h2{font-size:1.45rem}
   .trackerComposer{padding:14px}
   .trackerFormGrid{grid-template-columns:1fr}
+  .protocolFormGrid{grid-template-columns:1fr}.protocolWide{grid-column:auto}
   .trackerNotesCard{grid-column:auto}
   .trackerControls{
     flex-direction:column;
@@ -1147,6 +1161,7 @@ h1{
   }
   .trackerDatePicker{flex:1;min-width:0}
   .trackerSummary{grid-template-columns:1fr}
+  .protocolCardTop{align-items:flex-start}
   .bottomNav{grid-template-columns:repeat(5,1fr)}
   .navBtn{font-size:.67rem;padding:0 2px}
 }
@@ -2458,7 +2473,8 @@ html[data-theme="light"] .trackerHeader,
 html[data-theme="light"] .inventoryHeader,
 html[data-theme="light"] .historyHeader,
 html[data-theme="light"] .weightComposer,
-html[data-theme="light"] .moreGroup{
+html[data-theme="light"] .moreGroup,
+html[data-theme="light"] .protocolSection{
   background:#ffffff!important;
   border-color:var(--line)!important;
 }
@@ -2472,7 +2488,8 @@ html[data-theme="light"] .bigresult,
 html[data-theme="light"] .recommend,
 html[data-theme="light"] .warning,
 html[data-theme="light"] .reference,
-html[data-theme="light"] .vialRemainingBlock{
+html[data-theme="light"] .vialRemainingBlock,
+html[data-theme="light"] .protocolCard{
   background:#f2f4f6!important;
   border-color:var(--line)!important;
 }
@@ -2505,6 +2522,7 @@ html[data-theme="light"] .historyActionBtn,
 html[data-theme="light"] .logActionBtn,
 html[data-theme="light"] .vialActionBtn,
 html[data-theme="light"] .stockActionBtn,
+html[data-theme="light"] .protocolActionBtn,
 html[data-theme="light"] .homePrimaryBtn.secondary,
 html[data-theme="light"] .roundAddBtn{
   background:#eef1f4!important;
@@ -2608,6 +2626,7 @@ html[data-theme="light"] .linkedVialBadge,
 html[data-theme="light"] .historyActionBtn.activate{
   color:var(--cyan)!important;
 }
+html[data-theme="light"] .protocolDose,html[data-theme="light"] .protocolStatus.completed{color:var(--cyan)!important}html[data-theme="light"] .protocolStatus.skipped,html[data-theme="light"] .protocolActionBtn.warn{color:#74561d!important}html[data-theme="light"] .protocolActionBtn.primary{background:#086f63!important;border-color:#086f63!important;color:#fff!important}html[data-theme="light"] .protocolCard.completed{background:#eaf6f3!important;border-color:rgba(8,111,99,.24)!important}html[data-theme="light"] .protocolCard.skipped{background:#fbf6e8!important;opacity:1}html[data-theme="light"] .protocolCard.paused{opacity:1}
 html[data-theme="light"] .unitBtn{
   color:#4f5964!important;
   border-color:var(--line2)!important;
@@ -2896,11 +2915,19 @@ html[data-theme="light"] .boardChartGrid{stroke:rgba(20,28,38,.09)}
     <div class="trackerHeader">
       <div>
         <div class="heroEyebrow">Peptide Tracker</div>
-        <h2>Daily and weekly log</h2>
-        <p>Log what you used and when. Entries stay on this device unless you export a backup.</p>
+        <h2>Today and history</h2>
+        <p>Plan your own schedule, mark today complete, and keep linked vial inventory current. Records stay on this device unless you export a backup.</p>
       </div>
-      <button class="heroBtn primary" type="button" onclick="openTrackerComposer()">+ Log Entry</button>
+      <div class="trackerHeaderActions"><button class="heroBtn primary" type="button" onclick="openProtocolComposer()">+ Protocol</button><button class="heroBtn" type="button" onclick="openTrackerComposer()">+ Log Entry</button></div>
     </div>
+    <div id="protocolComposer" class="trackerComposer hidden"><div class="composerHeader"><div><div class="dashLabel">Your Schedule</div><h3 id="protocolComposerTitle">Create protocol</h3></div><button class="iconTextBtn" type="button" onclick="closeProtocolComposer()">Close</button></div><input id="protocolEditingId" type="hidden"><div class="protocolFormGrid">
+      <div class="inputcard protocolWide"><label class="label">Peptide / Protocol Name</label><input id="protocolPeptideName" class="textInput" type="text" list="trackerPeptideSuggestions" placeholder="Enter your own protocol name"></div>
+      <div class="inputcard"><label class="label">Use From Active Vial</label><select id="protocolActiveVialId" class="textInput trackerVialSelect" onchange="protocolVialChanged()"><option value="">Not linked to a vial</option></select><div id="protocolVialRemaining" class="vialRemainingHint">Optional. A linked vial updates when you mark an item complete.</div></div>
+      <div class="inputcard"><label class="label">Amount Per Entry</label><div class="inrow"><input id="protocolAmount" type="number" min="0" step="0.01" placeholder="Enter amount"><span id="protocolAmountDisplayUnit" class="unitlabel">MG</span></div><div class="unitToggle"><button class="unitBtn active" data-protocol-unit="mg" type="button" onclick="setProtocolUnit('mg')">MG</button><button class="unitBtn" data-protocol-unit="mcg" type="button" onclick="setProtocolUnit('mcg')">MCG</button></div><input id="protocolAmountUnit" type="hidden" value="mg"></div>
+      <div class="inputcard"><label class="label">Time</label><input id="protocolTime" class="textInput dateTimeInput" type="time"></div><div class="inputcard"><label class="label">Start Date</label><input id="protocolStartDate" class="textInput dateTimeInput" type="date"></div><div class="inputcard"><label class="label">Optional End Date</label><input id="protocolEndDate" class="textInput dateTimeInput" type="date"></div>
+      <div class="inputcard"><label class="label">Schedule</label><select id="protocolScheduleType" class="textInput" onchange="updateProtocolScheduleFields()"><option value="daily">Every day</option><option value="weekdays">Selected weekdays</option><option value="interval">Every set number of days</option></select><div id="protocolWeekdayFields" class="protocolWeekdays hidden"><label><input type="checkbox" data-protocol-weekday="0">Sun</label><label><input type="checkbox" data-protocol-weekday="1">Mon</label><label><input type="checkbox" data-protocol-weekday="2">Tue</label><label><input type="checkbox" data-protocol-weekday="3">Wed</label><label><input type="checkbox" data-protocol-weekday="4">Thu</label><label><input type="checkbox" data-protocol-weekday="5">Fri</label><label><input type="checkbox" data-protocol-weekday="6">Sat</label></div><div id="protocolIntervalFields" class="protocolInlineFields hidden"><div><label class="label">Repeat Every</label><input id="protocolIntervalDays" type="number" min="1" step="1" value="2"></div><div class="vialRemainingHint">days from the start date</div></div></div>
+      <div class="inputcard"><label class="protocolCycleToggle"><input id="protocolCycleEnabled" type="checkbox" onchange="updateProtocolScheduleFields()"> Add repeating on / rest cycle</label><div id="protocolCycleFields" class="protocolInlineFields hidden"><div><label class="label">On Days</label><input id="protocolOnDays" type="number" min="1" value="5"></div><div><label class="label">Rest Days</label><input id="protocolOffDays" type="number" min="1" value="2"></div></div></div>
+      <div class="inputcard protocolWide"><label class="label">Notes</label><input id="protocolNotes" class="textInput" type="text" placeholder="Optional personal note"></div></div><div class="trackerComposerActions"><button class="heroBtn" onclick="closeProtocolComposer()">Cancel</button><button id="protocolSaveButton" class="heroBtn primary" onclick="saveProtocol()">Save Protocol</button></div></div>
 
     <div id="trackerComposer" class="trackerComposer hidden">
       <div class="composerHeader">
@@ -2962,6 +2989,8 @@ html[data-theme="light"] .boardChartGrid{stroke:rgba(20,28,38,.09)}
         <button id="trackerSaveButton" class="heroBtn primary" type="button" onclick="saveTrackerEntry()">Save Entry</button>
       </div>
     </div>
+    <section class="protocolSection"><div class="protocolSectionHeader"><div><div class="dashLabel">Your Schedule</div><h3>Today</h3><p id="protocolTodaySummary">Loading today’s plan…</p></div></div><div id="protocolTodayList" class="protocolTodayGrid"></div></section>
+    <section class="protocolSection"><div class="protocolSectionHeader"><div><div class="dashLabel">Manage</div><h3>Protocols</h3><p>Schedules and status controls for plans you created.</p></div></div><div id="protocolList" class="protocolList"></div></section>
 
     <div class="trackerControls">
       <div class="viewToggle">
@@ -3230,7 +3259,8 @@ html[data-theme="light"] .boardChartGrid{stroke:rgba(20,28,38,.09)}
       <button class="moreRow dangerRow" type="button" onclick="eraseAllLocalData()"><span class="moreRowIcon eraseIcon">×</span><span><strong>Erase All Local Data</strong><small>Remove this device's VialTrack data</small></span><span class="moreChevron">›</span></button>
     </div>
     <div class="moreGroup"><div class="moreGroupTitle">About</div>
-      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.1.0</small></span></div>
+      <button class="moreRow supportRow" type="button" onclick="openSupportVialTrack()"><span class="moreRowIcon">$</span><span><strong>Support VialTrack</strong><small>Make an optional one-time contribution</small></span><span class="moreChevron">›</span></button>
+      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.3.0</small></span></div>
       <div class="moreStaticRow"><span><strong>Data</strong><small>Stored on this device unless you export it</small></span></div>
     </div>
   </section>
@@ -3371,50 +3401,7 @@ html[data-theme="light"] .boardChartGrid{stroke:rgba(20,28,38,.09)}
     <section id="panelNasal" class="appView hidden">
       <div class="specs">
         <h3>Standard Nasal Spray Pump Specs</h3>
-        <p>Standard metered pumps commonly deliver about <strong style="color:#06b6d4">0.1 mL (100 µL)</strong> per actuation. Calibrate your actual device before relying on a calculated amount.</p>
-        <div class="specgrid">
-          <div class="spec"><small>Pump Volume</small><strong>0.1 mL/spray</strong></div>
-          <div class="spec"><small>5 mL Bottle</small><strong>50 sprays</strong></div>
-          <div class="spec"><small>10 mL Bottle</small><strong>100 sprays</strong></div>
-          <div class="spec"><small>Both Nostrils</small><strong>0.2 mL/dose</strong></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="subtabs">
-          <button id="subVial" class="subtab active" onclick="switchNasal('vial')">DIY Vial Version</button>
-          <button id="subBottle" class="subtab" onclick="switchNasal('bottle')">Premixed Bottle Version</button>
-        </div>
-
-        <div id="nasalVial">
-          <div class="sectionhead"><span class="sectiontitle">INPUTS</span><button class="reset" onclick="resetNasalVial()">RESET</button></div>
-          <div class="inputs">
-            <div class="inputcard">
-              <label class="label">Vial Size</label>
-              <div class="inrow"><input id="nasalMass" type="number" min="0" step="0.1" value="10"><span id="nasalMassDisplay" class="unitlabel">MG</span></div>
-              <div class="unitToggle"><button class="unitBtn active" data-group="nasalMassUnit" onclick="setUnit('nasalMassUnit','mg',this)">MG</button><button class="unitBtn" data-group="nasalMassUnit" onclick="setUnit('nasalMassUnit','mcg',this)">MCG</button></div>
-              <input id="nasalMassUnit" type="hidden" value="mg">
-            </div>
-            <div class="inputcard">
-              <label class="label">Target Dose</label>
-              <div class="inrow"><input id="nasalDose" type="number" min="0" step="0.1" value="250"><span id="nasalDoseDisplay" class="unitlabel">MCG</span></div>
-              <div class="unitToggle"><button class="unitBtn active" data-group="nasalDoseUnit" onclick="setUnit('nasalDoseUnit','mcg',this)">MCG</button><button class="unitBtn" data-group="nasalDoseUnit" onclick="setUnit('nasalDoseUnit','mg',this)">MG</button></div>
-              <input id="nasalDoseUnit" type="hidden" value="mcg">
-            </div>
-            <div class="inputcard">
-              <label class="label">Spray Volume</label>
-              <div class="inrow"><input id="nasalSprayVol" type="number" min="0.01" step="0.01" value="0.10"><span class="unitlabel">ML</span></div>
-              <div class="hint">Common: 0.05–0.14 mL per spray</div>
-            </div>
-          </div>
-          <button class="calc" onclick="calculateNasalVial()">Calculate — Vial Version</button>
-          <div id="nasalVialResult" class="bigresult">
-            <div class="rlabel">Recommended: Add</div><div id="nasalAddVol" class="rval">—</div><div class="runit">mL of liquid to vial</div>
-            <div id="nasalVialSummary" class="rsub"></div>
-          </div>
-          <div id="nasalVialMetrics" class="metrics hidden">
-            <div class="metric"><div class="mlabel">Concentration</div><div id="nasalConc" class="mval">—</div><div id="nasalConcUnit" class="munit">mcg/mL</div></div>
-            <div class="metric"><div class="mlabel">Vol per Dose</div><div id="nasalVolDose" class="mval">—</div><div class="munit">mL</div></div>
+        <p>Standard metered pumps commonly deliver about <strong styl…837 tokens truncated…/div></div>
             <div class="metric"><div class="mlabel">Total Doses</div><div id="nasalDoses" class="mval">—</div><div class="munit">per vial</div></div>
           </div>
         </div>
@@ -3552,6 +3539,8 @@ else if(themePreference.addListener) themePreference.addListener(followDeviceThe
 
 
 let currentView = 'home';
+const VT_SUPPORT_URL='';
+function openSupportVialTrack(){if(!VT_SUPPORT_URL){alert('Support payments are not available yet.');return}window.open(VT_SUPPORT_URL,'_blank','noopener,noreferrer')}
 function showView(view){
   const previousView = currentView;
   currentView = view;
@@ -3784,7 +3773,7 @@ buildTicks();calculateRecon(false,true);
 
 <script>
 const VT_DB_NAME = 'VialDB';
-const VT_DB_VERSION = 5;
+const VT_DB_VERSION = 6;
 const VT_HISTORY_STORE = 'reconstitutions';
 let vtDbPromise = null;
 
@@ -3822,6 +3811,8 @@ function openVialDB(){
         weightStore.createIndex('date','date',{unique:false});
         weightStore.createIndex('createdAt','createdAt',{unique:false});
       }
+      if(!db.objectStoreNames.contains('protocols')){const s=db.createObjectStore('protocols',{keyPath:'id',autoIncrement:true});s.createIndex('status','status',{unique:false});s.createIndex('peptideName','peptideName',{unique:false});s.createIndex('createdAt','createdAt',{unique:false})}
+      if(!db.objectStoreNames.contains('protocolActions')){const s=db.createObjectStore('protocolActions',{keyPath:'id',autoIncrement:true});s.createIndex('date','date',{unique:false});s.createIndex('protocolId','protocolId',{unique:false});s.createIndex('trackerLogId','trackerLogId',{unique:false});s.createIndex('createdAt','createdAt',{unique:false})}
     };
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error);
@@ -4085,19 +4076,24 @@ async function exportHistory(){
   let activeVials = [];
   let stockInventory = [];
   let weightLogs = [];
+  let protocols = [];
+  let protocolActions = [];
   try{ trackerLogs = await getAllTrackerLogs(); }catch(e){}
   try{ activeVials = await getAllActiveVials(); }catch(e){}
   try{ stockInventory = await getAllStockItems(); }catch(e){}
   try{ weightLogs = await getAllWeightLogs(); }catch(e){}
+  try{ protocols=await getAllProtocols(); protocolActions=await getAllProtocolActions(); }catch(e){}
   const payload = {
     app:'VialTrack',
-    version:'14.1.0',
+    version:'14.3.0',
     exportedAt:new Date().toISOString(),
     reconstitutions:records,
     stockInventory,
     activeVials,
     trackerLogs,
-    weightLogs
+    weightLogs,
+    protocols,
+    protocolActions
   };
   const blob = new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
   const url = URL.createObjectURL(blob);
@@ -4172,32 +4168,43 @@ async function importHistoryFile(event){
       }
     }
 
+    const protocolIdMap=new Map();let importedProtocols=0;
+    if(Array.isArray(data.protocols))for(const raw of data.protocols){const p={...raw},old=+p.id;delete p.id;if(p.activeVialId&&vialIdMap.has(+p.activeVialId))p.activeVialId=vialIdMap.get(+p.activeVialId);else if(p.activeVialId)p.activeVialId=null;const id=await addProtocol(p);if(old)protocolIdMap.set(old,id);importedProtocols++}
+
     let importedLogs = 0;
+    const trackerIdMap=new Map();
     if(Array.isArray(data.trackerLogs)){
       for(const raw of data.trackerLogs){
         const log = {...raw};
+        const oldTrackerId=+log.id;
         delete log.id;
         if(log.activeVialId && vialIdMap.has(Number(log.activeVialId))){
           log.activeVialId = vialIdMap.get(Number(log.activeVialId));
         }else if(log.activeVialId && importedVials){
           log.activeVialId = null;
         }
+        if(log.protocolId&&protocolIdMap.has(+log.protocolId))log.protocolId=protocolIdMap.get(+log.protocolId);else if(log.protocolId)log.protocolId=null;
         if(!log.createdAt) log.createdAt = new Date().toISOString();
-        await addTrackerLog(log);
+        const newTrackerId=await addTrackerLog(log);if(oldTrackerId)trackerIdMap.set(oldTrackerId,newTrackerId);
         importedLogs++;
       }
     }
+    let importedProtocolActions=0;
+    if(Array.isArray(data.protocolActions))for(const raw of data.protocolActions){const a={...raw};delete a.id;if(!protocolIdMap.has(+a.protocolId))continue;a.protocolId=protocolIdMap.get(+a.protocolId);a.trackerLogId=trackerIdMap.get(+a.trackerLogId)||null;await addProtocolAction(a);importedProtocolActions++}
 
     event.target.value = '';
     await renderHistory();
     await updateHomeWeekEntryCount();
     await updateHomeActiveVialCount();
     await updateHomeStockVialCount();
+    await renderProtocols();
     await refreshHomeDashboard();
     alert(records.length + ' reconstitution record' + (records.length===1?'':'s') +
       (importedStock ? ', ' + importedStock + ' stock item' + (importedStock===1?'':'s') : '') +
       (importedVials ? ', ' + importedVials + ' active vial' + (importedVials===1?'':'s') : '') +
-      (importedLogs ? ', and ' + importedLogs + ' tracker entr' + (importedLogs===1?'y':'ies') : '') +
+      (importedLogs ? ', ' + importedLogs + ' tracker entr' + (importedLogs===1?'y':'ies') : '') +
+      (importedProtocols ? ', ' + importedProtocols + ' protocol' + (importedProtocols===1?'':'s') : '') +
+      (importedProtocolActions ? ', and ' + importedProtocolActions + ' protocol action' + (importedProtocolActions===1?'':'s') : '') +
       ' imported.');
   }catch(err){
     event.target.value = '';
@@ -4583,6 +4590,7 @@ async function populateTrackerPeptideSuggestions(){
     (await getAllTrackerLogs()).forEach(r=>{
       if(r.peptideName) names.add(String(r.peptideName).trim());
     });
+    (await getAllProtocols()).forEach(r=>{if(r.peptideName)names.add(String(r.peptideName).trim())});
   }catch(e){}
   dl.innerHTML = Array.from(names)
     .filter(Boolean)
@@ -4620,6 +4628,7 @@ function resetTrackerComposer(){
 }
 
 async function openTrackerComposer(id=null){
+  closeProtocolComposer();
   await populateTrackerPeptideSuggestions();
   await populateTrackerActiveVials();
   q('trackerComposer').classList.remove('hidden');
@@ -4660,6 +4669,7 @@ async function saveTrackerEntry(){
   const notes = (q('trackerNotes').value || '').trim();
   const activeVialId = Number(q('trackerActiveVialId').value || 0) || null;
   const editingId = Number(q('trackerEditingId').value || 0);
+  const priorLog=editingId?await getTrackerLog(editingId):null;
 
   if(!peptideName){
     alert('Enter a peptide or vial name.');
@@ -4710,6 +4720,7 @@ async function saveTrackerEntry(){
     notes,
     activeVialId,
     activeVialName: activeVialId ? (await getActiveVial(activeVialId))?.peptideName || '' : '',
+    protocolId:priorLog?.protocolId||null,
     createdAt:new Date().toISOString(),
     updatedAt:new Date().toISOString()
   };
@@ -4720,6 +4731,7 @@ async function saveTrackerEntry(){
       record.id = editingId;
       record.createdAt = existing?.createdAt || record.createdAt;
       await updateTrackerLog(record);
+      if(record.protocolId)await syncProtocolActionForTrackerLog(record);
     }else{
       await addTrackerLog(record);
     }
@@ -4737,12 +4749,14 @@ async function saveTrackerEntry(){
 
 async function removeTrackerEntry(id){
   if(!confirm('Delete this tracker entry?')) return;
+  const existing=await getTrackerLog(id);if(existing?.protocolId)await removeProtocolActionForTrackerLog(id);
   await deleteTrackerLog(id);
   await renderTracker();
   await updateHomeWeekEntryCount();
   await updateHomeActiveVialCount();
   await refreshHomeDashboard();
   await populateTrackerActiveVials();
+  await renderProtocols();
   await refreshHomeDashboard();
 }
 
@@ -4919,6 +4933,7 @@ async function prepareTracker(){
   }
   await populateTrackerPeptideSuggestions();
   await populateTrackerActiveVials();
+  await renderProtocols();
   await renderTracker();
 }
 
@@ -4940,6 +4955,35 @@ window.addEventListener('DOMContentLoaded',()=>{
   if(selected && !selected.value) selected.value = localDateString();
   updateHomeWeekEntryCount();
 });
+</script>
+
+
+<script>
+const VT_PROTOCOL_STORE='protocols',VT_PROTOCOL_ACTION_STORE='protocolActions';
+function protocolReq(store,mode,fn){return openVialDB().then(db=>new Promise((resolve,reject)=>{const r=fn(db.transaction(store,mode).objectStore(store));r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)}))}
+const addProtocol=r=>protocolReq(VT_PROTOCOL_STORE,'readwrite',s=>s.add(r)),updateProtocol=r=>protocolReq(VT_PROTOCOL_STORE,'readwrite',s=>s.put(r)),getProtocol=id=>protocolReq(VT_PROTOCOL_STORE,'readonly',s=>s.get(Number(id))).then(r=>r||null),getAllProtocols=()=>protocolReq(VT_PROTOCOL_STORE,'readonly',s=>s.getAll()).then(r=>r||[]);
+const addProtocolAction=r=>protocolReq(VT_PROTOCOL_ACTION_STORE,'readwrite',s=>s.add(r)),updateProtocolAction=r=>protocolReq(VT_PROTOCOL_ACTION_STORE,'readwrite',s=>s.put(r)),getAllProtocolActions=()=>protocolReq(VT_PROTOCOL_ACTION_STORE,'readonly',s=>s.getAll()).then(r=>r||[]),deleteProtocolAction=id=>protocolReq(VT_PROTOCOL_ACTION_STORE,'readwrite',s=>s.delete(Number(id)));
+async function syncProtocolActionForTrackerLog(log){const a=(await getAllProtocolActions()).find(x=>Number(x.trackerLogId)===Number(log.id));if(a){a.date=log.date;a.updatedAt=new Date().toISOString();await updateProtocolAction(a)}}
+async function removeProtocolActionForTrackerLog(id){for(const a of (await getAllProtocolActions()).filter(x=>Number(x.trackerLogId)===Number(id)))await deleteProtocolAction(a.id)}
+function protocolDayDifference(a,b){const x=trackerDateObj(a),y=trackerDateObj(b);return Math.round((Date.UTC(y.getFullYear(),y.getMonth(),y.getDate())-Date.UTC(x.getFullYear(),x.getMonth(),x.getDate()))/86400000)}
+function protocolIsScheduledOn(p,date){if(!p||p.status!=='active'||!p.startDate)return false;const n=protocolDayDifference(p.startDate,date);if(n<0||(p.endDate&&date>p.endDate))return false;if(p.cycleEnabled&&n%(Math.max(1,+p.onDays||1)+Math.max(1,+p.offDays||1))>=Math.max(1,+p.onDays||1))return false;if(p.scheduleType==='weekdays')return (p.weekdays||[]).map(Number).includes(trackerDateObj(date).getDay());if(p.scheduleType==='interval')return n%Math.max(1,+p.intervalDays||1)===0;return true}
+function protocolScheduleLabel(p){if(p.scheduleType==='weekdays'){const d=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];return (p.weekdays||[]).map(x=>d[+x]).join(', ')}if(p.scheduleType==='interval')return `Every ${Math.max(1,+p.intervalDays||1)} days`;return 'Every day'}
+function setProtocolUnit(unit){q('protocolAmountUnit').value=unit;q('protocolAmountDisplayUnit').textContent=unit.toUpperCase();document.querySelectorAll('[data-protocol-unit]').forEach(b=>b.classList.toggle('active',b.dataset.protocolUnit===unit))}
+function updateProtocolScheduleFields(){const t=q('protocolScheduleType').value;q('protocolWeekdayFields').classList.toggle('hidden',t!=='weekdays');q('protocolIntervalFields').classList.toggle('hidden',t!=='interval');q('protocolCycleFields').classList.toggle('hidden',!q('protocolCycleEnabled').checked)}
+async function populateProtocolActiveVials(selected=''){const select=q('protocolActiveVialId');let v=[],usage=new Map();try{v=await getAllActiveVials();usage=await vialUsageMap()}catch(e){}v=v.filter(x=>x.status==='active'||String(x.id)===String(selected));select.innerHTML='<option value="">Not linked to a vial</option>'+v.map(x=>`<option value="${+x.id}">${escHtml(x.peptideName)} · ${mcgDisplay((+x.totalMcg||0)-(usage.get(+x.id)||0))} remaining${x.status==='active'?'':' · archived'}</option>`).join('');select.value=String(selected||'');await protocolVialChanged(false)}
+async function protocolVialChanged(rename=true){const id=+q('protocolActiveVialId').value,h=q('protocolVialRemaining');if(!id){h.textContent='Optional. A linked vial updates when you mark an item complete.';return}const v=await getActiveVial(id),u=await vialUsageMap();if(rename)q('protocolPeptideName').value=v?.peptideName||'';h.textContent=(v?.status==='active'?'Calculated remaining: ':'Archived vial · ')+mcgDisplay((+v?.totalMcg||0)-(u.get(id)||0))}
+function resetProtocolComposer(){q('protocolEditingId').value='';q('protocolComposerTitle').textContent='Create protocol';q('protocolSaveButton').textContent='Save Protocol';q('protocolPeptideName').value='';q('protocolAmount').value='';setProtocolUnit('mg');q('protocolTime').value=currentTimeString();q('protocolStartDate').value=localDateString();q('protocolEndDate').value='';q('protocolScheduleType').value='daily';q('protocolIntervalDays').value=2;q('protocolCycleEnabled').checked=false;q('protocolOnDays').value=5;q('protocolOffDays').value=2;q('protocolNotes').value='';document.querySelectorAll('[data-protocol-weekday]').forEach(i=>i.checked=false);updateProtocolScheduleFields()}
+async function openProtocolComposer(id=null){closeTrackerComposer();q('protocolComposer').classList.remove('hidden');if(!id){resetProtocolComposer();await populateProtocolActiveVials()}else{const p=await getProtocol(id);if(!p)return;q('protocolEditingId').value=p.id;q('protocolComposerTitle').textContent='Edit protocol';q('protocolSaveButton').textContent='Save Changes';q('protocolPeptideName').value=p.peptideName;q('protocolAmount').value=p.amount;setProtocolUnit(p.amountUnit);q('protocolTime').value=p.time||'';q('protocolStartDate').value=p.startDate;q('protocolEndDate').value=p.endDate||'';q('protocolScheduleType').value=p.scheduleType;q('protocolIntervalDays').value=p.intervalDays||2;q('protocolCycleEnabled').checked=!!p.cycleEnabled;q('protocolOnDays').value=p.onDays||5;q('protocolOffDays').value=p.offDays||2;q('protocolNotes').value=p.notes||'';document.querySelectorAll('[data-protocol-weekday]').forEach(i=>i.checked=(p.weekdays||[]).map(Number).includes(+i.dataset.protocolWeekday));await populateProtocolActiveVials(p.activeVialId||'');updateProtocolScheduleFields()}q('protocolComposer').scrollIntoView({block:'start'})}
+function closeProtocolComposer(){q('protocolComposer')?.classList.add('hidden')}
+async function saveProtocol(){const name=q('protocolPeptideName').value.trim(),amount=+q('protocolAmount').value,start=q('protocolStartDate').value,end=q('protocolEndDate').value||null,type=q('protocolScheduleType').value,weekdays=Array.from(document.querySelectorAll('[data-protocol-weekday]:checked')).map(i=>+i.dataset.protocolWeekday),interval=+q('protocolIntervalDays').value,cycle=q('protocolCycleEnabled').checked,on=+q('protocolOnDays').value,off=+q('protocolOffDays').value,id=+q('protocolEditingId').value;if(!name)return alert('Enter a peptide or protocol name.');if(!(amount>0))return alert('Enter your amount per entry.');if(!start)return alert('Choose a start date.');if(end&&end<start)return alert('The end date must be on or after the start date.');if(type==='weekdays'&&!weekdays.length)return alert('Choose at least one weekday.');if(type==='interval'&&interval<1)return alert('Enter a repeat interval of at least 1 day.');if(cycle&&(on<1||off<1))return alert('Enter valid on and rest days.');const old=id?await getProtocol(id):null,now=new Date().toISOString(),r={id:id||undefined,peptideName:name,amount,amountUnit:q('protocolAmountUnit').value,time:q('protocolTime').value,activeVialId:+q('protocolActiveVialId').value||null,scheduleType:type,weekdays,intervalDays:Math.max(1,interval||1),startDate:start,endDate:end,cycleEnabled:cycle,onDays:Math.max(1,on||1),offDays:Math.max(1,off||1),notes:q('protocolNotes').value.trim(),status:old?.status||'active',createdAt:old?.createdAt||now,updatedAt:now};if(id)await updateProtocol(r);else{delete r.id;await addProtocol(r)}closeProtocolComposer();await renderProtocols()}
+async function setProtocolStatus(id,status){const p=await getProtocol(id);if(!p)return;if(status==='ended'&&!confirm('End this protocol? Past tracker entries will stay in history.'))return;p.status=status;p.updatedAt=new Date().toISOString();await updateProtocol(p);await renderProtocols()}
+async function protocolInventoryCheck(p){if(!p.activeVialId)return true;const v=await getActiveVial(p.activeVialId);if(!v||v.status!=='active'){alert('This protocol is linked to an unavailable or archived vial. Edit it and choose an active vial.');return false}const u=await vialUsageMap(),rem=(+v.totalMcg||0)-(u.get(+v.id)||0);return amountToMcg(p.amount,p.amountUnit)<=rem+.0001||confirm(`This is larger than the calculated remaining amount (${mcgDisplay(rem)}). Save anyway?`)}
+async function completeProtocolToday(id){const p=await getProtocol(id),date=localDateString(),actions=await getAllProtocolActions(),old=actions.find(a=>+a.protocolId===+id&&a.date===date);if(!p||old?.status==='completed'||!(await protocolInventoryCheck(p)))return;const v=p.activeVialId?await getActiveVial(p.activeVialId):null,now=new Date().toISOString(),logId=await addTrackerLog({peptideName:p.peptideName,amount:p.amount,amountUnit:p.amountUnit,date,time:p.time||currentTimeString(),notes:p.notes,activeVialId:p.activeVialId,activeVialName:v?.peptideName||'',protocolId:+p.id,createdAt:now,updatedAt:now}),a={protocolId:+p.id,date,status:'completed',trackerLogId:+logId,createdAt:old?.createdAt||now,updatedAt:now};if(old){a.id=old.id;await updateProtocolAction(a)}else await addProtocolAction(a);await refreshAfterProtocolAction()}
+async function skipProtocolToday(id){const date=localDateString(),actions=await getAllProtocolActions();if(actions.some(a=>+a.protocolId===+id&&a.date===date))return;const now=new Date().toISOString();await addProtocolAction({protocolId:+id,date,status:'skipped',trackerLogId:null,createdAt:now,updatedAt:now});await refreshAfterProtocolAction()}
+async function undoProtocolAction(id){const a=(await getAllProtocolActions()).find(x=>+x.id===+id);if(a?.trackerLogId)await deleteTrackerLog(a.trackerLogId);if(a)await deleteProtocolAction(a.id);await refreshAfterProtocolAction()}
+async function refreshAfterProtocolAction(){await renderProtocols();await renderTracker();await populateTrackerActiveVials();await refreshHomeDashboard()}
+async function renderProtocols(){const ps=await getAllProtocols(),actions=await getAllProtocolActions(),date=localDateString(),due=ps.filter(p=>protocolIsScheduledOn(p,date)),map=new Map(actions.filter(a=>a.date===date).map(a=>[+a.protocolId,a])),done=due.filter(p=>map.get(+p.id)?.status==='completed').length,skip=due.filter(p=>map.get(+p.id)?.status==='skipped').length;q('protocolTodaySummary').textContent=due.length?`${due.length-done-skip} due · ${done} complete${skip?' · '+skip+' skipped':''}`:'No protocol items are scheduled today.';q('protocolTodayList').innerHTML=due.length?due.map(p=>{const a=map.get(+p.id),s=a?.status||'due';return `<article class="protocolCard ${s}"><div class="protocolCardTop"><div><div class="protocolName">${escHtml(p.peptideName)}</div><div class="protocolMeta">${escHtml(formatLogTime(p.time)||'Any time')}</div></div><div class="protocolDose">${fmtNumber(p.amount,3)} ${escHtml(p.amountUnit)}</div></div><span class="protocolStatus ${s}">${s}</span><div class="protocolActions">${s==='due'?`<button class="protocolActionBtn primary" onclick="completeProtocolToday(${+p.id})">Complete</button><button class="protocolActionBtn" onclick="skipProtocolToday(${+p.id})">Skip</button>`:`<button class="protocolActionBtn" onclick="undoProtocolAction(${+a.id})">Undo</button>`}</div></article>`}).join(''):'<div class="protocolEmpty">Nothing is due today.</div>';q('protocolList').innerHTML=ps.length?ps.map(p=>`<article class="protocolCard ${p.status}"><div class="protocolCardTop"><div><div class="protocolName">${escHtml(p.peptideName)}</div><div class="protocolMeta">${escHtml(protocolScheduleLabel(p))} · Starts ${escHtml(formatShortDate(p.startDate))}</div></div><div class="protocolDose">${fmtNumber(p.amount,3)} ${escHtml(p.amountUnit)}</div></div><span class="protocolStatus">${escHtml(p.status)}</span><div class="protocolActions"><button class="protocolActionBtn" onclick="openProtocolComposer(${+p.id})">Edit</button>${p.status==='active'?`<button class="protocolActionBtn warn" onclick="setProtocolStatus(${+p.id},'paused')">Pause</button><button class="protocolActionBtn" onclick="setProtocolStatus(${+p.id},'ended')">End</button>`:p.status==='paused'?`<button class="protocolActionBtn primary" onclick="setProtocolStatus(${+p.id},'active')">Resume</button>`:''}</div></article>`).join(''):'<div class="protocolEmpty">No protocols yet.</div>'}
+window.addEventListener('DOMContentLoaded',renderProtocols);
 </script>
 
 
@@ -5613,7 +5657,7 @@ async function renderBoard(){
 
 
 <script>
-const VIAL_APP_VERSION = '14.1.1';
+const VIAL_APP_VERSION = '14.3.0';
 let vialTrackRegistration = null;
 let vialTrackWaitingWorker = null;
 let vialTrackUpdateDismissed = false;
