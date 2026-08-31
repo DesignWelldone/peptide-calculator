@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="./icon-192.png">
 
 <title>VialTrack</title>
-<meta name="vialtrack-version" content="14.1.0">
+<meta name="vialtrack-version" content="14.1.1">
 <meta name="description" content="Offline vial calculations, inventory, history, and weight tracking.">
 <script>
 (function(){
@@ -2425,8 +2425,9 @@ html[data-theme="light"]{
   --line:rgba(20,28,38,.09);
   --line2:rgba(20,28,38,.14);
   --text:#18212b;
-  --muted:#5f6873;
-  --muted2:#777f89;
+  --cyan:#086f63;
+  --muted:#4f5964;
+  --muted2:#5f6873;
   --warn:#9a6714;
 }
 html[data-theme="light"],
@@ -2545,6 +2546,107 @@ html[data-theme="light"] .warning strong{color:#8a5a0b!important}
 html[data-theme="light"] .warning p{color:#74561d!important}
 html[data-theme="light"] .dangerRow .moreRowIcon,
 html[data-theme="light"] .dangerRow strong{color:#a64040!important}
+
+/* V14.1.1 light-theme contrast corrections */
+html[data-theme="light"] .sectiontitle,
+html[data-theme="light"] .sidebar h2,
+html[data-theme="light"] .specs h3,
+html[data-theme="light"] .verify h3,
+html[data-theme="light"] .tips h3,
+html[data-theme="light"] .detail h3{
+  color:var(--text)!important;
+}
+html[data-theme="light"] .reset,
+html[data-theme="light"] .syringe-choice{
+  color:var(--text)!important;
+  border-color:var(--line2)!important;
+}
+html[data-theme="light"] .reset:hover,
+html[data-theme="light"] .syringe-choice:hover{
+  background:#e8ecef!important;
+}
+html[data-theme="light"] .syringe-choice.active{
+  background:#e5f3f1!important;
+  border-color:rgba(8,111,99,.42)!important;
+}
+html[data-theme="light"] .label,
+html[data-theme="light"] .unitlabel,
+html[data-theme="light"] .hint,
+html[data-theme="light"] .syringe-label,
+html[data-theme="light"] .metric .mlabel,
+html[data-theme="light"] .metric .munit,
+html[data-theme="light"] .summary,
+html[data-theme="light"] .bigresult .rsub,
+html[data-theme="light"] .weightHistoryNote,
+html[data-theme="light"] .weightHistoryDate,
+html[data-theme="light"] .appUpdateCard p,
+html[data-theme="light"] .appUpdateVersion,
+html[data-theme="light"] .appUpdateStatus{
+  color:var(--muted)!important;
+}
+html[data-theme="light"] .dashLabel,
+html[data-theme="light"] .offline-badge,
+html[data-theme="light"] .installButton,
+html[data-theme="light"] .unitBtn.active,
+html[data-theme="light"] .drawlabel,
+html[data-theme="light"] .drawval,
+html[data-theme="light"] .drawval small,
+html[data-theme="light"] .bigresult .rlabel,
+html[data-theme="light"] .bigresult .rval,
+html[data-theme="light"] .bigresult .runit,
+html[data-theme="light"] .recommend,
+html[data-theme="light"] .vialRemainingValue,
+html[data-theme="light"] .homeVialMiniRemaining,
+html[data-theme="light"] .homeEntryValue,
+html[data-theme="light"] .weightTrendValue,
+html[data-theme="light"] .moreRowIcon,
+html[data-theme="light"] .navBtn.active,
+html[data-theme="light"] .navBtn.active .navIcon,
+html[data-theme="light"] .navBtn.active .navLabel,
+html[data-theme="light"] .appUpdateEyebrow,
+html[data-theme="light"] .linkedVialBadge,
+html[data-theme="light"] .historyActionBtn.activate{
+  color:var(--cyan)!important;
+}
+html[data-theme="light"] .unitBtn{
+  color:#4f5964!important;
+  border-color:var(--line2)!important;
+}
+html[data-theme="light"] .installButton,
+html[data-theme="light"] .offline-badge{
+  background:#e5f3f1!important;
+  border-color:rgba(8,111,99,.32)!important;
+}
+html[data-theme="light"] .roadmapPill,
+html[data-theme="light"] .pendingStockNotice,
+html[data-theme="light"] .saveConfirmation{
+  color:#125f56!important;
+}
+html[data-theme="light"] .historyActionBtn.danger,
+html[data-theme="light"] .logActionBtn.danger,
+html[data-theme="light"] .stockActionBtn.danger{
+  color:#a64040!important;
+}
+html[data-theme="light"] .vialActionBtn.warn{
+  color:#74561d!important;
+}
+html[data-theme="light"] .weightEditBtn{
+  color:#4f5964!important;
+}
+html[data-theme="light"] .appUpdateCard{
+  background:#ffffff!important;
+  border-color:var(--line2)!important;
+}
+html[data-theme="light"] .appUpdateBtn.secondary{
+  background:#eef1f4!important;
+  border-color:var(--line2)!important;
+  color:var(--text)!important;
+}
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder{
+  color:var(--muted)!important;
+  opacity:1;
+}
 
 /* V14.1 status board */
 .homeBoardButton{
@@ -5511,7 +5613,7 @@ async function renderBoard(){
 
 
 <script>
-const VIAL_APP_VERSION = '14.1.0';
+const VIAL_APP_VERSION = '14.1.1';
 let vialTrackRegistration = null;
 let vialTrackWaitingWorker = null;
 let vialTrackUpdateDismissed = false;

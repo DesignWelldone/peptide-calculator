@@ -1,6 +1,8 @@
-VialTrack 14.1.0
+VialTrack 14.1.1
 
 Public build. Contains no personal seed data.
+
+This release improves light-theme readability across controls and labels.
 
 Navigation: Home, Track, Vials, Weight, More.
 Vials contains stock, active vials, reconstitution, and reconstitution history.
