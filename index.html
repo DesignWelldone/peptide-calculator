@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="./icon-192.png">
 
 <title>VialTrack</title>
-<meta name="vialtrack-version" content="14.0.2">
+<meta name="vialtrack-version" content="14.1.0">
 <meta name="description" content="Offline vial calculations, inventory, history, and weight tracking.">
 <script>
 (function(){
@@ -2384,7 +2384,7 @@ body{
 /* V14 simplified product structure */
 .bottomNav{grid-template-columns:repeat(5,1fr)!important}.simpleHomeHead{display:flex;justify-content:space-between;align-items:center;padding:8px 2px 12px}.simpleHomeHead h2{font-size:2rem;margin:3px 0 0}.simpleHomeIcon{width:48px;height:48px;border-radius:14px}.homePrimaryActions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px}.homePrimaryBtn{min-height:52px;border:0;border-radius:14px;background:#19c7a2;color:#081511;font-size:.96rem;font-weight:800}.homePrimaryBtn.secondary{background:#26282c;color:#f5f5f6;border:1px solid var(--line2)}.homeCompactStats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:10px}.homeCompactStats button{min-height:64px;padding:9px;border-radius:13px;background:#1d1f22;border:1px solid var(--line);color:var(--text);text-align:left}.homeCompactStats span{display:block;font-size:.62rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted2);font-weight:800}.homeCompactStats strong{display:block;font-size:1.2rem;margin-top:3px}.homeSectionTight{margin-top:9px!important}.simplifiedVialActions{display:grid!important;grid-template-columns:1fr 1fr;gap:7px!important}.subtleAction{opacity:.72}.simpleScreenHeader{padding:5px 2px 12px}.simpleScreenHeader h2{font-size:1.7rem;margin:2px 0}.morePanel{max-width:760px;margin:0 auto}.moreGroup{margin-bottom:14px;border-radius:18px;background:#1d1f22;border:1px solid var(--line);overflow:hidden}.moreGroupTitle{padding:13px 14px 7px;color:var(--muted2);font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.moreRow,.moreStaticRow{width:100%;min-height:64px;display:grid;grid-template-columns:34px 1fr 18px;align-items:center;gap:10px;padding:10px 14px;border:0;border-top:1px solid rgba(255,255,255,.035);background:transparent;color:var(--text);text-align:left}.moreStaticRow{grid-template-columns:1fr}.moreRowIcon{width:30px;height:30px;display:grid;place-items:center;color:#19c7a2}.moreRowIcon .appNavSvg{width:21px;height:21px}.eraseIcon{font-size:1.4rem}.moreRow strong,.moreStaticRow strong{display:block;font-size:.9rem}.moreRow small,.moreStaticRow small{display:block;color:var(--muted);font-size:.72rem;margin-top:2px}.moreChevron{color:var(--muted2);font-size:1.3rem}.importMoreRow{cursor:pointer}.importMoreRow input{display:none}.dangerRow .moreRowIcon,.dangerRow strong{color:#dc8b8b}.header .offline-badge,.header .subtitle,.header h1{display:none!important}@media(max-width:640px){.bottomNav{grid-template-columns:repeat(5,1fr)!important}.navLabel{font-size:.63rem!important}.homeCompactStats button{min-height:58px;padding:7px}.homeCompactStats strong{font-size:1.05rem}}
 
-/* V14.0.2 light and dark appearance */
+/* V14.1 light and dark appearance */
 .themeToggle{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -2546,8 +2546,155 @@ html[data-theme="light"] .warning p{color:#74561d!important}
 html[data-theme="light"] .dangerRow .moreRowIcon,
 html[data-theme="light"] .dangerRow strong{color:#a64040!important}
 
+/* V14.1 status board */
+.homeBoardButton{
+  display:grid;
+  grid-template-columns:34px auto;
+  align-items:center;
+  gap:8px;
+  min-height:46px;
+  padding:5px 11px 5px 6px;
+  border:1px solid var(--line2);
+  border-radius:15px;
+  background:#1d1f22;
+  color:var(--text);
+  font:inherit;
+  font-size:.76rem;
+  font-weight:800;
+  cursor:pointer;
+}
+.homeBoardButton img{width:34px;height:34px;border-radius:10px;display:block}
+.boardPanel{max-width:1180px;margin:0 auto 38px}
+.boardHeader{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:18px;
+  margin:2px 0 14px;
+}
+.boardHeader h2{font-size:2rem;line-height:1;margin:4px 0 7px}
+.boardHeader p{margin:0;color:var(--muted);font-size:.78rem}
+.boardHeaderActions{display:flex;gap:7px}
+.boardActionButton{
+  min-height:42px;
+  padding:0 14px;
+  border:1px solid var(--line2);
+  border-radius:12px;
+  background:#26282c;
+  color:var(--text);
+  font:inherit;
+  font-size:.78rem;
+  font-weight:760;
+  cursor:pointer;
+}
+.boardActionButton.primary{background:#19c7a2;border-color:#19c7a2;color:#071713}
+.boardStatusBanner{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  align-items:center;
+  gap:10px;
+  min-height:54px;
+  margin-bottom:10px;
+  padding:10px 14px;
+  border:1px solid rgba(25,199,162,.22);
+  border-radius:15px;
+  background:rgba(25,199,162,.08);
+  color:var(--text);
+  font-size:.82rem;
+  font-weight:700;
+}
+.boardStatusBanner.attention{border-color:rgba(226,169,71,.34);background:rgba(226,169,71,.1)}
+.boardStatusDot{width:9px;height:9px;border-radius:50%;background:#19c7a2;box-shadow:0 0 0 5px rgba(25,199,162,.1)}
+.boardStatusBanner.attention .boardStatusDot{background:#e2a947;box-shadow:0 0 0 5px rgba(226,169,71,.1)}
+.boardMetricGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:10px}
+.boardMetric{
+  min-height:108px;
+  padding:15px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:#1d1f22;
+}
+.boardMetricLabel{color:var(--muted2);font-size:.65rem;font-weight:850;text-transform:uppercase;letter-spacing:.08em}
+.boardMetricValue{margin-top:9px;font-size:1.75rem;font-weight:850;line-height:1;color:var(--text)}
+.boardMetricSub{margin-top:8px;color:var(--muted);font-size:.72rem;line-height:1.3}
+.boardGrid{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}
+.boardCard{
+  min-width:0;
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:#1d1f22;
+}
+.boardCardHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:13px}
+.boardCardHeader h3{margin:2px 0 0;font-size:1.02rem}
+.boardCardHeader span{color:var(--muted2);font-size:.68rem}
+.boardActivityCard{grid-column:span 7}
+.boardVialsCard{grid-column:span 5}
+.boardWeightCard{grid-column:span 6}
+.boardStockCard{grid-column:span 6}
+.boardRecentCard{grid-column:1/-1}
+.boardActivityChart{height:190px;display:flex;align-items:stretch;gap:5px;padding-top:8px}
+.boardActivityDay{flex:1;min-width:0;display:grid;grid-template-rows:1fr 18px;gap:7px;align-items:end;text-align:center}
+.boardActivityBarTrack{height:100%;display:flex;align-items:flex-end;border-radius:8px;background:rgba(255,255,255,.025);overflow:hidden}
+.boardActivityBar{width:100%;min-height:3px;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,#23d4b0,#139f84)}
+.boardActivityDay.today .boardActivityBar{background:linear-gradient(180deg,#f4c96b,#dca53e)}
+.boardActivityLabel{color:var(--muted2);font-size:.58rem;font-weight:750;white-space:nowrap}
+.boardEmpty{padding:22px 8px;color:var(--muted);font-size:.8rem;text-align:center}
+.boardVialList,.boardStockList,.boardRecentList{display:grid;gap:8px}
+.boardVialRow,.boardStockRow,.boardRecentRow{padding:10px 11px;border:1px solid var(--line);border-radius:13px;background:#232529}
+.boardVialTop,.boardStockRow,.boardRecentRow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.boardRowName{min-width:0;font-size:.8rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.boardRowMeta{margin-top:3px;color:var(--muted);font-size:.66rem}
+.boardRowValue{flex:0 0 auto;text-align:right;font-size:.8rem;font-weight:800}
+.boardProgress{height:5px;margin-top:9px;border-radius:99px;background:#303236;overflow:hidden}
+.boardProgress div{height:100%;border-radius:inherit;background:#19c7a2}
+.boardProgress.low div{background:#e2a947}
+.boardWeightSummary{display:flex;align-items:baseline;gap:9px;margin-bottom:8px}
+.boardWeightCurrent{font-size:2rem;font-weight:850}
+.boardWeightChange{font-size:.75rem;font-weight:800;color:var(--muted)}
+.boardWeightChart{height:150px}
+.boardWeightChart svg{display:block;width:100%;height:100%;overflow:visible}
+.boardWeightLine{fill:none;stroke:#19c7a2;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.boardWeightArea{fill:rgba(25,199,162,.08)}
+.boardWeightPoint{fill:#1d1f22;stroke:#19c7a2;stroke-width:3}
+.boardChartGrid{stroke:rgba(255,255,255,.055);stroke-width:1}
+.boardRecentRow{cursor:pointer}
+.boardPrivacyNote{margin:12px 2px 0;color:var(--muted2);font-size:.66rem;text-align:right}
+body.boardMode{overflow:auto}
+body.boardMode .header,body.boardMode .installArea,body.boardMode .bottomNav{display:none!important}
+body.boardMode .container{max-width:none;padding:18px 22px 30px}
+body.boardMode #boardPanel{max-width:1500px;margin:0 auto}
+body.boardMode #boardFullscreenButton{background:#19c7a2;border-color:#19c7a2;color:#071713}
+html[data-theme="light"] .homeBoardButton,
+html[data-theme="light"] .boardMetric,
+html[data-theme="light"] .boardCard{background:#ffffff!important;border-color:var(--line)!important}
+html[data-theme="light"] .boardActionButton{background:#eef1f4!important;border-color:var(--line2)!important;color:var(--text)!important}
+html[data-theme="light"] .boardActionButton.primary,
+html[data-theme="light"] body.boardMode #boardFullscreenButton{background:#19c7a2!important;border-color:#19c7a2!important;color:#071713!important}
+html[data-theme="light"] .boardVialRow,
+html[data-theme="light"] .boardStockRow,
+html[data-theme="light"] .boardRecentRow{background:#f5f7f8!important;border-color:var(--line)!important}
+html[data-theme="light"] .boardActivityBarTrack{background:#eef1f4}
+html[data-theme="light"] .boardProgress{background:#e3e7ea}
+html[data-theme="light"] .boardWeightPoint{fill:#ffffff}
+html[data-theme="light"] .boardChartGrid{stroke:rgba(20,28,38,.09)}
+
+@media(max-width:760px){
+  .boardHeader{align-items:flex-start;flex-direction:column}
+  .boardHeaderActions{width:100%}.boardActionButton{flex:1}
+  .boardMetricGrid{grid-template-columns:1fr 1fr}
+  .boardActivityCard,.boardVialsCard,.boardWeightCard,.boardStockCard,.boardRecentCard{grid-column:1/-1}
+  .boardActivityChart{height:150px;gap:3px}
+  .boardActivityLabel{font-size:.52rem}
+  body.boardMode .container{padding:12px 10px 24px}
+}
+
 @media(max-width:500px){
   .themeToggle button{min-width:58px;padding:0 10px}
+  .homeBoardButton{grid-template-columns:30px auto;padding-right:9px}
+  .homeBoardButton img{width:30px;height:30px}
+  .boardMetric{min-height:96px;padding:13px}
+  .boardMetricValue{font-size:1.45rem}
 }
 
 </style>
@@ -2577,7 +2724,7 @@ html[data-theme="light"] .dangerRow strong{color:#a64040!important}
   
   
   <section id="homePanel" class="homePanel appView">
-    <div class="simpleHomeHead"><div><div id="homeTodayDate" class="todayDate"></div><h2>Today</h2></div><img src="./icon-192.png" class="simpleHomeIcon" alt="VialTrack"></div>
+    <div class="simpleHomeHead"><div><div id="homeTodayDate" class="todayDate"></div><h2>Today</h2></div><button class="homeBoardButton" type="button" onclick="showView('board')" aria-label="Open VialTrack status board"><img src="./icon-192.png" alt=""><span>Board</span></button></div>
     <div class="homePrimaryActions"><button class="homePrimaryBtn" type="button" onclick="homeQuickLog()">Log</button><button class="homePrimaryBtn secondary" type="button" onclick="showView('calculator')">Reconstitute</button></div>
     <div class="homeCompactStats">
       <button onclick="showView('tracker')"><span>Today</span><strong id="homeTodayEntryCount">0</strong></button>
@@ -2589,6 +2736,55 @@ html[data-theme="light"] .dangerRow strong{color:#a64040!important}
     <div class="homeSection homeSectionTight"><div class="homeSectionHeader"><div><div class="dashLabel">Today</div><h3>Log</h3></div><button class="homeTextBtn" onclick="openTrackerToday()">View</button></div><div id="homeTodayEntries" class="homeList"></div></div>
     <div class="homeSection homeSectionTight"><div class="homeSectionHeader"><div><div class="dashLabel">Active</div><h3>Vials</h3></div><button class="homeTextBtn" onclick="showView('inventory')">View</button></div><div id="homeVialCards" class="homeVialGrid"></div></div>
     <div id="homeRecentHistory" class="hidden"></div>
+  </section>
+
+
+  <section id="boardPanel" class="boardPanel appView hidden">
+    <div class="boardHeader">
+      <div>
+        <div class="screenEyebrow">VialTrack Board</div>
+        <h2>Status</h2>
+        <p id="boardUpdatedAt">Calculated from this device</p>
+      </div>
+      <div class="boardHeaderActions">
+        <button class="boardActionButton" type="button" onclick="renderBoard()">Refresh</button>
+        <button id="boardFullscreenButton" class="boardActionButton primary" type="button" onclick="toggleBoardMode()">Full screen</button>
+      </div>
+    </div>
+
+    <div id="boardStatusBanner" class="boardStatusBanner"><span class="boardStatusDot"></span><span>Loading status…</span></div>
+
+    <div class="boardMetricGrid">
+      <article class="boardMetric"><div class="boardMetricLabel">Active vials</div><div id="boardActiveValue" class="boardMetricValue">0</div><div id="boardActiveSub" class="boardMetricSub">No active vials</div></article>
+      <article class="boardMetric"><div class="boardMetricLabel">Unopened stock</div><div id="boardStockValue" class="boardMetricValue">0</div><div id="boardStockSub" class="boardMetricSub">No stock recorded</div></article>
+      <article class="boardMetric"><div class="boardMetricLabel">This week</div><div id="boardWeekValue" class="boardMetricValue">0</div><div id="boardWeekSub" class="boardMetricSub">Tracker entries</div></article>
+      <article class="boardMetric"><div class="boardMetricLabel">Latest weight</div><div id="boardWeightValue" class="boardMetricValue">—</div><div id="boardWeightSub" class="boardMetricSub">No weight recorded</div></article>
+    </div>
+
+    <div class="boardGrid">
+      <section class="boardCard boardActivityCard">
+        <div class="boardCardHeader"><div><div class="dashLabel">Last 14 days</div><h3>Activity</h3></div><span id="boardActivityTotal">0 entries</span></div>
+        <div id="boardActivityChart" class="boardActivityChart"></div>
+      </section>
+      <section class="boardCard boardVialsCard">
+        <div class="boardCardHeader"><div><div class="dashLabel">Calculated remaining</div><h3>Active vials</h3></div><span id="boardVialCount">0 active</span></div>
+        <div id="boardVialList" class="boardVialList"></div>
+      </section>
+      <section class="boardCard boardWeightCard">
+        <div class="boardCardHeader"><div><div class="dashLabel">Recent entries</div><h3>Weight trend</h3></div><span id="boardWeightRange">No entries</span></div>
+        <div id="boardWeightSummary" class="boardWeightSummary"></div>
+        <div id="boardWeightChart" class="boardWeightChart"></div>
+      </section>
+      <section class="boardCard boardStockCard">
+        <div class="boardCardHeader"><div><div class="dashLabel">On hand</div><h3>Stock</h3></div><span id="boardStockCount">0 vials</span></div>
+        <div id="boardStockList" class="boardStockList"></div>
+      </section>
+      <section class="boardCard boardRecentCard">
+        <div class="boardCardHeader"><div><div class="dashLabel">Latest recorded use</div><h3>Recent activity</h3></div><span id="boardRecentCount">0 entries</span></div>
+        <div id="boardRecentList" class="boardRecentList"></div>
+      </section>
+    </div>
+    <div class="boardPrivacyNote">Status is calculated locally from records stored on this device.</div>
   </section>
 
 
@@ -2923,6 +3119,7 @@ html[data-theme="light"] .dangerRow strong{color:#a64040!important}
   <section id="morePanel" class="morePanel appView hidden">
     <div class="simpleScreenHeader"><div class="screenEyebrow">VialTrack</div><h2>More</h2></div>
     <div class="moreGroup"><div class="moreGroupTitle">Tools</div>
+      <button class="moreRow" type="button" onclick="showView('board')"><span class="moreRowIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9"/><path d="M10 19V5"/><path d="M16 19v-7"/><path d="M22 19V3"/><path d="M2 19h21"/></svg></span><span><strong>Status Board</strong><small>Graphs and a summary of recorded status</small></span><span class="moreChevron">›</span></button>
       <button class="moreRow" type="button" onclick="showView('nasal')"><span class="moreRowIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3c2 2.5 3 5 3 7.5 0 3-1.2 5.2-3.6 6.6"/><path d="M13 8c3 .5 5 2.3 6 5"/><path d="M15.5 14.5h3"/></svg></span><span><strong>Intranasal Calculator</strong><small>Nasal spray calculations</small></span><span class="moreChevron">›</span></button>
     </div>
     <div class="moreGroup"><div class="moreGroupTitle">Data & Backup</div>
@@ -2931,7 +3128,7 @@ html[data-theme="light"] .dangerRow strong{color:#a64040!important}
       <button class="moreRow dangerRow" type="button" onclick="eraseAllLocalData()"><span class="moreRowIcon eraseIcon">×</span><span><strong>Erase All Local Data</strong><small>Remove this device's VialTrack data</small></span><span class="moreChevron">›</span></button>
     </div>
     <div class="moreGroup"><div class="moreGroupTitle">About</div>
-      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.0.2</small></span></div>
+      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.1.0</small></span></div>
       <div class="moreStaticRow"><span><strong>Data</strong><small>Stored on this device unless you export it</small></span></div>
     </div>
   </section>
@@ -3256,10 +3453,14 @@ let currentView = 'home';
 function showView(view){
   const previousView = currentView;
   currentView = view;
+  if(view !== 'board' && document.body.classList.contains('boardMode')){
+    setBoardMode(false);
+  }
   if(previousView !== view){
     window.scrollTo({top:0,left:0,behavior:'auto'});
   }
   const home = q('homePanel');
+  const board = q('boardPanel');
   const recon = q('panelRecon');
   const tracker = q('trackerPanel');
   const inventory = q('inventoryPanel');
@@ -3268,6 +3469,7 @@ function showView(view){
   const more = q('morePanel');
   const nasal = q('panelNasal');
   if(home) home.classList.toggle('hidden', view !== 'home');
+  if(board) board.classList.toggle('hidden', view !== 'board');
   if(recon) recon.classList.toggle('hidden', view !== 'calculator');
   if(tracker) tracker.classList.toggle('hidden', view !== 'tracker');
   if(inventory) inventory.classList.toggle('hidden', view !== 'inventory');
@@ -3276,7 +3478,7 @@ function showView(view){
   if(more) more.classList.toggle('hidden', view !== 'more');
   if(nasal) nasal.classList.toggle('hidden', view !== 'nasal');
 
-  const navMap = {home:'navHome', tracker:'navTracker', inventory:'navInventory', weight:'navWeight', more:'navMore', calculator:'navInventory', history:'navInventory', nasal:'navMore'};
+  const navMap = {home:'navHome', board:'navHome', tracker:'navTracker', inventory:'navInventory', weight:'navWeight', more:'navMore', calculator:'navInventory', history:'navInventory', nasal:'navMore'};
   ['navHome','navTracker','navInventory','navWeight','navMore'].forEach(id => {
     const el = q(id);
     if(el) el.classList.toggle('active', id === navMap[view]);
@@ -3298,6 +3500,8 @@ function showView(view){
     prepareWeightTracker();
   }else if(view === 'more'){
     // Static screen.
+  }else if(view === 'board'){
+    renderBoard();
   }else if(view === 'home'){
     refreshHomeDashboard();
   }
@@ -3785,7 +3989,7 @@ async function exportHistory(){
   try{ weightLogs = await getAllWeightLogs(); }catch(e){}
   const payload = {
     app:'VialTrack',
-    version:'14.0.2',
+    version:'14.1.0',
     exportedAt:new Date().toISOString(),
     reconstitutions:records,
     stockInventory,
@@ -5059,6 +5263,132 @@ window.addEventListener('DOMContentLoaded',()=>seedWeightData().then(renderWeigh
 </script>
 
 <script>
+function setBoardMode(enabled){
+  const next = Boolean(enabled);
+  document.body.classList.toggle('boardMode', next);
+  const button = q('boardFullscreenButton');
+  if(button) button.textContent = next ? 'Exit board' : 'Full screen';
+}
+
+function toggleBoardMode(){
+  setBoardMode(!document.body.classList.contains('boardMode'));
+}
+
+function boardWeightSvg(records){
+  if(records.length < 2) return '<div class="boardEmpty">Add at least two weight entries to show a trend.</div>';
+  const values = records.map(r=>Number(r.weight)).filter(Number.isFinite);
+  if(values.length < 2) return '<div class="boardEmpty">Add at least two weight entries to show a trend.</div>';
+  const width=600,height=150,padX=16,padY=16;
+  const min=Math.min(...values),max=Math.max(...values),range=Math.max(1,max-min);
+  const points=values.map((value,index)=>{
+    const x=padX+(index/(values.length-1))*(width-padX*2);
+    const y=padY+((max-value)/range)*(height-padY*2);
+    return {x,y,value};
+  });
+  const line=points.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+  const area=`${points[0].x.toFixed(1)},${(height-padY).toFixed(1)} ${line} ${points[points.length-1].x.toFixed(1)},${(height-padY).toFixed(1)}`;
+  const grid=[.25,.5,.75].map(part=>{
+    const y=(padY+part*(height-padY*2)).toFixed(1);
+    return `<line class="boardChartGrid" x1="${padX}" y1="${y}" x2="${width-padX}" y2="${y}"/>`;
+  }).join('');
+  const dots=points.map((p,index)=>`<circle class="boardWeightPoint" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${index===points.length-1?5:3}"><title>${p.value.toFixed(1)} lbs</title></circle>`).join('');
+  return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Weight trend from ${values[0].toFixed(1)} to ${values[values.length-1].toFixed(1)} pounds">${grid}<polygon class="boardWeightArea" points="${area}"/><polyline class="boardWeightLine" points="${line}"/>${dots}</svg>`;
+}
+
+async function renderBoard(){
+  const panel=q('boardPanel');
+  if(!panel) return;
+
+  let logs=[],vials=[],stock=[],weights=[],usage=new Map();
+  try{logs=await getAllTrackerLogs();}catch(e){}
+  try{vials=await getAllActiveVials();}catch(e){}
+  try{stock=await getAllStockItems();}catch(e){}
+  try{weights=await getAllWeightLogs();}catch(e){}
+  try{usage=await vialUsageMap();}catch(e){}
+
+  const now=new Date();
+  const today=localDateString(now);
+  const activeVials=vials.filter(v=>v.status==='active').map(v=>{
+    const total=Number(v.totalMcg)||0;
+    const used=usage.get(Number(v.id))||0;
+    const remaining=Math.max(0,total-used);
+    const pct=total>0?Math.max(0,Math.min(100,(remaining/total)*100)):0;
+    const reconstituted=new Date(v.reconstitutedAt||v.createdAt||now);
+    const days=Number.isNaN(reconstituted.getTime())?null:Math.max(0,Math.floor((now-reconstituted)/86400000));
+    return {...v,total,used,remaining,pct,days};
+  }).sort((a,b)=>a.pct-b.pct);
+  const lowVials=activeVials.filter(v=>v.total>0&&v.pct<=25);
+  const totalStock=stock.reduce((sum,item)=>sum+Math.max(0,Number(item.quantity)||0),0);
+
+  const weekStart=startOfWeek(now);
+  const weekDates=Array.from({length:7},(_,i)=>localDateString(addDays(weekStart,i)));
+  const weekLogs=logs.filter(log=>weekDates.includes(log.date));
+  const weekActiveDays=new Set(weekLogs.map(log=>log.date)).size;
+
+  weights=weights.filter(r=>Number.isFinite(Number(r.weight))).sort((a,b)=>weightTimestamp(a).localeCompare(weightTimestamp(b)));
+  const latestWeight=weights[weights.length-1]||null;
+  const previousWeight=weights[weights.length-2]||null;
+  const weightChange=latestWeight&&previousWeight?Number(latestWeight.weight)-Number(previousWeight.weight):null;
+
+  q('boardUpdatedAt').textContent='Updated '+now.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'})+' · calculated from this device';
+  q('boardActiveValue').textContent=activeVials.length;
+  q('boardActiveSub').textContent=lowVials.length?`${lowVials.length} at or below 25%`:(activeVials.length?'Calculated remaining':'No active vials');
+  q('boardStockValue').textContent=totalStock;
+  q('boardStockSub').textContent=stock.length?`${stock.length} stock ${stock.length===1?'group':'groups'}`:'No stock recorded';
+  q('boardWeekValue').textContent=weekLogs.length;
+  q('boardWeekSub').textContent=`Across ${weekActiveDays} ${weekActiveDays===1?'day':'days'}`;
+  q('boardWeightValue').textContent=latestWeight?Number(latestWeight.weight).toFixed(1):'—';
+  q('boardWeightSub').textContent=latestWeight?(weightChange===null?formatShortDate(latestWeight.date):`${weightChange>0?'+':''}${weightChange.toFixed(1)} lbs from previous`):'No weight recorded';
+
+  const status=q('boardStatusBanner');
+  status.classList.toggle('attention',lowVials.length>0);
+  const statusText=status.querySelector('span:last-child');
+  if(lowVials.length){
+    statusText.textContent=`${lowVials.length} active ${lowVials.length===1?'vial is':'vials are'} at or below 25% calculated remaining.`;
+  }else if(!activeVials.length&&!totalStock){
+    statusText.textContent='No vial inventory is recorded on this device.';
+  }else{
+    statusText.textContent='No active vials are below 25% calculated remaining.';
+  }
+
+  const activityDates=Array.from({length:14},(_,i)=>localDateString(addDays(now,i-13)));
+  const activityCounts=activityDates.map(date=>logs.filter(log=>log.date===date).length);
+  const activityMax=Math.max(1,...activityCounts);
+  const activityTotal=activityCounts.reduce((sum,count)=>sum+count,0);
+  q('boardActivityTotal').textContent=`${activityTotal} ${activityTotal===1?'entry':'entries'}`;
+  q('boardActivityChart').innerHTML=activityDates.map((date,index)=>{
+    const count=activityCounts[index];
+    const height=count?Math.max(8,(count/activityMax)*100):2;
+    const d=trackerDateObj(date);
+    const label=d.toLocaleDateString(undefined,{weekday:'narrow'});
+    return `<div class="boardActivityDay ${date===today?'today':''}" aria-label="${escHtml(formatShortDate(date))}: ${count} ${count===1?'entry':'entries'}"><div class="boardActivityBarTrack"><div class="boardActivityBar" style="height:${height.toFixed(1)}%"><span class="hidden">${count}</span></div></div><div class="boardActivityLabel">${escHtml(label)}</div></div>`;
+  }).join('');
+
+  q('boardVialCount').textContent=`${activeVials.length} active`;
+  q('boardVialList').innerHTML=activeVials.length?activeVials.slice(0,6).map(v=>`
+    <div class="boardVialRow">
+      <div class="boardVialTop"><div><div class="boardRowName">${escHtml(v.peptideName||'Unnamed vial')}</div><div class="boardRowMeta">${v.days===null?'Date unavailable':`${v.days} ${v.days===1?'day':'days'} since reconstitution`}</div></div><div class="boardRowValue">${mcgDisplay(v.remaining)}<div class="boardRowMeta">${fmtNumber(v.pct,0)}%</div></div></div>
+      <div class="boardProgress ${v.pct<=25?'low':''}"><div style="width:${v.pct.toFixed(1)}%"></div></div>
+    </div>`).join(''):'<div class="boardEmpty">No active vials recorded.</div>';
+
+  const recentWeights=weights.slice(-12);
+  q('boardWeightRange').textContent=recentWeights.length?`${recentWeights.length} ${recentWeights.length===1?'entry':'entries'}`:'No entries';
+  q('boardWeightSummary').innerHTML=latestWeight?`<div class="boardWeightCurrent">${Number(latestWeight.weight).toFixed(1)} lbs</div><div class="boardWeightChange">${weightChange===null?'First recorded weight':`${weightChange>0?'+':''}${weightChange.toFixed(1)} lbs from previous`}</div>`:'';
+  q('boardWeightChart').innerHTML=boardWeightSvg(recentWeights);
+
+  q('boardStockCount').textContent=`${totalStock} ${totalStock===1?'vial':'vials'}`;
+  const sortedStock=stock.slice().sort((a,b)=>(Number(b.quantity)||0)-(Number(a.quantity)||0));
+  q('boardStockList').innerHTML=sortedStock.length?sortedStock.slice(0,7).map(item=>`
+    <div class="boardStockRow"><div><div class="boardRowName">${escHtml(item.peptideName||'Unnamed vial')}</div><div class="boardRowMeta">${fmtNumber(item.strength,3)} ${escHtml(item.strengthUnit||'mg')} per vial</div></div><div class="boardRowValue">${Math.max(0,Number(item.quantity)||0)}</div></div>`).join(''):'<div class="boardEmpty">No unopened stock recorded.</div>';
+
+  const recentLogs=logs.slice().sort((a,b)=>`${b.date||''}T${b.time||''}`.localeCompare(`${a.date||''}T${a.time||''}`)).slice(0,6);
+  q('boardRecentCount').textContent=`${recentLogs.length} shown`;
+  q('boardRecentList').innerHTML=recentLogs.length?recentLogs.map(log=>`
+    <div class="boardRecentRow" onclick="showView('tracker');setTimeout(()=>openTrackerComposer(${Number(log.id)}),80)"><div><div class="boardRowName">${escHtml(log.peptideName||'Unnamed entry')}</div><div class="boardRowMeta">${escHtml(formatShortDate(log.date))}${log.time?' · '+escHtml(formatLogTime(log.time)):''}</div></div><div class="boardRowValue">${fmtNumber(log.amount,3)} ${escHtml(log.amountUnit||'')}</div></div>`).join(''):'<div class="boardEmpty">No tracker activity recorded.</div>';
+}
+</script>
+
+<script>
 (function(){
   const STATE_KEY = 'vialTrackState_v12';
   let deferredInstallPrompt = null;
@@ -5122,7 +5452,7 @@ window.addEventListener('DOMContentLoaded',()=>seedWeightData().then(renderWeigh
     }
 
     calculateRecon(false, true);
-    if(state.currentView && ['home','calculator','tracker','inventory','weight','history','more','nasal'].includes(state.currentView)){
+    if(state.currentView && ['home','board','calculator','tracker','inventory','weight','history','more','nasal'].includes(state.currentView)){
       showView(state.currentView);
     }
     return true;
@@ -5181,7 +5511,7 @@ window.addEventListener('DOMContentLoaded',()=>seedWeightData().then(renderWeigh
 
 
 <script>
-const VIAL_APP_VERSION = '14.0.2';
+const VIAL_APP_VERSION = '14.1.0';
 let vialTrackRegistration = null;
 let vialTrackWaitingWorker = null;
 let vialTrackUpdateDismissed = false;
