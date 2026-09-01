@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 60837)
-Total output lines: 5840
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +13,7 @@ Total output lines: 5840
 <link rel="apple-touch-icon" href="./icon-192.png">
 
 <title>VialTrack</title>
-<meta name="vialtrack-version" content="14.3.0">
+<meta name="vialtrack-version" content="14.3.1">
 <meta name="description" content="Offline vial calculations, user-created protocols, inventory, history, and weight tracking.">
 <script>
 (function(){
@@ -2667,6 +2664,64 @@ html[data-theme="light"] textarea::placeholder{
   opacity:1;
 }
 
+/* V14.3.1 Track screen light-theme contrast */
+html[data-theme="light"] .heroEyebrow,
+html[data-theme="light"] .screenEyebrow,
+html[data-theme="light"] .weekDow,
+html[data-theme="light"] .logAmount,
+html[data-theme="light"] .weekEntryAmount{
+  color:var(--cyan)!important;
+}
+html[data-theme="light"] .dateNavBtn,
+html[data-theme="light"] .todayBtn,
+html[data-theme="light"] .trackerDatePicker{
+  background:#ffffff!important;
+  border-color:var(--line2)!important;
+  color:var(--text)!important;
+}
+html[data-theme="light"] .dateNavBtn:hover,
+html[data-theme="light"] .todayBtn:hover{
+  background:#eef1f4!important;
+}
+html[data-theme="light"] .trackerSummaryCard strong,
+html[data-theme="light"] .logPeptide,
+html[data-theme="light"] .weekDate,
+html[data-theme="light"] .weekEntryName{
+  color:var(--text)!important;
+}
+html[data-theme="light"] .logCard,
+html[data-theme="light"] .weekDay{
+  background:#ffffff!important;
+  border-color:var(--line)!important;
+}
+html[data-theme="light"] .weekDay.today{
+  border-color:rgba(8,111,99,.42)!important;
+  box-shadow:inset 0 0 0 1px rgba(8,111,99,.08)!important;
+}
+html[data-theme="light"] .weekEntry,
+html[data-theme="light"] .logNotes{
+  background:#f2f4f6!important;
+  border-color:var(--line)!important;
+}
+html[data-theme="light"] .logTime,
+html[data-theme="light"] .weekEmpty{
+  color:var(--muted)!important;
+}
+html[data-theme="light"] .linkedVialBadge{
+  background:#e5f3f1!important;
+  border-color:rgba(8,111,99,.22)!important;
+  color:#086f63!important;
+}
+html[data-theme="light"] .trackerEmpty{
+  background:#ffffff!important;
+  border-color:var(--line2)!important;
+}
+html[data-theme="light"] .heroBtn.primary{
+  background:#086f63!important;
+  border-color:#086f63!important;
+  color:#ffffff!important;
+}
+
 /* V14.1 status board */
 .homeBoardButton{
   display:grid;
@@ -3260,7 +3315,7 @@ html[data-theme="light"] .boardChartGrid{stroke:rgba(20,28,38,.09)}
     </div>
     <div class="moreGroup"><div class="moreGroupTitle">About</div>
       <button class="moreRow supportRow" type="button" onclick="openSupportVialTrack()"><span class="moreRowIcon">$</span><span><strong>Support VialTrack</strong><small>Make an optional one-time contribution</small></span><span class="moreChevron">›</span></button>
-      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.3.0</small></span></div>
+      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.3.1</small></span></div>
       <div class="moreStaticRow"><span><strong>Data</strong><small>Stored on this device unless you export it</small></span></div>
     </div>
   </section>
@@ -3401,7 +3456,50 @@ html[data-theme="light"] .boardChartGrid{stroke:rgba(20,28,38,.09)}
     <section id="panelNasal" class="appView hidden">
       <div class="specs">
         <h3>Standard Nasal Spray Pump Specs</h3>
-        <p>Standard metered pumps commonly deliver about <strong styl…837 tokens truncated…/div></div>
+        <p>Standard metered pumps commonly deliver about <strong style="color:#06b6d4">0.1 mL (100 µL)</strong> per actuation. Calibrate your actual device before relying on a calculated amount.</p>
+        <div class="specgrid">
+          <div class="spec"><small>Pump Volume</small><strong>0.1 mL/spray</strong></div>
+          <div class="spec"><small>5 mL Bottle</small><strong>50 sprays</strong></div>
+          <div class="spec"><small>10 mL Bottle</small><strong>100 sprays</strong></div>
+          <div class="spec"><small>Both Nostrils</small><strong>0.2 mL/dose</strong></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="subtabs">
+          <button id="subVial" class="subtab active" onclick="switchNasal('vial')">DIY Vial Version</button>
+          <button id="subBottle" class="subtab" onclick="switchNasal('bottle')">Premixed Bottle Version</button>
+        </div>
+
+        <div id="nasalVial">
+          <div class="sectionhead"><span class="sectiontitle">INPUTS</span><button class="reset" onclick="resetNasalVial()">RESET</button></div>
+          <div class="inputs">
+            <div class="inputcard">
+              <label class="label">Vial Size</label>
+              <div class="inrow"><input id="nasalMass" type="number" min="0" step="0.1" value="10"><span id="nasalMassDisplay" class="unitlabel">MG</span></div>
+              <div class="unitToggle"><button class="unitBtn active" data-group="nasalMassUnit" onclick="setUnit('nasalMassUnit','mg',this)">MG</button><button class="unitBtn" data-group="nasalMassUnit" onclick="setUnit('nasalMassUnit','mcg',this)">MCG</button></div>
+              <input id="nasalMassUnit" type="hidden" value="mg">
+            </div>
+            <div class="inputcard">
+              <label class="label">Target Dose</label>
+              <div class="inrow"><input id="nasalDose" type="number" min="0" step="0.1" value="250"><span id="nasalDoseDisplay" class="unitlabel">MCG</span></div>
+              <div class="unitToggle"><button class="unitBtn active" data-group="nasalDoseUnit" onclick="setUnit('nasalDoseUnit','mcg',this)">MCG</button><button class="unitBtn" data-group="nasalDoseUnit" onclick="setUnit('nasalDoseUnit','mg',this)">MG</button></div>
+              <input id="nasalDoseUnit" type="hidden" value="mcg">
+            </div>
+            <div class="inputcard">
+              <label class="label">Spray Volume</label>
+              <div class="inrow"><input id="nasalSprayVol" type="number" min="0.01" step="0.01" value="0.10"><span class="unitlabel">ML</span></div>
+              <div class="hint">Common: 0.05–0.14 mL per spray</div>
+            </div>
+          </div>
+          <button class="calc" onclick="calculateNasalVial()">Calculate — Vial Version</button>
+          <div id="nasalVialResult" class="bigresult">
+            <div class="rlabel">Recommended: Add</div><div id="nasalAddVol" class="rval">—</div><div class="runit">mL of liquid to vial</div>
+            <div id="nasalVialSummary" class="rsub"></div>
+          </div>
+          <div id="nasalVialMetrics" class="metrics hidden">
+            <div class="metric"><div class="mlabel">Concentration</div><div id="nasalConc" class="mval">—</div><div id="nasalConcUnit" class="munit">mcg/mL</div></div>
+            <div class="metric"><div class="mlabel">Vol per Dose</div><div id="nasalVolDose" class="mval">—</div><div class="munit">mL</div></div>
             <div class="metric"><div class="mlabel">Total Doses</div><div id="nasalDoses" class="mval">—</div><div class="munit">per vial</div></div>
           </div>
         </div>
@@ -4085,7 +4183,7 @@ async function exportHistory(){
   try{ protocols=await getAllProtocols(); protocolActions=await getAllProtocolActions(); }catch(e){}
   const payload = {
     app:'VialTrack',
-    version:'14.3.0',
+    version:'14.3.1',
     exportedAt:new Date().toISOString(),
     reconstitutions:records,
     stockInventory,
@@ -5657,7 +5755,7 @@ async function renderBoard(){
 
 
 <script>
-const VIAL_APP_VERSION = '14.3.0';
+const VIAL_APP_VERSION = '14.3.1';
 let vialTrackRegistration = null;
 let vialTrackWaitingWorker = null;
 let vialTrackUpdateDismissed = false;
