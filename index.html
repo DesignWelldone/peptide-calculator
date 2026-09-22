@@ -5770,7 +5770,7 @@ async function renderBoard(){
 
     calculateRecon(false, true);
     if(state.currentView && ['home','board','calculator','tracker','inventory','weight','history','more','nasal'].includes(state.currentView)){
-      showView(state.currentView, {replace:true});
+      showView(state.currentView);
     }
     return true;
   }
@@ -5812,7 +5812,7 @@ async function renderBoard(){
       if(currentView !== 'home' && dx >= 56 && Math.abs(dx) > Math.abs(dy) * 1.2) window.history.back();
     }
     topBar.addEventListener('pointerup', finish);
-    topBar.addEventListener('pointercancel', finish);
+    topBar.addEventListener('pointercancel', function(){ start = null; });
   })();
 
 
