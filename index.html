@@ -2920,6 +2920,13 @@ html[data-theme="dark"] optgroup {
   }
 }
 
+.vialBackButton{
+  position:absolute;left:12px;top:12px;width:42px;height:42px;border:0;border-radius:999px;
+  background:transparent;color:inherit;font-size:2rem;line-height:1;cursor:pointer
+}
+.header{position:relative;touch-action:pan-y}
+@media(max-width:600px){.vialBackButton{left:4px;top:8px}}
+
 html[data-theme="light"] select,
 html[data-theme="light"] option,
 html[data-theme="light"] optgroup {
@@ -2930,7 +2937,8 @@ html[data-theme="light"] optgroup {
 </head>
 <body>
 <div class="container">
-  <header class="header">
+  <header class="header" id="vialTopBar">
+    <button id="vialBackButton" class="vialBackButton hidden" type="button" aria-label="Back" onclick="window.history.back()">‹</button>
     <div class="brand brandWithIcon"><span aria-hidden="true" class="brandIcon paper-product-icon paper-vial-icon"></span> <span>VialTrack</span></div>
     <span class="themeToggle headerThemeToggle" role="group" aria-label="Color mode">
       <button id="themeLightButton" type="button" onclick="setTheme('light')" aria-pressed="false">Light</button>
@@ -3690,9 +3698,13 @@ else if(themePreference.addListener) themePreference.addListener(followDeviceThe
 
 
 let currentView = 'home';
+const VT_VIEW_KEY = '__vialTrackView';
+const VT_VIEWS = ['home','board','calculator','tracker','inventory','weight','history','more','nasal'];
 const VT_SUPPORT_URL='';
 function openSupportVialTrack(){if(!VT_SUPPORT_URL){alert('Support payments are not available yet.');return}window.open(VT_SUPPORT_URL,'_blank','noopener,noreferrer')}
-function showView(view){
+function showView(view, options){
+  if(!VT_VIEWS.includes(view)) view = 'home';
+  const navigation = options || {};
   const previousView = currentView;
   currentView = view;
   if(view !== 'board' && document.body.classList.contains('boardMode')){
@@ -3725,6 +3737,14 @@ function showView(view){
     const el = q(id);
     if(el) el.classList.toggle('active', id === navMap[view]);
   });
+  q('vialBackButton')?.classList.toggle('hidden', view === 'home');
+  if(previousView !== view && !navigation.fromHistory){
+    const nextState = Object.assign({}, window.history.state || {}, { [VT_VIEW_KEY]: view });
+    if(navigation.replace) window.history.replaceState(nextState, '', window.location.href);
+    else window.history.pushState(nextState, '', window.location.href);
+  }else if(navigation.replace){
+    window.history.replaceState(Object.assign({}, window.history.state || {}, { [VT_VIEW_KEY]: view }), '', window.location.href);
+  }
 
   if(view === 'calculator'){
     q('tabRecon').classList.add('active');
@@ -5765,7 +5785,35 @@ async function renderBoard(){
   });
 
   // Restore saved state on subsequent launches.
-  if(!restoreState()){ showView('home'); }
+  if(!restoreState()){ showView('home', {replace:true}); }
+  else if(!window.history.state || !window.history.state[VT_VIEW_KEY]){
+    window.history.replaceState(Object.assign({}, window.history.state || {}, { [VT_VIEW_KEY]: currentView }), '', window.location.href);
+  }
+
+  window.addEventListener('popstate', function(event){
+    const next = event.state && VT_VIEWS.includes(event.state[VT_VIEW_KEY]) ? event.state[VT_VIEW_KEY] : 'home';
+    showView(next, {fromHistory:true});
+  });
+
+  (function installTopBarBackSwipe(){
+    const topBar = q('vialTopBar');
+    if(!topBar) return;
+    let start = null;
+    topBar.addEventListener('pointerdown', function(event){
+      if(event.target.closest('button,a,input,select,textarea')) return;
+      start = {id:event.pointerId,x:event.clientX,y:event.clientY};
+      topBar.setPointerCapture?.(event.pointerId);
+    });
+    function finish(event){
+      if(!start || start.id !== event.pointerId) return;
+      const dx = event.clientX - start.x;
+      const dy = event.clientY - start.y;
+      start = null;
+      if(currentView !== 'home' && dx >= 56 && Math.abs(dx) > Math.abs(dy) * 1.2) window.history.back();
+    }
+    topBar.addEventListener('pointerup', finish);
+    topBar.addEventListener('pointercancel', function(){ start = null; });
+  })();
 
 
 
