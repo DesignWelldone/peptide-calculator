@@ -25,3 +25,9 @@ Blob spaces retain their current assignments: Memories/Live clay, Player/Files/S
 - Blob: existing 119 tests, TypeScript and production build pass. Authenticated media/playback and device acceptance remain a user-device check; no access bypass, service permission, database or controller changes.
 
 Scope is presentation and identity only. Product stages, account/access policies, local records, paid access, navigation destinations and media behavior do not change.
+
+## Surface/button refinement after user review
+
+Jeremy removed the product-mark requirement from buttons. Keep product marks in headings and discovery; action buttons retain visible labels, useful directional/utility glyphs and assigned accent colors. Dark canvas/card/inset: #080808 / #101010 / #171717. Light canvas/card/inset: #FFFFFF / #FCFCFC / #F6F6F6. Text, border and supporting accent roles derive against these backgrounds. This supersedes the button-icon and warm-neutral details above while retaining the product palette, fonts, large discovery marks and right-hand options rule. No auth/data/controller changes.
+
+VialTrack accent refinement: use syringe blue-green #75AEB8, inspired by the existing cyan liquid, in its icon and product-action roles. This supersedes VialTrack lavender only; other lavender products retain their assignments. Calculator/sidebar/result/reference panels use the same neutral surface, with no tinted reference rows; inputs and selected controls remain identifiable. The syringe drawing and arithmetic are unchanged.

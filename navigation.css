@@ -1,38 +1,34 @@
-html[data-theme="light"] {
---po-canvas: #F4F0E6;
---po-surface: #F8F5ED;
---po-inset: #EEE9DE;
---po-ink: #252821;
---po-muted: #62665E;
---po-line: #D8D3C8;
---po-accent: #A294B1;
+html[data-theme="light"] {--po-canvas: #FFFFFF;
+--po-surface: #FCFCFC;
+--po-inset: #F6F6F6;
+--po-ink: #202020;
+--po-muted: #626262;
+--po-line: #DEDEDE;
+--po-accent: #75AEB8;
 --po-on-accent: #252821;
---po-accent-hover: #9588A3;
+--po-accent-hover: #6CA0A9;
 --po-on-accent-hover: #252821;
---po-accent-text: #6E6578;
---po-accent-soft: #EEE9E6;
---po-on-accent-soft: #6E6578;
---po-accent-ring: #8D819A;
---po-accent-border: #8D819A;
-}
-html[data-theme="dark"] {
---po-canvas: #171914;
---po-surface: #22251F;
---po-inset: #2A2D27;
---po-ink: #E9E5DB;
---po-muted: #B7B8AC;
---po-line: #42463C;
---po-accent: #A294B1;
+--po-accent-text: #50767D;
+--po-accent-soft: #ECF3F4;
+--po-on-accent-soft: #4E747A;
+--po-accent-ring: #65969E;
+--po-accent-border: #65969E;}
+html[data-theme="dark"] {--po-canvas: #080808;
+--po-surface: #101010;
+--po-inset: #171717;
+--po-ink: #EEEEEE;
+--po-muted: #B6B6B6;
+--po-line: #2C2C2C;
+--po-accent: #75AEB8;
 --po-on-accent: #252821;
---po-accent-hover: #A99DB7;
+--po-accent-hover: #80B4BE;
 --po-on-accent-hover: #252821;
---po-accent-text: #A294B1;
---po-accent-soft: #363736;
---po-on-accent-soft: #A89AB6;
---po-accent-ring: #A294B1;
---po-accent-border: #A294B1;
-}
-/* Paper One lavender and shared DesignWelldone navigation, v14.4.0. */
+--po-accent-text: #75AEB8;
+--po-accent-soft: #20292B;
+--po-on-accent-soft: #75AEB8;
+--po-accent-ring: #75AEB8;
+--po-accent-border: #75AEB8;}
+/* Paper One syringe blue-green and shared DesignWelldone navigation, v14.4.0. */
 html[data-theme] { --bg:var(--po-canvas); --bg2:var(--po-canvas); --panel:var(--po-surface); --panel2:var(--po-inset); --panel3:var(--po-inset); --line:var(--po-line); --line2:var(--po-line); --border:var(--po-line); --text:var(--po-ink); --muted:var(--po-muted); --muted2:var(--po-muted); --aqua:var(--po-accent); --cyan:var(--po-accent); --blue:var(--po-accent); --blue2:var(--po-accent); --teal:var(--po-accent); }
 html[data-theme] body { background:var(--po-canvas)!important; color:var(--po-ink); padding-bottom:env(safe-area-inset-bottom); }
 html[data-theme] .container { padding:0 20px 28px; gap:20px; }
@@ -111,7 +107,6 @@ html[data-theme] body,html[data-theme] :is(button,input,select,textarea) {font-f
 .vialIdentityIcon {--paper-light:url("./icons/paper-one/vial-light.svg");--paper-dark:url("./icons/paper-one/vial-dark.svg");width:28px;height:28px}
 .vialWordmark {display:flex;align-items:center;gap:8px;font-weight:700}
 .homePrimaryBtn {display:flex;align-items:center;justify-content:center;gap:8px}
-.homePrimaryBtn .vialIdentityIcon {width:24px;height:24px}
 html[data-theme] :is(.trackerSummaryCard,.trackerComposer,.trackerNotesCard,.todayHero,.weightHeroCard,.weightTrendCard,.boardCard,.todayStatCard,.stockStat,.vialStat,.dayLogCard,.logCard,.protocolCard,.inventoryHeader,.trackerHeader,.historyHeader,.boardVialRow,.boardStockRow) {background:var(--po-surface)!important;color:var(--po-ink)!important;border-color:var(--po-line)!important;box-shadow:none}
 html[data-theme] :is(.dateNavBtn,.todayBtn,.viewToggle,.viewToggle button,.filterBtn) {background:var(--po-inset)!important;color:var(--po-ink)!important;border-color:var(--po-line)!important}
 html[data-theme] :is(.trackerSummaryCard,.todayStatCard,.stockStat,.vialStat) strong {color:var(--po-ink)!important}
@@ -126,3 +121,19 @@ html[data-theme] :is(.specs,.verify,.tips,.detail,.results,.roadmapCard,.dashCar
 html[data-theme] :is(.vialRemainingBlock,.drawbox,.bigresult,.recommend,.reference) {background:var(--po-inset)!important;color:var(--po-ink)!important;border-color:var(--po-line)!important}
 html[data-theme] :is(.historyActionBtn.primary,.quickAction.primary,.stockActionBtn.primary) {background:var(--po-accent)!important;color:var(--po-on-accent)!important;border-color:var(--po-accent-border)!important;box-shadow:none}
 html[data-theme] :is(.saveBtn:not(.secondarySave),.historyActionBtn.primary,.quickAction.primary,.stockActionBtn.primary):hover {background:var(--po-accent-hover)!important;color:var(--po-on-accent-hover)!important}
+
+html[data-theme] .homeBoardButton {display:inline-flex;align-items:center;justify-content:center;gap:0;padding:10px 14px}
+
+/* Equivalent panels use one surface; only actual controls receive state fills. */
+html[data-theme] :is(.drawbox,.bigresult,.recommend,.warning,.reference,.vialRemainingBlock,.sidebar) {background:var(--po-surface)!important;border-color:var(--po-line)!important;color:var(--po-ink)!important;box-shadow:none}
+html[data-theme] .refrow {background:transparent!important;border-radius:0;border-bottom:1px solid var(--po-line)}
+html[data-theme] :is(.syringe-choice,.unitBtn) {background:var(--po-surface)!important;color:var(--po-ink)!important;border-color:var(--po-line)!important;box-shadow:none}
+html[data-theme] :is(.syringe-choice.active,.unitBtn.active) {background:var(--po-accent-soft)!important;color:var(--po-on-accent-soft)!important;border-color:var(--po-accent-border)!important}
+html[data-theme] .syringe-choice :is(strong,span) {color:inherit!important}
+html[data-theme] :is(.drawlabel,.drawval,.bigresult .rval,.bigresult .rlabel,.bigresult .runit,.refrow span:nth-child(2)) {color:var(--po-accent-text)!important;text-shadow:none}
+html[data-theme] :is(.metric .mval,.refrow span:first-child,.refrow span:last-child) {color:var(--po-ink)!important}
+html[data-theme] :is(.hint,.mlabel,.munit,.rsub,.syringe-label,.label) {color:var(--po-muted)!important}
+html[data-theme="dark"] .warning :is(strong,p) {color:#E4BB62!important}
+html[data-theme="light"] .warning :is(strong,p) {color:#805B00!important}
+/* Theme changes should not leave isolated dark fills fading over a light page. */
+html[data-theme] :is(.inputcard,.syringe-choice,.unitBtn) {transition:none}

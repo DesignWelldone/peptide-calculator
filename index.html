@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<meta id="themeColorMeta" name="theme-color" content="#101113">
+<meta id="themeColorMeta" name="theme-color" content="#080808">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="VialTrack">
 <link rel="manifest" href="./manifest.json">
-<link rel="icon" type="image/svg+xml" href="./favicon.svg?v=paper-one-2">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg?v=paper-one-3">
 <link rel="apple-touch-icon" href="./icons/paper-one/vial-180.png">
 
 <title>VialTrack</title>
-<meta name="vialtrack-version" content="14.4.2">
+<meta name="vialtrack-version" content="14.4.3">
 <meta name="description" content="Offline vial calculations, user-created protocols, inventory, history, and weight tracking.">
 <script>
 (function(){
@@ -2665,7 +2665,7 @@ html[data-theme="light"] textarea::placeholder{
   opacity:1;
 }
 
-/* V14.4.2 Track screen light-theme contrast */
+/* V14.4.3 Track screen light-theme contrast */
 html[data-theme="light"] .heroEyebrow,
 html[data-theme="light"] .screenEyebrow,
 html[data-theme="light"] .weekDow,
@@ -2934,7 +2934,7 @@ html[data-theme="light"] optgroup {
 }
 
 </style>
-<link rel="stylesheet" href="./navigation.css?v=14.4.2">
+<link rel="stylesheet" href="./navigation.css?v=14.4.3">
 </head>
 <body>
 <div class="container">
@@ -2993,8 +2993,8 @@ html[data-theme="light"] optgroup {
   
   
   <section id="homePanel" class="homePanel appView">
-    <div class="simpleHomeHead"><div><div id="homeTodayDate" class="todayDate"></div><h2>Today</h2></div><button class="homeBoardButton" type="button" onclick="showView('board')" aria-label="Open VialTrack status board"><span aria-hidden="true" class="paper-product-icon vialIdentityIcon"></span><span>Board</span></button></div>
-    <div class="homePrimaryActions"><button class="homePrimaryBtn" type="button" onclick="homeQuickLog()"><span aria-hidden="true" class="paper-product-icon vialIdentityIcon"></span>Log</button><button class="homePrimaryBtn secondary" type="button" onclick="showView('calculator')"><span aria-hidden="true" class="paper-product-icon vialIdentityIcon"></span>Reconstitute</button></div>
+    <div class="simpleHomeHead"><div><div id="homeTodayDate" class="todayDate"></div><h2>Today</h2></div><button class="homeBoardButton" type="button" onclick="showView('board')" aria-label="Open VialTrack status board"><span>Board</span></button></div>
+    <div class="homePrimaryActions"><button class="homePrimaryBtn" type="button" onclick="homeQuickLog()">Log</button><button class="homePrimaryBtn secondary" type="button" onclick="showView('calculator')">Reconstitute</button></div>
     <div class="homeCompactStats">
       <button onclick="showView('tracker')"><span>Today</span><strong id="homeTodayEntryCount">0</strong></button>
       <button onclick="showView('inventory')"><span>Active</span><strong id="homeActiveVialCount">0</strong></button>
@@ -3405,7 +3405,7 @@ html[data-theme="light"] optgroup {
     </div>
     <div class="moreGroup"><div class="moreGroupTitle">About</div>
       <button class="moreRow supportRow" type="button" disabled aria-disabled="true"><span class="moreRowIcon">$</span><span><strong>Support VialTrack</strong><small>Contributions are not available yet</small></span><span class="moreChevron">›</span></button>
-      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.4.2</small></span></div>
+      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.4.3</small></span></div>
       <div class="moreStaticRow"><span><strong>Data</strong><small>Stored on this device unless you export it</small></span></div>
     </div>
   </section>
@@ -3699,7 +3699,7 @@ function applyTheme(theme, persist){
   document.documentElement.dataset.theme = next;
   document.documentElement.style.colorScheme = next;
   const meta = q('themeColorMeta');
-  if(meta) meta.setAttribute('content', next === 'light' ? '#F4F0E6' : '#171914');
+  if(meta) meta.setAttribute('content', next === 'light' ? '#FFFFFF' : '#080808');
   syncThemeControls(next);
   if(persist){
     try { localStorage.setItem(VT_THEME_KEY, next); } catch(e) {}
@@ -4279,7 +4279,7 @@ async function exportHistory(){
   try{ protocols=await getAllProtocols(); protocolActions=await getAllProtocolActions(); }catch(e){}
   const payload = {
     app:'VialTrack',
-    version:'14.4.2',
+    version:'14.4.3',
     exportedAt:new Date().toISOString(),
     reconstitutions:records,
     stockInventory,
@@ -5880,7 +5880,7 @@ async function renderBoard(){
 
 
 <script>
-const VIAL_APP_VERSION = '14.4.2';
+const VIAL_APP_VERSION = '14.4.3';
 let vialTrackRegistration = null;
 let vialTrackWaitingWorker = null;
 let vialTrackUpdateDismissed = false;
@@ -6019,6 +6019,6 @@ async function eraseAllLocalData(){
   try{ if(vtDbPromise){ try{(await vtDbPromise).close()}catch(e){} } await new Promise((resolve,reject)=>{const r=indexedDB.deleteDatabase(VT_DB_NAME);r.onsuccess=resolve;r.onerror=()=>reject(r.error);r.onblocked=resolve;}); Object.keys(localStorage).filter(k=>k.toLowerCase().includes('vial')).forEach(k=>localStorage.removeItem(k)); location.reload(); }catch(e){alert('Could not erase local data. Close other VialTrack tabs and try again.')}
 }
 </script>
-<script src="./navigation.js?v=14.4.2"></script>
+<script src="./navigation.js?v=14.4.3"></script>
 </body>
 </html>
