@@ -22,6 +22,8 @@ function openVialMenu(){
 function closeVialMenu(){ q('vialNavigation').close(); }
 function vialMenuGo(view){ closeVialMenu(); showView(view); }
 function syncVialNavigation(view){
+  closeVialOptions();
+  q('vialOptionsRefresh').hidden = view !== 'board';
   const context=q('vialContext');
   context.classList.toggle('hidden', !['inventory','calculator','history'].includes(view));
   context.querySelectorAll('[data-vial-view]').forEach(button=>{
@@ -38,3 +40,12 @@ document.body.dataset.vialView=currentView;
 syncVialNavigation(currentView);
 
 q('vialNavigation').addEventListener('cancel',event=>{event.preventDefault();if(q('vialNavigation').dataset.menuPage !== 'main') vialMenuPage('main');else closeVialMenu();});
+
+function positionVialOptions(){
+  const bounds=q('vialOptionsButton').getBoundingClientRect();
+  q('vialOptions').style.setProperty('--options-top', (bounds.bottom+8)+'px');
+  q('vialOptions').style.setProperty('--options-right', Math.max(12,innerWidth-bounds.right)+'px');
+}
+function openVialOptions(){ positionVialOptions();q('vialOptions').showPopover(); }
+function closeVialOptions(){ if(q('vialOptions').matches(':popover-open')) q('vialOptions').hidePopover(); }
+q('vialOptions').addEventListener('toggle',()=>q('vialOptionsButton').setAttribute('aria-expanded',String(q('vialOptions').matches(':popover-open'))));

@@ -31,3 +31,7 @@ Records stay in the existing browser-local stores. No accounts, database migrati
 ## Validation
 
 JavaScript syntax and offline asset/version checks pass. Browser checks cover 320px, 390px and desktop layouts, light/dark appearance, nested menu, separate Back/Close, Vials context selection and the unchanged default calculation result. Existing math and record functions are compared with the base revision. Only navigation/theme behavior and release metadata change.
+
+## Right-hand options, v14.4.1
+
+Keep the hamburger and Back on the left. A vertical three-dot control is the final header control on the right. It opens Appearance, Settings & backup and Export backup, with Refresh status board shown only on the Board screen. Navigation stays in the hamburger/text destinations. The existing theme buttons live in the options popup; Settings links to that same appearance control. Native popover light-dismiss and Escape behavior are retained. Corrected legacy mobile padding that clipped the header. No calculation, record, account, payment or storage identities change; the update remains prompt-based.

@@ -1,11 +1,11 @@
-const CACHE_NAME = 'vialtrack-v14-4-0';
-const APP_VERSION = '14.4.0';
+const CACHE_NAME = 'vialtrack-v14-4-1';
+const APP_VERSION = '14.4.1';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
-  './navigation.css?v=14.4.0',
-  './navigation.js?v=14.4.0',
+  './navigation.css?v=14.4.1',
+  './navigation.js?v=14.4.1',
   './version.json',
   './icons/paper-one/vial-192.png',
   './icons/paper-one/vial-512.png',
