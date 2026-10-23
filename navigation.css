@@ -1,0 +1,88 @@
+html[data-theme="light"] {
+--po-canvas: #F4F0E6;
+--po-surface: #F8F5ED;
+--po-inset: #EEE9DE;
+--po-ink: #252821;
+--po-muted: #62665E;
+--po-line: #D8D3C8;
+--po-accent: #A294B1;
+--po-on-accent: #252821;
+--po-accent-hover: #9588A3;
+--po-on-accent-hover: #252821;
+--po-accent-text: #6E6578;
+--po-accent-soft: #EEE9E6;
+--po-on-accent-soft: #6E6578;
+--po-accent-ring: #8D819A;
+--po-accent-border: #8D819A;
+}
+html[data-theme="dark"] {
+--po-canvas: #171914;
+--po-surface: #22251F;
+--po-inset: #2A2D27;
+--po-ink: #E9E5DB;
+--po-muted: #B7B8AC;
+--po-line: #42463C;
+--po-accent: #A294B1;
+--po-on-accent: #252821;
+--po-accent-hover: #A99DB7;
+--po-on-accent-hover: #252821;
+--po-accent-text: #A294B1;
+--po-accent-soft: #363736;
+--po-on-accent-soft: #A89AB6;
+--po-accent-ring: #A294B1;
+--po-accent-border: #A294B1;
+}
+/* Paper One lavender and shared DesignWelldone navigation, v14.4.0. */
+html[data-theme] { --bg:var(--po-canvas); --bg2:var(--po-canvas); --panel:var(--po-surface); --panel2:var(--po-inset); --panel3:var(--po-inset); --line:var(--po-line); --line2:var(--po-line); --border:var(--po-line); --text:var(--po-ink); --muted:var(--po-muted); --muted2:var(--po-muted); --aqua:var(--po-accent); --cyan:var(--po-accent); --blue:var(--po-accent); --blue2:var(--po-accent); --teal:var(--po-accent); }
+html[data-theme] body { background:var(--po-canvas)!important; color:var(--po-ink); padding-bottom:env(safe-area-inset-bottom); }
+html[data-theme] .container { padding:0 20px 28px; gap:20px; }
+.vialChrome { grid-column:1/-1; position:sticky; top:0; z-index:500; margin:0 -20px; background:var(--po-canvas); border-bottom:1px solid var(--po-line); }
+html[data-theme] .vialChrome .header { display:flex; align-items:center; gap:12px; padding:10px 16px; margin:0; min-height:66px; background:var(--po-canvas); border:0; }
+.vialWordmark { color:var(--po-ink); font-size:24px; letter-spacing:-.8px; font-weight:750; text-decoration:none; margin-right:auto; }
+.vialIconButton { display:grid; place-items:center; flex:0 0 44px; width:44px; height:44px; padding:10px; color:var(--po-ink); background:transparent; border:0; border-radius:8px; cursor:pointer; }
+.vialIconButton svg { width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.vialDestinations,.vialContext { display:flex; gap:22px; overflow-x:auto; scrollbar-width:none; padding:0 20px; background:var(--po-inset); }
+.vialDestinations button,.vialContext button { flex:0 0 auto; min-height:50px; padding:10px 0; border:0; border-bottom:3px solid transparent; border-radius:0; background:transparent; color:var(--po-muted); font:650 15px/1.3 inherit; font-family:inherit; font-size:15px; cursor:pointer; }
+.vialDestinations button[aria-current],.vialContext button[aria-current] { color:var(--po-ink); border-bottom-color:var(--po-accent-ring); }
+.vialContext { background:var(--po-canvas); border-top:1px solid var(--po-line); gap:24px; }
+.vialContext button { font-size:14px; min-height:46px; font-weight:500; }
+html[data-theme] #vialBackButton { position:static; }
+html[data-theme] .tabbar { display:none!important; }
+html[data-theme] :is(.homePanel,.trackerPanel,.inventoryPanel,.weightPanel,.historyPanel,.morePanel,.boardPanel,#mainContent) { margin-top:0; min-width:0; }
+html[data-theme] :is(.moreGroup,.homeSection,.homeCompactStats button,.inputcard,.card,.historyCard,.vialCard,.protocolCard,.weightHistoryCard,.weightEntryCard,.trackerComposer,.protocolComposer,.emptyState,.stockCard,.boardMetric,.boardSection,.boardRecentRow) { background:var(--po-surface)!important; border-color:var(--po-line)!important; color:var(--po-ink); box-shadow:none; }
+html[data-theme] :is(input:not([type=checkbox]):not([type=radio]),select,textarea) { background:var(--po-inset)!important; color:var(--po-ink)!important; border-color:var(--po-line)!important; border-radius:10px; }
+html[data-theme] :is(.homePrimaryBtn,.heroBtn.primary,.vialActionBtn.primary,.protocolActionBtn.primary,.appUpdateBtn.primary,.boardActionButton.primary,.calcbtn,.savebtn) { background:var(--po-accent)!important; color:var(--po-on-accent)!important; border-color:var(--po-accent-border)!important; box-shadow:none; }
+html[data-theme] :is(.homePrimaryBtn.secondary,.heroBtn:not(.primary),.vialActionBtn:not(.primary),.homeBoardButton,.boardActionButton:not(.primary),.weightEntrySaveBtn) { background:var(--po-inset)!important; color:var(--po-ink)!important; border-color:var(--po-line)!important; }
+html[data-theme] :is(.screenEyebrow,.heroEyebrow,.dashLabel,.homeTextBtn,.moreGroupTitle,.todayDate,.sectiontitle,.unitlabel) { color:var(--po-muted)!important; }
+html[data-theme] .moreRow { grid-template-columns:1fr 18px; padding:16px 18px; min-height:76px; border-top:1px solid var(--po-line); }
+.moreRowIcon { display:none!important; }
+html[data-theme] .moreStaticRow { padding:18px; gap:14px; }
+.moreRow small,.moreStaticRow small { font-size:13px; line-height:1.5; }
+html[data-theme] .themeToggle { position:static; display:inline-flex; gap:4px; width:max-content; padding:4px; background:var(--po-inset); border:1px solid var(--po-line); border-radius:999px; }
+html[data-theme] .themeToggle button { min-height:40px; padding:8px 16px; border:0; border-radius:999px; color:var(--po-muted); background:transparent; }
+html[data-theme] .themeToggle button.active { background:var(--po-accent); color:var(--po-on-accent); }
+#vialNavigation { position:fixed; inset:0 auto 0 0; width:min(100%,420px); height:100dvh; max-width:100%; max-height:100dvh; padding:0; margin:0; border:0; border-right:1px solid var(--po-line); border-radius:0; background:var(--po-canvas); color:var(--po-ink); overscroll-behavior:contain; }
+#vialNavigation::backdrop { background:#0008; }
+body:has(#vialNavigation[open]) { overflow:hidden; }
+.vialMenuHead { position:sticky; top:0; display:flex; align-items:center; gap:8px; padding:12px 16px; border-bottom:1px solid var(--po-line); background:var(--po-canvas); z-index:1; }
+.vialMenuHead strong { flex:1; font-size:22px; }
+.vialMenuPage { padding:12px 20px; }
+.vialMenuPage[hidden],.vialIconButton[hidden] { display:none; }
+.vialMenuLabel { padding:10px 0; color:var(--po-muted); font-size:13px; }
+.vialMenuPage>button,.vialMenuPage>a { display:block; position:relative; width:100%; min-height:76px; padding:16px 28px 16px 0; border:0; border-bottom:1px solid var(--po-line); border-radius:0; background:transparent; color:var(--po-ink); text-align:left; text-decoration:none; font:650 18px/1.4 system-ui; cursor:pointer; }
+.vialMenuPage small { display:block; margin-top:4px; color:var(--po-muted); font:400 14px/1.5 system-ui; }
+.vialMenuPage button>span,.vialCompanyLink>span { position:absolute; right:0; top:24px; }
+.vialMenuFoot { padding:12px 20px 28px; color:var(--po-muted); font-size:13px; }
+html[data-theme] :is(button,a,input,select,textarea):focus-visible { outline:2px solid var(--po-accent-ring); outline-offset:3px; }
+html[data-theme] #installArea { margin:0; }
+html[data-theme] .footer { color:var(--po-muted); padding:20px 0; }
+body.boardMode .vialChrome { display:none; }
+@media(min-width:800px) { .vialChrome { margin:0 -20px; }.vialDestinations,.vialContext { gap:30px; }.vialMenuPage { padding-inline:24px; } }
+@media(max-width:360px) { html[data-theme] .container { padding-inline:16px; }.vialChrome { margin-inline:-16px; }.vialDestinations { gap:20px; padding-inline:16px; }.vialDestinations button { font-size:14px; } }
+html[data-theme] .themeToggle { background:var(--po-inset)!important; border-color:var(--po-line)!important; }
+html[data-theme] .themeToggle button { background:transparent!important; color:var(--po-muted)!important; box-shadow:none!important; }
+html[data-theme] .themeToggle button.active { background:var(--po-accent)!important; color:var(--po-on-accent)!important; }
+body:not([data-vial-view="calculator"]):not([data-vial-view="nasal"]) aside { display:none; }
+.moreRow:disabled { opacity:.65; cursor:default; }
+html[data-theme] :is(.calc,.saveBtn:not(.secondarySave),.weightSaveBtn) { background:var(--po-accent)!important; color:var(--po-on-accent)!important; border-color:var(--po-accent-border)!important; box-shadow:none; }
+html[data-theme] :is(.unitBtn.active,.syringe-choice.active,.tab.active) { background:var(--po-accent-soft)!important; color:var(--po-on-accent-soft)!important; border-color:var(--po-accent-border)!important; }
