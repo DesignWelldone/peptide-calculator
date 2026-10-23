@@ -1,17 +1,19 @@
-const CACHE_NAME = 'vialtrack-v14-4-1';
-const APP_VERSION = '14.4.1';
+const CACHE_NAME = 'vialtrack-v14-4-2';
+const APP_VERSION = '14.4.2';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
-  './navigation.css?v=14.4.1',
-  './navigation.js?v=14.4.1',
+  './navigation.css?v=14.4.2',
+  './navigation.js?v=14.4.2',
   './version.json',
+  './icons/paper-one/vial-light.svg',
+  './icons/paper-one/vial-dark.svg',
   './icons/paper-one/vial-192.png',
   './icons/paper-one/vial-512.png',
   './icons/paper-one/vial-180.png',
   './icons/paper-one/vial-maskable.png',
-  './favicon.svg?v=paper-one-1'
+  './favicon.svg?v=paper-one-2'
 ];
 
 self.addEventListener('install', event => {

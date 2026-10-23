@@ -10,11 +10,11 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="VialTrack">
 <link rel="manifest" href="./manifest.json">
-<link rel="icon" type="image/svg+xml" href="./favicon.svg?v=paper-one-1">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg?v=paper-one-2">
 <link rel="apple-touch-icon" href="./icons/paper-one/vial-180.png">
 
 <title>VialTrack</title>
-<meta name="vialtrack-version" content="14.4.1">
+<meta name="vialtrack-version" content="14.4.2">
 <meta name="description" content="Offline vial calculations, user-created protocols, inventory, history, and weight tracking.">
 <script>
 (function(){
@@ -2665,7 +2665,7 @@ html[data-theme="light"] textarea::placeholder{
   opacity:1;
 }
 
-/* V14.4.1 Track screen light-theme contrast */
+/* V14.4.2 Track screen light-theme contrast */
 html[data-theme="light"] .heroEyebrow,
 html[data-theme="light"] .screenEyebrow,
 html[data-theme="light"] .weekDow,
@@ -2934,7 +2934,7 @@ html[data-theme="light"] optgroup {
 }
 
 </style>
-<link rel="stylesheet" href="./navigation.css?v=14.4.1">
+<link rel="stylesheet" href="./navigation.css?v=14.4.2">
 </head>
 <body>
 <div class="container">
@@ -2942,7 +2942,7 @@ html[data-theme="light"] optgroup {
   <header class="header" id="vialTopBar">
     <button id="vialMenuButton" class="vialIconButton" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="vialNavigation" onclick="openVialMenu()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
     <button id="vialBackButton" class="vialIconButton hidden" type="button" aria-label="Back" onclick="window.history.back()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button>
-    <a class="vialWordmark" href="./" onclick="event.preventDefault();showView('home')">VialTrack</a>
+    <a class="vialWordmark" href="./" onclick="event.preventDefault();showView('home')"><span aria-hidden="true" class="paper-product-icon vialIdentityIcon"></span><span>VialTrack</span></a>
     <button id="vialOptionsButton" class="vialIconButton" type="button" aria-label="Page options" aria-haspopup="dialog" aria-expanded="false" aria-controls="vialOptions" popovertarget="vialOptions" onclick="positionVialOptions()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"/></svg></button>
   </header>
   <nav class="vialDestinations" aria-label="Primary">
@@ -2993,8 +2993,8 @@ html[data-theme="light"] optgroup {
   
   
   <section id="homePanel" class="homePanel appView">
-    <div class="simpleHomeHead"><div><div id="homeTodayDate" class="todayDate"></div><h2>Today</h2></div><button class="homeBoardButton" type="button" onclick="showView('board')" aria-label="Open VialTrack status board"><img src="./icons/paper-one/vial-192.png" alt=""><span>Board</span></button></div>
-    <div class="homePrimaryActions"><button class="homePrimaryBtn" type="button" onclick="homeQuickLog()">Log</button><button class="homePrimaryBtn secondary" type="button" onclick="showView('calculator')">Reconstitute</button></div>
+    <div class="simpleHomeHead"><div><div id="homeTodayDate" class="todayDate"></div><h2>Today</h2></div><button class="homeBoardButton" type="button" onclick="showView('board')" aria-label="Open VialTrack status board"><span aria-hidden="true" class="paper-product-icon vialIdentityIcon"></span><span>Board</span></button></div>
+    <div class="homePrimaryActions"><button class="homePrimaryBtn" type="button" onclick="homeQuickLog()"><span aria-hidden="true" class="paper-product-icon vialIdentityIcon"></span>Log</button><button class="homePrimaryBtn secondary" type="button" onclick="showView('calculator')"><span aria-hidden="true" class="paper-product-icon vialIdentityIcon"></span>Reconstitute</button></div>
     <div class="homeCompactStats">
       <button onclick="showView('tracker')"><span>Today</span><strong id="homeTodayEntryCount">0</strong></button>
       <button onclick="showView('inventory')"><span>Active</span><strong id="homeActiveVialCount">0</strong></button>
@@ -3405,7 +3405,7 @@ html[data-theme="light"] optgroup {
     </div>
     <div class="moreGroup"><div class="moreGroupTitle">About</div>
       <button class="moreRow supportRow" type="button" disabled aria-disabled="true"><span class="moreRowIcon">$</span><span><strong>Support VialTrack</strong><small>Contributions are not available yet</small></span><span class="moreChevron">›</span></button>
-      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.4.1</small></span></div>
+      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.4.2</small></span></div>
       <div class="moreStaticRow"><span><strong>Data</strong><small>Stored on this device unless you export it</small></span></div>
     </div>
   </section>
@@ -4279,7 +4279,7 @@ async function exportHistory(){
   try{ protocols=await getAllProtocols(); protocolActions=await getAllProtocolActions(); }catch(e){}
   const payload = {
     app:'VialTrack',
-    version:'14.4.1',
+    version:'14.4.2',
     exportedAt:new Date().toISOString(),
     reconstitutions:records,
     stockInventory,
@@ -5880,7 +5880,7 @@ async function renderBoard(){
 
 
 <script>
-const VIAL_APP_VERSION = '14.4.1';
+const VIAL_APP_VERSION = '14.4.2';
 let vialTrackRegistration = null;
 let vialTrackWaitingWorker = null;
 let vialTrackUpdateDismissed = false;
@@ -6019,6 +6019,6 @@ async function eraseAllLocalData(){
   try{ if(vtDbPromise){ try{(await vtDbPromise).close()}catch(e){} } await new Promise((resolve,reject)=>{const r=indexedDB.deleteDatabase(VT_DB_NAME);r.onsuccess=resolve;r.onerror=()=>reject(r.error);r.onblocked=resolve;}); Object.keys(localStorage).filter(k=>k.toLowerCase().includes('vial')).forEach(k=>localStorage.removeItem(k)); location.reload(); }catch(e){alert('Could not erase local data. Close other VialTrack tabs and try again.')}
 }
 </script>
-<script src="./navigation.js?v=14.4.1"></script>
+<script src="./navigation.js?v=14.4.2"></script>
 </body>
 </html>

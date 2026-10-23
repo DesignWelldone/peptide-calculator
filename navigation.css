@@ -105,3 +105,24 @@ html[data-theme] :is(.unitBtn.active,.syringe-choice.active,.tab.active) { backg
   html[data-theme] .container { padding-inline:16px!important; }
   html[data-theme] .vialChrome .header { padding-inline:12px!important; }
 }
+
+/* Shared typography, identity, and remaining legacy blue panels. */
+html[data-theme] body,html[data-theme] :is(button,input,select,textarea) {font-family:Arial,Helvetica,system-ui,sans-serif!important}
+.vialIdentityIcon {--paper-light:url("./icons/paper-one/vial-light.svg");--paper-dark:url("./icons/paper-one/vial-dark.svg");width:28px;height:28px}
+.vialWordmark {display:flex;align-items:center;gap:8px;font-weight:700}
+.homePrimaryBtn {display:flex;align-items:center;justify-content:center;gap:8px}
+.homePrimaryBtn .vialIdentityIcon {width:24px;height:24px}
+html[data-theme] :is(.trackerSummaryCard,.trackerComposer,.trackerNotesCard,.todayHero,.weightHeroCard,.weightTrendCard,.boardCard,.todayStatCard,.stockStat,.vialStat,.dayLogCard,.logCard,.protocolCard,.inventoryHeader,.trackerHeader,.historyHeader,.boardVialRow,.boardStockRow) {background:var(--po-surface)!important;color:var(--po-ink)!important;border-color:var(--po-line)!important;box-shadow:none}
+html[data-theme] :is(.dateNavBtn,.todayBtn,.viewToggle,.viewToggle button,.filterBtn) {background:var(--po-inset)!important;color:var(--po-ink)!important;border-color:var(--po-line)!important}
+html[data-theme] :is(.trackerSummaryCard,.todayStatCard,.stockStat,.vialStat) strong {color:var(--po-ink)!important}
+html[data-theme] .viewToggle button.active {background:var(--po-accent-soft)!important;color:var(--po-on-accent-soft)!important}
+html[data-theme] .homePrimaryBtn:hover {background:var(--po-accent-hover)!important;color:var(--po-on-accent-hover)!important}
+html[data-theme] .homePrimaryBtn.secondary:hover {background:var(--po-accent-soft)!important;color:var(--po-on-accent-soft)!important}
+@media(max-width:360px) {.vialWordmark {font-size:20px;gap:6px}.vialWordmark .vialIdentityIcon {width:24px;height:24px}.homePrimaryBtn {font-size:14px;gap:6px}}
+
+html[data-theme] :is(.homeTextBtn,.homeList button,.homeVialGrid button) {background:var(--po-inset)!important;color:var(--po-ink)!important;border-color:var(--po-line)!important;box-shadow:none}
+html[data-theme] {--aqua:var(--po-accent-text);--cyan:var(--po-accent-text);--blue:var(--po-accent-text);--blue2:var(--po-accent-text);--teal:var(--po-accent-text)}
+html[data-theme] :is(.specs,.verify,.tips,.detail,.results,.roadmapCard,.dashCard,.metric,.spec,.homeHero,.weekDay,.protocolSection) {background:var(--po-surface)!important;color:var(--po-ink)!important;border-color:var(--po-line)!important;box-shadow:none}
+html[data-theme] :is(.vialRemainingBlock,.drawbox,.bigresult,.recommend,.reference) {background:var(--po-inset)!important;color:var(--po-ink)!important;border-color:var(--po-line)!important}
+html[data-theme] :is(.historyActionBtn.primary,.quickAction.primary,.stockActionBtn.primary) {background:var(--po-accent)!important;color:var(--po-on-accent)!important;border-color:var(--po-accent-border)!important;box-shadow:none}
+html[data-theme] :is(.saveBtn:not(.secondarySave),.historyActionBtn.primary,.quickAction.primary,.stockActionBtn.primary):hover {background:var(--po-accent-hover)!important;color:var(--po-on-accent-hover)!important}
