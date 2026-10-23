@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="./icons/paper-one/vial-180.png">
 
 <title>VialTrack</title>
-<meta name="vialtrack-version" content="14.4.0">
+<meta name="vialtrack-version" content="14.4.1">
 <meta name="description" content="Offline vial calculations, user-created protocols, inventory, history, and weight tracking.">
 <script>
 (function(){
@@ -2665,7 +2665,7 @@ html[data-theme="light"] textarea::placeholder{
   opacity:1;
 }
 
-/* V14.4.0 Track screen light-theme contrast */
+/* V14.4.1 Track screen light-theme contrast */
 html[data-theme="light"] .heroEyebrow,
 html[data-theme="light"] .screenEyebrow,
 html[data-theme="light"] .weekDow,
@@ -2934,15 +2934,16 @@ html[data-theme="light"] optgroup {
 }
 
 </style>
-<link rel="stylesheet" href="./navigation.css?v=14.4.0">
+<link rel="stylesheet" href="./navigation.css?v=14.4.1">
 </head>
 <body>
 <div class="container">
   <div class="vialChrome">
   <header class="header" id="vialTopBar">
     <button id="vialMenuButton" class="vialIconButton" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="vialNavigation" onclick="openVialMenu()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
-    <a class="vialWordmark" href="./" onclick="event.preventDefault();showView('home')">VialTrack</a>
     <button id="vialBackButton" class="vialIconButton hidden" type="button" aria-label="Back" onclick="window.history.back()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button>
+    <a class="vialWordmark" href="./" onclick="event.preventDefault();showView('home')">VialTrack</a>
+    <button id="vialOptionsButton" class="vialIconButton" type="button" aria-label="Page options" aria-haspopup="dialog" aria-expanded="false" aria-controls="vialOptions" popovertarget="vialOptions" onclick="positionVialOptions()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"/></svg></button>
   </header>
   <nav class="vialDestinations" aria-label="Primary">
     <button id="navHome" onclick="showView('home')" aria-current="page">Home</button>
@@ -2956,6 +2957,12 @@ html[data-theme="light"] optgroup {
     <button data-vial-view="calculator" onclick="showView('calculator')">Reconstitute</button>
     <button data-vial-view="history" onclick="showView('history')">History</button>
   </nav>
+  </div>
+  <div id="vialOptions" class="vialOptions" popover="auto" role="dialog" aria-label="Page options">
+    <h2>Page options</h2><div class="vialOptionsAppearance"><span>Appearance</span><span class="themeToggle" role="group" aria-label="Color mode"><button id="themeLightButton" type="button" onclick="setTheme('light')" aria-pressed="false">Light</button><button id="themeDarkButton" type="button" onclick="setTheme('dark')" aria-pressed="false">Dark</button></span></div>
+    <button id="vialOptionsRefresh" type="button" hidden onclick="closeVialOptions();renderBoard()">Refresh status board</button>
+    <button type="button" onclick="closeVialOptions();showView('more')">Settings &amp; backup</button>
+    <button type="button" onclick="closeVialOptions();exportHistory()">Export backup</button>
   </div>
   <dialog id="vialNavigation" aria-labelledby="vialMenuTitle">
     <header class="vialMenuHead"><button id="vialMenuBack" class="vialIconButton" type="button" aria-label="Back to navigation" onclick="vialMenuPage('main')" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button><strong id="vialMenuTitle">VialTrack</strong><button class="vialIconButton" type="button" aria-label="Close navigation" onclick="closeVialMenu()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></header>
@@ -3390,7 +3397,7 @@ html[data-theme="light"] optgroup {
 
   <section id="morePanel" class="morePanel appView hidden">
     <div class="simpleScreenHeader"><div class="screenEyebrow">VialTrack</div><h2>Settings</h2></div>
-    <div class="moreGroup"><div class="moreGroupTitle">Appearance</div><div class="moreStaticRow"><span><strong>Color theme</strong><small>Choose how VialTrack looks on this device</small></span><span class="themeToggle" role="group" aria-label="Color mode"><button id="themeLightButton" type="button" onclick="setTheme('light')" aria-pressed="false">Light</button><button id="themeDarkButton" type="button" onclick="setTheme('dark')" aria-pressed="false">Dark</button></span></div></div>
+    <div class="moreGroup"><div class="moreGroupTitle">Appearance</div><div class="moreStaticRow"><span><strong>Color theme</strong><small>Choose how VialTrack looks on this device</small></span><button class="vialAppearanceShortcut" type="button" onclick="openVialOptions()">Change appearance</button></div></div>
     <div class="moreGroup"><div class="moreGroupTitle">Data & Backup</div>
       <button class="moreRow" type="button" onclick="exportHistory()"><span class="moreRowIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M5 19h14"/></svg></span><span><strong>Export Backup</strong><small>Save a copy of all VialTrack data</small></span><span class="moreChevron">›</span></button>
       <button class="moreRow importMoreRow" type="button" onclick="q('vialBackupImport').click()"><span class="moreRowIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h14"/><circle cx="3" cy="6" r=".7"/><circle cx="3" cy="12" r=".7"/><circle cx="3" cy="18" r=".7"/></svg></span><span><strong>Import Backup</strong><small>Restore a VialTrack JSON backup</small></span><span class="moreChevron">›</span></button><input id="vialBackupImport" type="file" accept="application/json,.json" onchange="importHistoryFile(event)" hidden>
@@ -3398,7 +3405,7 @@ html[data-theme="light"] optgroup {
     </div>
     <div class="moreGroup"><div class="moreGroupTitle">About</div>
       <button class="moreRow supportRow" type="button" disabled aria-disabled="true"><span class="moreRowIcon">$</span><span><strong>Support VialTrack</strong><small>Contributions are not available yet</small></span><span class="moreChevron">›</span></button>
-      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.4.0</small></span></div>
+      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.4.1</small></span></div>
       <div class="moreStaticRow"><span><strong>Data</strong><small>Stored on this device unless you export it</small></span></div>
     </div>
   </section>
@@ -4272,7 +4279,7 @@ async function exportHistory(){
   try{ protocols=await getAllProtocols(); protocolActions=await getAllProtocolActions(); }catch(e){}
   const payload = {
     app:'VialTrack',
-    version:'14.4.0',
+    version:'14.4.1',
     exportedAt:new Date().toISOString(),
     reconstitutions:records,
     stockInventory,
@@ -5873,7 +5880,7 @@ async function renderBoard(){
 
 
 <script>
-const VIAL_APP_VERSION = '14.4.0';
+const VIAL_APP_VERSION = '14.4.1';
 let vialTrackRegistration = null;
 let vialTrackWaitingWorker = null;
 let vialTrackUpdateDismissed = false;
@@ -6012,6 +6019,6 @@ async function eraseAllLocalData(){
   try{ if(vtDbPromise){ try{(await vtDbPromise).close()}catch(e){} } await new Promise((resolve,reject)=>{const r=indexedDB.deleteDatabase(VT_DB_NAME);r.onsuccess=resolve;r.onerror=()=>reject(r.error);r.onblocked=resolve;}); Object.keys(localStorage).filter(k=>k.toLowerCase().includes('vial')).forEach(k=>localStorage.removeItem(k)); location.reload(); }catch(e){alert('Could not erase local data. Close other VialTrack tabs and try again.')}
 }
 </script>
-<script src="./navigation.js?v=14.4.0"></script>
+<script src="./navigation.js?v=14.4.1"></script>
 </body>
 </html>

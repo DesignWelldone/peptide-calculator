@@ -86,3 +86,22 @@ body:not([data-vial-view="calculator"]):not([data-vial-view="nasal"]) aside { di
 .moreRow:disabled { opacity:.65; cursor:default; }
 html[data-theme] :is(.calc,.saveBtn:not(.secondarySave),.weightSaveBtn) { background:var(--po-accent)!important; color:var(--po-on-accent)!important; border-color:var(--po-accent-border)!important; box-shadow:none; }
 html[data-theme] :is(.unitBtn.active,.syringe-choice.active,.tab.active) { background:var(--po-accent-soft)!important; color:var(--po-on-accent-soft)!important; border-color:var(--po-accent-border)!important; }
+
+/* Right-side overflow contains options, never another destination catalog. */
+#vialOptions { position:fixed; inset:auto; top:var(--options-top,76px); right:var(--options-right,16px); width:min(320px,calc(100vw - 24px)); max-height:calc(100dvh - var(--options-top,76px) - 12px); overflow-y:auto; margin:0; padding:18px; border:1px solid var(--po-line); border-radius:14px; background:var(--po-surface); color:var(--po-ink); box-shadow:0 10px 32px #0003; }
+#vialOptions h2 { margin:0 0 12px; color:var(--po-muted); font-size:13px; font-weight:600; }
+.vialOptionsAppearance { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; padding:6px 0 18px; border-bottom:1px solid var(--po-line); }
+#vialOptions>button { display:block; width:100%; min-height:48px; padding:14px 0; border:0; border-bottom:1px solid var(--po-line); border-radius:0; color:var(--po-ink); background:transparent; text-align:left; font:500 15px/1.5 system-ui; cursor:pointer; }
+#vialOptions>button[hidden] { display:none; }
+#vialOptions>button:last-child { border-bottom:0; padding-bottom:4px; }
+.vialAppearanceShortcut { min-height:44px; width:max-content; padding:8px 14px; background:var(--po-inset); color:var(--po-ink); border:1px solid var(--po-line); border-radius:10px; font:inherit; cursor:pointer; }
+@media(max-width:360px) { html[data-theme] .vialChrome .header { gap:6px; padding-inline:12px; }.vialWordmark { font-size:22px; } }
+/* Retire legacy mobile padding that previously clipped the shared header. */
+@media(max-width:640px) {
+  html[data-theme] .container { padding:0 20px 28px!important; }
+  html[data-theme] .vialChrome .header { margin:0!important; padding:10px 16px!important; }
+}
+@media(max-width:360px) {
+  html[data-theme] .container { padding-inline:16px!important; }
+  html[data-theme] .vialChrome .header { padding-inline:12px!important; }
+}
