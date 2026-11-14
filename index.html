@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="./icons/paper-one/vial-180.png">
 
 <title>VialTrack</title>
-<meta name="vialtrack-version" content="14.4.3">
+<meta name="vialtrack-version" content="14.5.0">
 <meta name="description" content="Offline vial calculations, user-created protocols, inventory, history, and weight tracking.">
 <script>
 (function(){
@@ -2665,7 +2665,7 @@ html[data-theme="light"] textarea::placeholder{
   opacity:1;
 }
 
-/* V14.4.3 Track screen light-theme contrast */
+/* V14.5.0 Track screen light-theme contrast */
 html[data-theme="light"] .heroEyebrow,
 html[data-theme="light"] .screenEyebrow,
 html[data-theme="light"] .weekDow,
@@ -2934,7 +2934,8 @@ html[data-theme="light"] optgroup {
 }
 
 </style>
-<link rel="stylesheet" href="./navigation.css?v=14.4.3">
+<link rel="stylesheet" href="./navigation.css?v=14.5.0">
+<style>#usagePanel .moreStaticRow select{justify-self:start;min-height:44px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--text);font:inherit}.usageStatus{margin:0;padding:0 14px 12px;color:var(--muted);font-size:.78rem}.usageStatus:empty{display:none}</style>
 </head>
 <body>
 <div class="container">
@@ -3405,8 +3406,23 @@ html[data-theme="light"] optgroup {
     </div>
     <div class="moreGroup"><div class="moreGroupTitle">About</div>
       <button class="moreRow supportRow" type="button" disabled aria-disabled="true"><span class="moreRowIcon">$</span><span><strong>Support VialTrack</strong><small>Contributions are not available yet</small></span><span class="moreChevron">›</span></button>
-      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.4.3</small></span></div>
+      <button class="moreRow" type="button" onclick="showView('usage')"><span class="moreRowIcon"><svg class="appNavSvg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><span><strong>Your Usage</strong><small>Which screens you use, kept on this device</small></span><span class="moreChevron">›</span></button>
+      <div class="moreStaticRow"><span><strong>VialTrack</strong><small>Version 14.5.0</small></span></div>
       <div class="moreStaticRow"><span><strong>Data</strong><small>Stored on this device unless you export it</small></span></div>
+    </div>
+  </section>
+
+  <section id="usagePanel" class="morePanel appView hidden" aria-labelledby="usageTitle">
+    <div class="simpleScreenHeader"><div class="screenEyebrow">VialTrack</div><h2 id="usageTitle">Your Usage</h2></div>
+    <div class="moreGroup"><div class="moreGroupTitle">Private to this device</div>
+      <div class="moreStaticRow"><span><strong>What's kept</strong><small>Which VialTrack screens you open, how often and for how long, for up to 90 days. Never doses, vials or notes. Nothing is sent anywhere.</small></span></div>
+      <div class="moreStaticRow"><span><strong>Time range</strong><small id="usageSummaryLine">No activity yet.</small></span><select id="usageRange" aria-label="Time range" onchange="vtUsage.render()"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select></div>
+    </div>
+    <div class="moreGroup"><div class="moreGroupTitle">Activity by screen</div><div id="usageList"></div></div>
+    <div class="moreGroup"><div class="moreGroupTitle">Controls</div>
+      <button class="moreRow" type="button" id="usageToggle" onclick="vtUsage.toggle()"><span class="moreRowIcon">II</span><span><strong id="usageToggleLabel">Pause Tracking</strong><small>Stop or restart usage tracking on this device</small></span><span class="moreChevron">›</span></button>
+      <button class="moreRow dangerRow" type="button" id="usageClear" onclick="vtUsage.clear()"><span class="moreRowIcon eraseIcon">×</span><span><strong>Clear Usage Data</strong><small>Remove saved usage from this device</small></span><span class="moreChevron">›</span></button>
+      <p id="usageStatus" role="status" class="usageStatus"></p>
     </div>
   </section>
 
@@ -3720,7 +3736,7 @@ else if(themePreference.addListener) themePreference.addListener(followDeviceThe
 
 let currentView = 'home';
 const VT_VIEW_KEY = '__vialTrackView';
-const VT_VIEWS = ['home','board','calculator','tracker','inventory','weight','history','more','nasal'];
+const VT_VIEWS = ['home','board','calculator','tracker','inventory','weight','history','more','nasal','usage'];
 const VT_SUPPORT_URL='';
 function openSupportVialTrack(){if(!VT_SUPPORT_URL){alert('Support payments are not available yet.');return}window.open(VT_SUPPORT_URL,'_blank','noopener,noreferrer')}
 function showView(view, options){
@@ -3752,8 +3768,10 @@ function showView(view, options){
   if(history) history.classList.toggle('hidden', view !== 'history');
   if(more) more.classList.toggle('hidden', view !== 'more');
   if(nasal) nasal.classList.toggle('hidden', view !== 'nasal');
+  const usagePanel = q('usagePanel');
+  if(usagePanel) usagePanel.classList.toggle('hidden', view !== 'usage');
 
-  const navMap = {home:'navHome', board:'navHome', tracker:'navTracker', inventory:'navInventory', weight:'navWeight', more:'navMore', calculator:'navInventory', history:'navInventory', nasal:'navMore'};
+  const navMap = {home:'navHome', board:'navHome', tracker:'navTracker', inventory:'navInventory', weight:'navWeight', more:'navMore', calculator:'navInventory', history:'navInventory', nasal:'navMore', usage:'navMore'};
   ['navHome','navTracker','navInventory','navWeight','navMore'].forEach(id => {
     const el = q(id);
     if(el){ el.classList.toggle('active', id === navMap[view]); if(id === navMap[view]) el.setAttribute('aria-current','page'); else el.removeAttribute('aria-current'); }
@@ -3783,6 +3801,8 @@ function showView(view, options){
     renderInventory();
   }else if(view === 'weight'){
     prepareWeightTracker();
+  }else if(view === 'usage'){
+    if(window.vtUsage) window.vtUsage.render();
   }else if(view === 'more'){
     // Static screen.
   }else if(view === 'board'){
@@ -3790,6 +3810,7 @@ function showView(view, options){
   }else if(view === 'home'){
     refreshHomeDashboard();
   }
+  if(window.vtUsage) window.vtUsage.refresh();
 }
 
 function switchTab(tab){
@@ -4279,7 +4300,7 @@ async function exportHistory(){
   try{ protocols=await getAllProtocols(); protocolActions=await getAllProtocolActions(); }catch(e){}
   const payload = {
     app:'VialTrack',
-    version:'14.4.3',
+    version:'14.5.0',
     exportedAt:new Date().toISOString(),
     reconstitutions:records,
     stockInventory,
@@ -5880,7 +5901,7 @@ async function renderBoard(){
 
 
 <script>
-const VIAL_APP_VERSION = '14.4.3';
+const VIAL_APP_VERSION = '14.5.0';
 let vialTrackRegistration = null;
 let vialTrackWaitingWorker = null;
 let vialTrackUpdateDismissed = false;
@@ -6019,6 +6040,7 @@ async function eraseAllLocalData(){
   try{ if(vtDbPromise){ try{(await vtDbPromise).close()}catch(e){} } await new Promise((resolve,reject)=>{const r=indexedDB.deleteDatabase(VT_DB_NAME);r.onsuccess=resolve;r.onerror=()=>reject(r.error);r.onblocked=resolve;}); Object.keys(localStorage).filter(k=>k.toLowerCase().includes('vial')).forEach(k=>localStorage.removeItem(k)); location.reload(); }catch(e){alert('Could not erase local data. Close other VialTrack tabs and try again.')}
 }
 </script>
-<script src="./navigation.js?v=14.4.3"></script>
+<script src="./usage.js?v=14.5.0"></script>
+<script src="./navigation.js?v=14.5.0"></script>
 </body>
 </html>
