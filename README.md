@@ -2,6 +2,8 @@
 
 An offline-capable app for vial calculations, inventory, history, weight tracking, and a local status board. Personal records stay on the device unless the user exports a backup.
 
+Version 14.5.1 updates the VialTrack app icon, favicon and home-screen icons to the approved Paper One product family.
+
 Version 14.3.0 adds local protocol planning with daily, weekday, interval, and on/rest schedules; a Today board with complete, skip, and undo; linked-vial inventory updates; pause/resume/end controls; and protocol backup/restore.
 
 Version 14.1.1 improved light-theme contrast across calculator controls, labels, status accents, and secondary actions.
